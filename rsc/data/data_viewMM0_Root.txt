@@ -1,0 +1,6 @@
+Text centered 0 0 1280 125 152 Project; 60
+Button 390 150 500 100 Single Player; 11
+Button 390 250 500 100 Multiplayer; 12
+Button 390 350 500 100 Editor; 5
+Button 390 450 500 100 Settings; 13
+Button 390 550 500 100 Quit; 0

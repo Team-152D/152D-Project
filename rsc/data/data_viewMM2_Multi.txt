@@ -1,0 +1,4 @@
+Text centered 0 0 1280 125 Multiplayer; 42
+Button 100 100 150 100 Back; 10
+Button 390 150 500 100 Join; 10
+Button 390 250 500 100 Host; 10
