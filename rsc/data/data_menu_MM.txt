@@ -1,5 +1,5 @@
 Main Menu;
-rsc\\data_viewMM0_Root.txt 0 rsc\\ui\\test.bmp
-rsc\\data_viewMM1_Single.txt 10 rsc\\ui\\test.bmp
-rsc\\data_viewMM2_Multi.txt 10 rsc\\ui\\test.bmp
-rsc\\data_viewMM4_Set.txt 10 rsc\\ui\\test.bmp
+rsc\\data\\data_viewMM0_Root.txt 0 rsc\\ui\\test.bmp
+rsc\\data\\data_viewMM1_Single.txt 10 rsc\\ui\\test.bmp
+rsc\\data\\data_viewMM2_Multi.txt 10 rsc\\ui\\test.bmp
+rsc\\data\\data_viewMM4_Set.txt 10 rsc\\ui\\test.bmp

@@ -19,6 +19,7 @@ Text::~Text()
 
 void Text::writeText(int x, int y, const char* text, int size)
 {
+	cout << "writing text" << endl;
     if ( fontSize != size )
     {
 	fontSize = size;
@@ -35,11 +36,12 @@ void Text::writeText(int x, int y, const char* text, int size)
 
 void Text::writeTextCentered(SDL_Rect offsets, const char* text, int size)
 {
+	cout << "writing centered text" << endl;
     if ( fontSize != size )
     {
 	fontSize = size;
 	TTF_CloseFont(font);
-	font = TTF_OpenFont("rsc\\font_Xolonium-Regular.ttf", fontSize);
+	font = TTF_OpenFont("rsc\\ui\\font_Xolonium-Regular.ttf", fontSize);
     }
     int x, y, w, h;
     TTF_SizeText(font, text, &w, &h);

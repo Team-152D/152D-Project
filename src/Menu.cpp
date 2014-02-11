@@ -31,6 +31,7 @@ int Menu::runMenu( )
 	bool inMenu = true;
 	views->at( currentView )->draw( );
 
+	cout << "Entering menu loop" << endl;
 	while ( inMenu )
 	{
 		//input, update

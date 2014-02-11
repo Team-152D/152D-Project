@@ -38,7 +38,9 @@ int Application::runApplication()
 			case Global::AS_GAME_MULTI:
 				appState = Global::AS_MAIN_MENU;
 				break;
-			//editor case
+			case Global::AS_EDITOR:
+				appState = Global::AS_MAIN_MENU;
+				break;
 			default:
 				break;
 		}
@@ -67,7 +69,7 @@ bool Application::initializeApplication()
 	
 	//Initialize sdl_image
 	
-	window = SDL_CreateWindow( "152 Project", 0, 0, 1024, 768, SDL_WINDOW_FULLSCREEN );
+	window = SDL_CreateWindow( "152 Project", 0, 0, 1280, 800, SDL_WINDOW_FULLSCREEN );
 	if( window == NULL )
 	{
 		//fail

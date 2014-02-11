@@ -26,6 +26,7 @@ namespace Global
     const int AS_MAIN_MENU = 2;
     const int AS_GAME_SINGLE = 3;
     const int AS_GAME_MULTI = 4;
+    const int AS_EDITOR = 5;
     
     const int MMS_0 = 10;
 	const int MMS_1 = 11;
