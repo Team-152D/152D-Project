@@ -38,12 +38,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Application.o \
 	${OBJECTDIR}/src/Audio.o \
 	${OBJECTDIR}/src/Editor.o \
+	${OBJECTDIR}/src/Enemy.o \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/Global.o \
+	${OBJECTDIR}/src/Grid.o \
 	${OBJECTDIR}/src/Image.o \
 	${OBJECTDIR}/src/Level.o \
 	${OBJECTDIR}/src/Main.o \
 	${OBJECTDIR}/src/Menu.o \
+	${OBJECTDIR}/src/Player.o \
+	${OBJECTDIR}/src/Projectile.o \
 	${OBJECTDIR}/src/Settings.o \
 	${OBJECTDIR}/src/Text.o \
 	${OBJECTDIR}/src/UI_Button.o \
@@ -93,6 +97,11 @@ ${OBJECTDIR}/src/Editor.o: src/Editor.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Editor.o src/Editor.cpp
 
+${OBJECTDIR}/src/Enemy.o: src/Enemy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Enemy.o src/Enemy.cpp
+
 ${OBJECTDIR}/src/Game.o: src/Game.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -102,6 +111,11 @@ ${OBJECTDIR}/src/Global.o: src/Global.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Global.o src/Global.cpp
+
+${OBJECTDIR}/src/Grid.o: src/Grid.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Grid.o src/Grid.cpp
 
 ${OBJECTDIR}/src/Image.o: src/Image.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -122,6 +136,16 @@ ${OBJECTDIR}/src/Menu.o: src/Menu.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Menu.o src/Menu.cpp
+
+${OBJECTDIR}/src/Player.o: src/Player.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Player.o src/Player.cpp
+
+${OBJECTDIR}/src/Projectile.o: src/Projectile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Projectile.o src/Projectile.cpp
 
 ${OBJECTDIR}/src/Settings.o: src/Settings.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
