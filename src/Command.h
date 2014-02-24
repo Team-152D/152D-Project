@@ -8,7 +8,7 @@
 #ifndef COMMAND_H
 #define	COMMAND_H
 
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 
 class command{
     int sock;
