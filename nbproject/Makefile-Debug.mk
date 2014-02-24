@@ -37,8 +37,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Application.o \
 	${OBJECTDIR}/src/Audio.o \
+	${OBJECTDIR}/src/Editor.o \
+	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/Global.o \
 	${OBJECTDIR}/src/Image.o \
+	${OBJECTDIR}/src/Level.o \
 	${OBJECTDIR}/src/Main.o \
 	${OBJECTDIR}/src/Menu.o \
 	${OBJECTDIR}/src/Settings.o \
@@ -46,7 +49,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/UI_Button.o \
 	${OBJECTDIR}/src/UI_Checkbox.o \
 	${OBJECTDIR}/src/UI_TextLabel.o \
-	${OBJECTDIR}/src/View.o
+	${OBJECTDIR}/src/View.o \
+	${OBJECTDIR}/src/command.o \
+	${OBJECTDIR}/src/net.o
 
 
 # C Compiler Flags
@@ -83,6 +88,16 @@ ${OBJECTDIR}/src/Audio.o: src/Audio.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Audio.o src/Audio.cpp
 
+${OBJECTDIR}/src/Editor.o: src/Editor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Editor.o src/Editor.cpp
+
+${OBJECTDIR}/src/Game.o: src/Game.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Game.o src/Game.cpp
+
 ${OBJECTDIR}/src/Global.o: src/Global.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -92,6 +107,11 @@ ${OBJECTDIR}/src/Image.o: src/Image.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Image.o src/Image.cpp
+
+${OBJECTDIR}/src/Level.o: src/Level.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Level.o src/Level.cpp
 
 ${OBJECTDIR}/src/Main.o: src/Main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -132,6 +152,16 @@ ${OBJECTDIR}/src/View.o: src/View.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/View.o src/View.cpp
+
+${OBJECTDIR}/src/command.o: src/command.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/command.o src/command.cpp
+
+${OBJECTDIR}/src/net.o: src/net.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/net.o src/net.cpp
 
 # Subprojects
 .build-subprojects:

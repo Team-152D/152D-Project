@@ -19,7 +19,7 @@ Text::~Text()
 
 void Text::writeText(int x, int y, const char* text, int size)
 {
-	cout << "writing text" << endl;
+	//cout << "writing text" << endl;
     if ( fontSize != size )
     {
 	fontSize = size;
@@ -36,7 +36,7 @@ void Text::writeText(int x, int y, const char* text, int size)
 
 void Text::writeTextCentered(SDL_Rect offsets, const char* text, int size)
 {
-	cout << "writing centered text" << endl;
+	//cout << "writing centered text" << endl;
     if ( fontSize != size )
     {
 	fontSize = size;
