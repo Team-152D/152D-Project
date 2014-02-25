@@ -60,6 +60,18 @@ void Player::input(char* cmd)
     else if ( !strcmp(cmd, "Shoot") );
 }
 
+bool Player::hit(int x, int y){
+    bool hit=false;
+    //if statement distance formula x
+    //    hit=true;
+    //if statement distance formula y
+    //    hit=true;
+    
+    if(hit=true)
+        //health-=damage
+    return hit;
+}
+
 void Player::update()
 {
     cout<<"updating x"<<endl;

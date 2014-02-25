@@ -21,6 +21,7 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void input(char*);
+    bool hit(int, int);
     void update();
     void draw();
     

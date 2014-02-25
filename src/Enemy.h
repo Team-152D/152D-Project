@@ -21,6 +21,7 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void AI();
+    bool hit(int, int);
     void die();
     void update();
     void draw();

@@ -81,6 +81,18 @@ void Enemy::AI(){
     }
 }
 
+bool Enemy::hit(int x, int y){
+    bool hit=false;
+    //if statement distance formula x
+    //    hit=true;
+    //if statement distance formula y
+    //    hit=true;
+    
+    if(hit=true)
+        //health-=damage
+    return hit;
+}
+
 void Enemy::die(){
     
     if(health<=0) delete this;
