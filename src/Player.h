@@ -7,7 +7,6 @@
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_mixer.h"
 #include "Global.h"
-#include "Utility.h"
 #include <cstdlib>
 
 class Game;

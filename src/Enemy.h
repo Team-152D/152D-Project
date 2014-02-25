@@ -2,27 +2,59 @@
 #define	ENEMY_H
 
 #include "Unit.h"
-#include "Global.h"
 #include <string>
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_mixer.h"
+#include "Global.h"
+#include <cstdlib>
+
+class Game;
+
 using namespace std;
 
 class Enemy : public Unit
 {
 public:
-    Enemy();
+    Enemy(int,int);
     ~Enemy();
+    void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
+    
+    void AI();
+    void die();
     void update();
     void draw();
+    
+    int getX();
+    int getY();
+    int getXVel();
+    int getYVel();
 private:
+    void set_clips();
     //The dimensions of the image
     const int ENEMY_WIDTH = 32;
     const int ENEMY_HEIGHT = 32;
-    //the direction status of the stick figure
-    const int ENEMY_RIGHT = 0;
-    const int ENEMY_LEFT = 1;
+    
+    //whether the enemy is shooting at the player
+    bool shooting;
+    //whether the enemy can "see" the player
+    bool seesPlayer;
+
+    //current focus player
+    Player* target;
+    
+    //The surfaces
+    SDL_Surface *enemy_sprite_up = NULL;
+    SDL_Surface *enemy_sprite_down = NULL;
+    SDL_Surface *enemy_sprite_right = NULL;
+    SDL_Surface *enemy_sprite_left = NULL;
+    SDL_Surface *screen = NULL;
+
+    //The event structure
+    SDL_Event event;
+
+    //The areas of the sprite sheet
+    SDL_Rect spriteClips[ 4 ];
 
 };
 
