@@ -17,7 +17,7 @@ public:
     ~Audio();
     
     void playSound(string);
-    void playMusic(int);
+    void playMusic(string);
 private:
     Mix_Chunk* loadSound(string);
 };

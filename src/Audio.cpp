@@ -24,7 +24,10 @@ void Audio::playSound( string identifier )
 	Mix_FreeChunk( sound );
 }
 
-void Audio::playMusic( int identifier )
+void Audio::playMusic( string identifier )
 {
-
+	Mix_Music *music = Mix_LoadMUS(identifier.c_str());
+	if( Mix_PlayMusic(music,1) == -1 )
+		cout << "ERROR: Failed to play music" << endl;
+	Mix_FreeMusic(music);
 }

@@ -1,4 +1,4 @@
 Text centered 0 0 1280 125 Single Player; 42
 Button 100 100 150 100 Back; 10
-Button 390 150 500 100 New Game; 10
-Button 390 250 500 100 Load Game; 10
+Button 390 150 500 100 New Game; 3
+Button 390 250 500 100 Load Game; 4

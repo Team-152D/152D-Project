@@ -3,10 +3,9 @@
 
 #include "Unit.h"
 #include <string>
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_mixer.h"
-#include "Global.h"
+#include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
 #include <cstdlib>
 
 class Game;

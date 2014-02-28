@@ -1,10 +1,3 @@
-/* 
- * File:   Grid.h
- * Author: Lena
- *
- * Created on December 6, 2013, 10:22 PM
- */
-
 #ifndef __GameProject__Grid__
 #define __GameProject__Grid__
 
@@ -13,11 +6,11 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 #include "Global.h"
-#include "Utility.h"
+#include "Image.h"
 
 using namespace std;
 

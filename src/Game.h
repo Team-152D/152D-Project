@@ -7,10 +7,12 @@
 
 #include "net.h"
 #include "Level.h"
-#include "Utility.h"
+#include "Image.h"
 #include "Timer.h"
 #include "Global.h"
 #include "Command.h"
+#include "Audio.h"
+#include "Text.h"
 
 class Game
 {

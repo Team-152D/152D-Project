@@ -50,6 +50,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Projectile.o \
 	${OBJECTDIR}/src/Settings.o \
 	${OBJECTDIR}/src/Text.o \
+	${OBJECTDIR}/src/Timer.o \
 	${OBJECTDIR}/src/UI_Button.o \
 	${OBJECTDIR}/src/UI_Checkbox.o \
 	${OBJECTDIR}/src/UI_TextLabel.o \
@@ -156,6 +157,11 @@ ${OBJECTDIR}/src/Text.o: src/Text.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Text.o src/Text.cpp
+
+${OBJECTDIR}/src/Timer.o: src/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Timer.o src/Timer.cpp
 
 ${OBJECTDIR}/src/UI_Button.o: src/UI_Button.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

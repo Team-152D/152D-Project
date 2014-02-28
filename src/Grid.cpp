@@ -18,15 +18,15 @@ Grid::Grid(string input)
 
     loadGrid(input);
     
-    IMG_BRICK = Utility::loadImage("resources\\tile_brick32.jpg");
-    IMG_DIRT = Utility::loadImage("resources\\tile_dirt32.jpg");
-    IMG_DIRTYBRICK = Utility::loadImage("resources\\tile_dirtybrick32.jpg");
-    IMG_GRASS = Utility::loadImage("resources\\tile_grass32.jpg");
-    IMG_LAVA = Utility::loadImage("resources\\tile_lava32.jpg");
-    IMG_REDCARPET = Utility::loadImage("resources\\tile_redcarpet32.jpg");
-    IMG_STONE = Utility::loadImage("resources\\tile_stone32.jpg");
-    IMG_WATER = Utility::loadImage("resources\\tile_water32.jpg");
-    IMG_WOOD = Utility::loadImage("resources\\tile_wood32.jpg");
+    IMG_BRICK = image->loadImage("resources\\tile_brick32.jpg");
+    IMG_DIRT = image->loadImage("resources\\tile_dirt32.jpg");
+    IMG_DIRTYBRICK = image->loadImage("resources\\tile_dirtybrick32.jpg");
+    IMG_GRASS = image->loadImage("resources\\tile_grass32.jpg");
+    IMG_LAVA = image->loadImage("resources\\tile_lava32.jpg");
+    IMG_REDCARPET = image->loadImage("resources\\tile_redcarpet32.jpg");
+    IMG_STONE = image->loadImage("resources\\tile_stone32.jpg");
+    IMG_WATER = image->loadImage("resources\\tile_water32.jpg");
+    IMG_WOOD = image->loadImage("resources\\tile_wood32.jpg");
 }
 
 
@@ -36,15 +36,15 @@ Grid::Grid(vector<vector<int>*>* iGrid)
     height = grid -> size();
     width = grid -> at(0) -> size();
     
-    IMG_BRICK = Utility::loadImage("resources\\tile_brick32.jpg");
-    IMG_DIRT = Utility::loadImage("resources\\tile_dirt32.jpg");
-    IMG_DIRTYBRICK = Utility::loadImage("resources\\tile_dirtybrick32.jpg");
-    IMG_GRASS = Utility::loadImage("resources\\tile_grass32.jpg");
-    IMG_LAVA = Utility::loadImage("resources\\tile_lava32.jpg");
-    IMG_REDCARPET = Utility::loadImage("resources\\tile_redcarpet32.jpg");
-    IMG_STONE = Utility::loadImage("resources\\tile_stone32.jpg");
-    IMG_WATER = Utility::loadImage("resources\\tile_water32.jpg");
-    IMG_WOOD = Utility::loadImage("resources\\tile_wood32.jpg");
+    IMG_BRICK = image->loadImage("resources\\tile_brick32.jpg");
+    IMG_DIRT = image->loadImage("resources\\tile_dirt32.jpg");
+    IMG_DIRTYBRICK = image->loadImage("resources\\tile_dirtybrick32.jpg");
+    IMG_GRASS = image->loadImage("resources\\tile_grass32.jpg");
+    IMG_LAVA = image->loadImage("resources\\tile_lava32.jpg");
+    IMG_REDCARPET = image->loadImage("resources\\tile_redcarpet32.jpg");
+    IMG_STONE = image->loadImage("resources\\tile_stone32.jpg");
+    IMG_WATER = image->loadImage("resources\\tile_water32.jpg");
+    IMG_WOOD = image->loadImage("resources\\tile_wood32.jpg");
 }
 
 Grid::~Grid()
@@ -106,31 +106,31 @@ void Grid::drawGrid()
             switch (grid->at(i)->at(j))
             {
                 case 1:
-                    Utility::applySurface(j * 32, i * 32, IMG_BRICK);
+                    image->drawSurface(j * 32, i * 32, IMG_BRICK);
                     break;
                 case 2:
-                    Utility::applySurface(j * 32, i * 32, IMG_DIRT);
+                    image->drawSurface(j * 32, i * 32, IMG_DIRT);
                     break;
                 case 3:
-                    Utility::applySurface(j * 32, i * 32, IMG_DIRTYBRICK);
+                    image->drawSurface(j * 32, i * 32, IMG_DIRTYBRICK);
                     break;
                 case 4:
-                    Utility::applySurface(j * 32, i * 32, IMG_GRASS);
+                    image->drawSurface(j * 32, i * 32, IMG_GRASS);
                     break;
                 case 5:
-                    Utility::applySurface(j * 32, i * 32, IMG_LAVA);
+                    image->drawSurface(j * 32, i * 32, IMG_LAVA);
                     break;
                 case 6:
-                    Utility::applySurface(j * 32, i * 32, IMG_REDCARPET);
+                    image->drawSurface(j * 32, i * 32, IMG_REDCARPET);
                     break;
                 case 7:
-                    Utility::applySurface(j * 32, i * 32, IMG_STONE);
+                    image->drawSurface(j * 32, i * 32, IMG_STONE);
                     break;
                 case 8:
-                    Utility::applySurface(j * 32, i * 32, IMG_WATER);
+                    image->drawSurface(j * 32, i * 32, IMG_WATER);
                     break;
                 case 9:
-                    Utility::applySurface(j * 32, i * 32, IMG_WOOD);
+                    image->drawSurface(j * 32, i * 32, IMG_WOOD);
                     break;
             }
     }

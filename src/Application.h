@@ -8,7 +8,7 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
 
-//#include "Editor.h"
+#include "Editor.h"
 #include "Global.h"
 #include "Menu.h"
 
@@ -27,7 +27,8 @@ public:
 private:
     bool initializeApplication();
     int appState;
-    //Editor *editor;
+    Game *game;
+    Editor *editor;
     Menu *menu;
 };
 

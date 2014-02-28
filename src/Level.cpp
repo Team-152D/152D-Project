@@ -87,11 +87,11 @@ void Level::loadLevel(int level)
     cout << "DEBUG: Level is loading file";
     vector<vector<int>*>* temp = new vector<vector<int>*>;
 
-    for ( int i = 0; i < GRID_HEIGHT; i++ )
+    for ( int i = 0; i < Global::GRID_HEIGHT; i++ )
 	temp->push_back(new vector<int>);
 
-    for ( int i = 0; i < GRID_HEIGHT; i++ )
-	for ( int j = 0; j < GRID_WIDTH; j++ )
+    for ( int i = 0; i < Global::GRID_HEIGHT; i++ )
+	for ( int j = 0; j < Global::GRID_WIDTH; j++ )
 	    temp->at(i)->push_back(1);
 
     string filepath;
@@ -111,9 +111,9 @@ void Level::loadLevel(int level)
 
     ifstream infile;
     infile.open(filepath.c_str());
-    for ( int i = 0; i < GRID_HEIGHT; i++ )
+    for ( int i = 0; i < Global::GRID_HEIGHT; i++ )
     {
-	for ( int j = 0; j < GRID_WIDTH; j++ )
+	for ( int j = 0; j < Global::GRID_WIDTH; j++ )
 	{
 	    int input;
 	    if ( infile >> input )

@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f2" displayName="rsc" projectFiles="true">
-      <logicalFolder name="f1" displayName="audio" projectFiles="true">
-        <itemPath>rsc/audio/sfx_buttonPress.wav</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="data" projectFiles="true">
-        <itemPath>rsc/data/data_menu_MM.txt</itemPath>
-        <itemPath>rsc/data/data_viewMM0_Root.txt</itemPath>
-        <itemPath>rsc/data/data_viewMM1_Single.txt</itemPath>
-        <itemPath>rsc/data/data_viewMM2_Multi.txt</itemPath>
-        <itemPath>rsc/data/data_viewMM4_Set.txt</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="ui" projectFiles="true">
-        <itemPath>rsc/ui/font_Xolonium-Regular.ttf</itemPath>
-        <itemPath>rsc/ui/test.bmp</itemPath>
-        <itemPath>rsc/ui/ui_checkboxBackground.bmp</itemPath>
-        <itemPath>rsc/ui/ui_checkboxCheck.bmp</itemPath>
-        <itemPath>rsc/ui/ui_editorBackground.bmp</itemPath>
-        <itemPath>rsc/ui/ui_horizontalLineGreen.bmp</itemPath>
-        <itemPath>rsc/ui/ui_tempButton.bmp</itemPath>
-        <itemPath>rsc/ui/ui_tempHighlightButtonDown.bmp</itemPath>
-        <itemPath>rsc/ui/ui_tempHighlightMouseOver.bmp</itemPath>
-        <itemPath>rsc/ui/ui_verticalLineGreen.bmp</itemPath>
-      </logicalFolder>
-    </logicalFolder>
     <logicalFolder name="f1" displayName="src" projectFiles="true">
       <logicalFolder name="f1" displayName="Application" projectFiles="true">
         <itemPath>src/Application.cpp</itemPath>
@@ -84,6 +60,8 @@
         <itemPath>src/Image.h</itemPath>
         <itemPath>src/Text.cpp</itemPath>
         <itemPath>src/Text.h</itemPath>
+        <itemPath>src/Timer.cpp</itemPath>
+        <itemPath>src/Timer.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <itemPath>Makefile</itemPath>
@@ -105,6 +83,7 @@
           <incDir>
             <pElem>../../../../../MinGW/include</pElem>
           </incDir>
+          <warningLevel>0</warningLevel>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
@@ -117,48 +96,11 @@
             <linkerLibLibItem>SDL2_image</linkerLibLibItem>
             <linkerLibLibItem>SDL2_mixer</linkerLibLibItem>
             <linkerLibLibItem>SDL2_ttf</linkerLibLibItem>
+            <linkerLibLibItem>ws2_32</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/audio/sfx_buttonPress.wav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_menu_MM.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM0_Root.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM1_Single.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM2_Multi.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM4_Set.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/font_Xolonium-Regular.ttf" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/test.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_checkboxBackground.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_checkboxCheck.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_editorBackground.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_horizontalLineGreen.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempButton.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempHighlightButtonDown.bmp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempHighlightMouseOver.bmp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_verticalLineGreen.bmp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Application.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -219,6 +161,10 @@
       <item path="src/Text.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Text.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/UI_AbstractElement.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -269,44 +215,6 @@
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="rsc/audio/sfx_buttonPress.wav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_menu_MM.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM0_Root.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM1_Single.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM2_Multi.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/data/data_viewMM4_Set.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/font_Xolonium-Regular.ttf" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/test.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_checkboxBackground.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_checkboxCheck.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_editorBackground.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_horizontalLineGreen.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempButton.bmp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempHighlightButtonDown.bmp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_tempHighlightMouseOver.bmp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="rsc/ui/ui_verticalLineGreen.bmp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/Application.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Application.h" ex="false" tool="3" flavor2="0">
@@ -366,6 +274,10 @@
       <item path="src/Text.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Text.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/UI_AbstractElement.h" ex="false" tool="3" flavor2="0">
       </item>

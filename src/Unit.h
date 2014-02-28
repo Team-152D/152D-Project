@@ -2,12 +2,17 @@
 #define	UNIT_H
 
 #include <iostream>
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 #include "Timer.h"
 #include <string>
 using namespace std;
 
 // Unit (Global characteristics for players and enemies)
+
+const int DIR_UP = 1200;
+const int DIR_RIGHT = 300;
+const int DIR_DOWN = 600;
+const int DIR_LEFT = 900;
 
 class Unit
 {

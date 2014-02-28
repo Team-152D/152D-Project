@@ -7,6 +7,7 @@
 #include "SDL2/SDL_image.h"
 
 #include "Global.h"
+#include "Audio.h"
 #include "Image.h"
 #include "Text.h"
 #include "Grid.h"

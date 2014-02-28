@@ -15,9 +15,9 @@ Enemy::Enemy(int x, int y)
 
     //Initialize animation variables
     frame = 0;
-    direction = ENEMY_RIGHT;
+    direction = DIR_RIGHT;
     
-    target = Level->getPlayer(1);
+    target = currentLevelGlobal->getPlayer(1);
 
     seesPlayer=false;
     shooting=false;
@@ -25,10 +25,10 @@ Enemy::Enemy(int x, int y)
     set_clips();
 
     //Load the sprite sheet
-    enemy_sprite_up = Utility::loadImage("resources\\sprite_RedUp.png"); // move up
-    enemy_sprite_right = Utility::loadImage("resources\\sprite_RedRight.png"); // move right
-    enemy_sprite_down = Utility::loadImage("resources\\sprite_RedDown.png"); // move down
-    enemy_sprite_left = Utility::loadImage("resources\\sprite_RedLeft.png"); // move left
+    enemy_sprite_up = image->loadImage("resources\\sprite_RedUp.png"); // move up
+    enemy_sprite_right = image->loadImage("resources\\sprite_RedRight.png"); // move right
+    enemy_sprite_down = image->loadImage("resources\\sprite_RedDown.png"); // move down
+    enemy_sprite_left = image->loadImage("resources\\sprite_RedLeft.png"); // move left
     if ( enemy_sprite_up == NULL || enemy_sprite_right == NULL || enemy_sprite_down == NULL || enemy_sprite_left == NULL )
 	cout << "Enemy sprite didn't load" << endl;
 }
@@ -53,7 +53,7 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
     offset.y = yOffset;
 
     //Blit
-    SDL_BlitSurface(source, clip, mainScreenSurface, &offset);
+    SDL_BlitSurface(source, clip, screenSurface, &offset);
 }
 
 
@@ -105,26 +105,26 @@ void Enemy::update()
     {
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0 ||
-		xOffset + 16 >= GAME_WIDTH ||
+		xOffset + 16 >= Global::GAME_WIDTH ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
 	    xOffset -= xVel;
 	if ( xVel < 0 )
-	    direction = ENEMY_LEFT;
+	    direction = DIR_LEFT;
 	else if ( xVel > 0 )
-	    direction = ENEMY_RIGHT;
+	    direction = DIR_RIGHT;
     }
     cout<<"updating y"<<endl;
     if ( yVel != 0 )
     {
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0 ||
-		yOffset + 16 >= GAME_HEIGHT ||
+		yOffset + 16 >= Global::GAME_HEIGHT ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
 	    yOffset -= yVel;
 	if ( yVel < 0 )
-	    direction = ENEMY_UP;
+	    direction = DIR_UP;
 	else if ( yVel > 0 )
-	    direction = ENEMY_DOWN;
+	    direction = DIR_DOWN;
     }
     cout<<"checking tiles"<<endl;
     switch(currentLevelGlobal->getGrid()->getTileAt( (xOffset+16)/32,(yOffset+16)/32 ))
@@ -136,7 +136,7 @@ void Enemy::update()
     }
 }
 
-void Player::draw()
+void Enemy::draw()
 {
     int frameCounter = currentGameGlobal->getFrameCounter();
     if ( xVel == 0 && yVel == 0 )
@@ -149,17 +149,17 @@ void Player::draw()
 
     switch ( direction )
     {
-	case ENEMY_UP:
-	    apply_surface(xOffset - 16, yOffset - 16, player_sprite_up, &spriteClips[frame]);
+	case DIR_UP:
+	    apply_surface(xOffset - 16, yOffset - 16, enemy_sprite_up, &spriteClips[frame]);
 	    break;
-	case ENEMY_RIGHT:
-	    apply_surface(xOffset - 16, yOffset - 16, player_sprite_right, &spriteClips[frame]);
+	case DIR_RIGHT:
+	    apply_surface(xOffset - 16, yOffset - 16, enemy_sprite_right, &spriteClips[frame]);
 	    break;
-	case ENEMY_DOWN:
-	    apply_surface(xOffset - 16, yOffset - 16, player_sprite_down, &spriteClips[frame]);
+	case DIR_DOWN:
+	    apply_surface(xOffset - 16, yOffset - 16, enemy_sprite_down, &spriteClips[frame]);
 	    break;
-	case ENEMY_LEFT:
-	    apply_surface(xOffset - 16, yOffset - 16, player_sprite_left, &spriteClips[frame]);
+	case DIR_LEFT:
+	    apply_surface(xOffset - 16, yOffset - 16, enemy_sprite_left, &spriteClips[frame]);
 	    break;
 
     }
@@ -199,12 +199,12 @@ void Enemy::set_clips()
     spriteClips[ 3 ].h = ENEMY_HEIGHT;
 }
 
-int Player::getXVel()
+int Enemy::getXVel()
 {
     return xVel;
 }
 
-int Player::getYVel()
+int Enemy::getYVel()
 {
     return xVel;
 }
