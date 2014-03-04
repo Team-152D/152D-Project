@@ -61,7 +61,6 @@ private:
     
     SDL_Surface* IMG_MENU1;
     
-    SDL_Surface* IMG_BUTTON_HIGHLIGHT;
     SDL_Surface* IMG_SELECT_HIGHLIGHT;    
     SDL_Surface* IMG_INFOBAR;
 };

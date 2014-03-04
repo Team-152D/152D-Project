@@ -21,10 +21,10 @@ Player::Player( int x, int y )
 	set_clips( );
 
 	//Load the sprite sheet
-	player_sprite_up = image->loadImage( "resources\\sprite_RedUp.png" ); // move up
-	player_sprite_right = image->loadImage( "resources\\sprite_RedRight.png" ); // move right
-	player_sprite_down = image->loadImage( "resources\\sprite_RedDown.png" ); // move down
-	player_sprite_left = image->loadImage( "resources\\sprite_RedLeft.png" ); // move left
+	player_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
+	player_sprite_right = image->loadImage( "rsc\\game\\sprite_RedRight.bmp" ); // move right
+	player_sprite_down = image->loadImage( "rsc\\game\\sprite_RedDown.bmp" ); // move down
+	player_sprite_left = image->loadImage( "rsc\\game\\sprite_RedLeft.bmp" ); // move left
 	if ( player_sprite_up == NULL || player_sprite_right == NULL || player_sprite_down == NULL || player_sprite_left == NULL )
 		cout << "Player sprite didn't load" << endl;
 }
@@ -76,7 +76,7 @@ bool Player::hit( int x, int y )
 
 void Player::update( )
 {
-	cout << "updating x" << endl;
+	//cout << "updating x" << endl;
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
@@ -89,7 +89,7 @@ void Player::update( )
 		else if ( xVel > 0 )
 			direction = DIR_RIGHT;
 	}
-	cout << "updating y" << endl;
+	//cout << "updating y" << endl;
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
@@ -102,7 +102,7 @@ void Player::update( )
 		else if ( yVel > 0 )
 			direction = DIR_DOWN;
 	}
-	cout << "checking tiles" << endl;
+	//cout << "checking tiles" << endl;
 	switch ( currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) )
 	{
 		case 5: //lava
@@ -110,6 +110,7 @@ void Player::update( )
 			break;
 			//Other dmg tiles
 	}
+	//cout << "testing..." << endl;
 }
 
 void Player::draw( )

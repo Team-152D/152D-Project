@@ -17,39 +17,38 @@ Editor::Editor( )
 	endzone.w = 0;
 	endzone.h = 0;
 
-	editorBackground = image->loadImage( "rsc\\ui\\ui_editorBackground.png" );
-	horizontalLine = image->loadImage( "rsc\\ui\\ui_horizontalLine.png" );
-	verticalLine = image->loadImage( "rsc\\ui\\ui_verticalLine.png" );
+	editorBackground = image->loadImage( "rsc\\ui\\ui_editorBackground.bmp" );
+	horizontalLine = image->loadImage( "rsc\\ui\\ui_horizontalLine.bmp" );
+	verticalLine = image->loadImage( "rsc\\ui\\ui_verticalLine.bmp" );
 
-	IMG_BRICK = image->loadImage( "rsc\\game\\tile_brick32.jpg" );
-	IMG_DIRT = image->loadImage( "rsc\\game\\tile_dirt32.jpg" );
-	IMG_DIRTYBRICK = image->loadImage( "rsc\\game\\tile_dirtybrick32.jpg" );
-	IMG_GRASS = image->loadImage( "rsc\\game\\tile_grass32.jpg" );
-	IMG_LAVA = image->loadImage( "rsc\\game\\tile_lava32.jpg" );
-	IMG_REDCARPET = image->loadImage( "rsc\\game\\tile_redcarpet32.jpg" );
-	IMG_STONE = image->loadImage( "rsc\\game\\tile_stone32.jpg" );
-	IMG_WATER = image->loadImage( "rsc\\game\\tile_water32.jpg" );
-	IMG_WOOD = image->loadImage( "rsc\\game\\tile_wood32.jpg" );
+	IMG_BRICK = image->loadImage( "rsc\\game\\tile_brick32.bmp" );
+	IMG_DIRT = image->loadImage( "rsc\\game\\tile_dirt32.bmp" );
+	IMG_DIRTYBRICK = image->loadImage( "rsc\\game\\tile_dirtybrick32.bmp" );
+	IMG_GRASS = image->loadImage( "rsc\\game\\tile_grass32.bmp" );
+	IMG_LAVA = image->loadImage( "rsc\\game\\tile_lava32.bmp" );
+	IMG_REDCARPET = image->loadImage( "rsc\\game\\tile_redcarpet32.bmp" );
+	IMG_STONE = image->loadImage( "rsc\\game\\tile_stone32.bmp" );
+	IMG_WATER = image->loadImage( "rsc\\game\\tile_water32.bmp" );
+	IMG_WOOD = image->loadImage( "rsc\\game\\tile_wood32.bmp" );
 
-	IMG_BRICK64 = image->loadImage( "rsc\\game\\tile_brick64.jpg" );
-	IMG_DIRT64 = image->loadImage( "rsc\\game\\tile_dirt64.jpg" );
-	IMG_DIRTYBRICK64 = image->loadImage( "rsc\\game\\tile_dirtybrick64.jpg" );
-	IMG_GRASS64 = image->loadImage( "rsc\\game\\tile_grass64.jpg" );
-	IMG_LAVA64 = image->loadImage( "rsc\\game\\tile_lava64.jpg" );
-	IMG_REDCARPET64 = image->loadImage( "rsc\\game\\tile_redcarpet64.jpg" );
-	IMG_STONE64 = image->loadImage( "rsc\\game\\tile_stone64.jpg" );
-	IMG_WATER64 = image->loadImage( "rsc\\game\\tile_water64.jpg" );
-	IMG_WOOD64 = image->loadImage( "rsc\\game\\tile_wood64.jpg" );
+	IMG_BRICK64 = image->loadImage( "rsc\\game\\tile_brick64.bmp" );
+	IMG_DIRT64 = image->loadImage( "rsc\\game\\tile_dirt64.bmp" );
+	IMG_DIRTYBRICK64 = image->loadImage( "rsc\\game\\tile_dirtybrick64.bmp" );
+	IMG_GRASS64 = image->loadImage( "rsc\\game\\tile_grass64.bmp" );
+	IMG_LAVA64 = image->loadImage( "rsc\\game\\tile_lava64.bmp" );
+	IMG_REDCARPET64 = image->loadImage( "rsc\\game\\tile_redcarpet64.bmp" );
+	IMG_STONE64 = image->loadImage( "rsc\\game\\tile_stone64.bmp" );
+	IMG_WATER64 = image->loadImage( "rsc\\game\\tile_water64.bmp" );
+	IMG_WOOD64 = image->loadImage( "rsc\\game\\tile_wood64.bmp" );
 
-	IMG_P1 = image->loadImage( "rsc\\game\\tile_p1.png" );
-	IMG_P2 = image->loadImage( "rsc\\game\\tile_p2.png" );
-	IMG_END = image->loadImage( "rsc\\game\\tile_end.png" );
+	IMG_P1 = image->loadImage( "rsc\\game\\tile_p1.bmp" );
+	IMG_P2 = image->loadImage( "rsc\\game\\tile_p2.bmp" );
+	IMG_END = image->loadImage( "rsc\\game\\tile_end.bmp" );
 
-	IMG_MENU1 = NULL; // image->loadImage( "resources\\ui_menu1.png" );
+	IMG_MENU1 = image->loadImage( "rsc\\ui\\ui_menu1.bmp" );
 
-	IMG_BUTTON_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_menuHighlight.jpg" );
-	IMG_SELECT_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_editorHighlight.png" );
-	IMG_INFOBAR = image->loadImage( "rsc\\ui\\ui_infoBar.png" );
+	IMG_SELECT_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_editorHighlight.bmp" );
+	IMG_INFOBAR = image->loadImage( "rsc\\ui\\ui_infoBar.bmp" );
 }
 
 Editor::~Editor( )
@@ -70,7 +69,6 @@ Editor::~Editor( )
 
 	SDL_FreeSurface( IMG_MENU1 );
 
-	SDL_FreeSurface( IMG_BUTTON_HIGHLIGHT );
 	SDL_FreeSurface( IMG_INFOBAR );
 }
 
@@ -131,7 +129,7 @@ int Editor::update( )
 
 		if ( mouseUp.y <= 640 )
 		{
-			cout << "grid update" << endl;
+			//cout << "grid update" << endl;
 			mouseUp.x /= 32;
 			mouseUp.y /= 32;
 			grid->setTileAt( mouseUp.x, mouseUp.y, selectedTile );
@@ -288,7 +286,7 @@ int Editor::draw( )
 
 void Editor::save( )
 {
-	SDL_Surface* menu = NULL; // image->loadImage( "resources\\ui_menu5.png" );
+	SDL_Surface* menu = NULL; // image->loadImage( "resources\\ui_menu5.bmp" );
 	image->drawSurface( 0, 0, menu );
 	SDL_Rect box;
 	box.x = 390;
