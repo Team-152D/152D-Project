@@ -17,39 +17,39 @@ Editor::Editor( )
 	endzone.w = 0;
 	endzone.h = 0;
 
-	editorBackground = image->loadImage( "resources\\ui_editorBackground.png" );
-	horizontalLine = image->loadImage( "resources\\ui_horizontalLine.png" );
-	verticalLine = image->loadImage( "resources\\ui_verticalLine.png" );
+	editorBackground = image->loadImage( "rsc\\ui\\ui_editorBackground.png" );
+	horizontalLine = image->loadImage( "rsc\\ui\\ui_horizontalLine.png" );
+	verticalLine = image->loadImage( "rsc\\ui\\ui_verticalLine.png" );
 
-	IMG_BRICK = image->loadImage( "resources\\tile_brick32.jpg" );
-	IMG_DIRT = image->loadImage( "resources\\tile_dirt32.jpg" );
-	IMG_DIRTYBRICK = image->loadImage( "resources\\tile_dirtybrick32.jpg" );
-	IMG_GRASS = image->loadImage( "resources\\tile_grass32.jpg" );
-	IMG_LAVA = image->loadImage( "resources\\tile_lava32.jpg" );
-	IMG_REDCARPET = image->loadImage( "resources\\tile_redcarpet32.jpg" );
-	IMG_STONE = image->loadImage( "resources\\tile_stone32.jpg" );
-	IMG_WATER = image->loadImage( "resources\\tile_water32.jpg" );
-	IMG_WOOD = image->loadImage( "resources\\tile_wood32.jpg" );
+	IMG_BRICK = image->loadImage( "rsc\\game\\tile_brick32.jpg" );
+	IMG_DIRT = image->loadImage( "rsc\\game\\tile_dirt32.jpg" );
+	IMG_DIRTYBRICK = image->loadImage( "rsc\\game\\tile_dirtybrick32.jpg" );
+	IMG_GRASS = image->loadImage( "rsc\\game\\tile_grass32.jpg" );
+	IMG_LAVA = image->loadImage( "rsc\\game\\tile_lava32.jpg" );
+	IMG_REDCARPET = image->loadImage( "rsc\\game\\tile_redcarpet32.jpg" );
+	IMG_STONE = image->loadImage( "rsc\\game\\tile_stone32.jpg" );
+	IMG_WATER = image->loadImage( "rsc\\game\\tile_water32.jpg" );
+	IMG_WOOD = image->loadImage( "rsc\\game\\tile_wood32.jpg" );
 
-	IMG_BRICK64 = image->loadImage( "resources\\tile_brick64.jpg" );
-	IMG_DIRT64 = image->loadImage( "resources\\tile_dirt64.jpg" );
-	IMG_DIRTYBRICK64 = image->loadImage( "resources\\tile_dirtybrick64.jpg" );
-	IMG_GRASS64 = image->loadImage( "resources\\tile_grass64.jpg" );
-	IMG_LAVA64 = image->loadImage( "resources\\tile_lava64.jpg" );
-	IMG_REDCARPET64 = image->loadImage( "resources\\tile_redcarpet64.jpg" );
-	IMG_STONE64 = image->loadImage( "resources\\tile_stone64.jpg" );
-	IMG_WATER64 = image->loadImage( "resources\\tile_water64.jpg" );
-	IMG_WOOD64 = image->loadImage( "resources\\tile_wood64.jpg" );
+	IMG_BRICK64 = image->loadImage( "rsc\\game\\tile_brick64.jpg" );
+	IMG_DIRT64 = image->loadImage( "rsc\\game\\tile_dirt64.jpg" );
+	IMG_DIRTYBRICK64 = image->loadImage( "rsc\\game\\tile_dirtybrick64.jpg" );
+	IMG_GRASS64 = image->loadImage( "rsc\\game\\tile_grass64.jpg" );
+	IMG_LAVA64 = image->loadImage( "rsc\\game\\tile_lava64.jpg" );
+	IMG_REDCARPET64 = image->loadImage( "rsc\\game\\tile_redcarpet64.jpg" );
+	IMG_STONE64 = image->loadImage( "rsc\\game\\tile_stone64.jpg" );
+	IMG_WATER64 = image->loadImage( "rsc\\game\\tile_water64.jpg" );
+	IMG_WOOD64 = image->loadImage( "rsc\\game\\tile_wood64.jpg" );
 
-	IMG_P1 = image->loadImage( "resources\\tile_p1.png" );
-	IMG_P2 = image->loadImage( "resources\\tile_p2.png" );
-	IMG_END = image->loadImage( "resources\\tile_end.png" );
+	IMG_P1 = image->loadImage( "rsc\\game\\tile_p1.png" );
+	IMG_P2 = image->loadImage( "rsc\\game\\tile_p2.png" );
+	IMG_END = image->loadImage( "rsc\\game\\tile_end.png" );
 
-	IMG_MENU1 = image->loadImage( "resources\\ui_menu1.png" );
+	IMG_MENU1 = NULL; // image->loadImage( "resources\\ui_menu1.png" );
 
-	IMG_BUTTON_HIGHLIGHT = image->loadImage( "resources\\ui_menuHighlight.jpg" );
-	IMG_SELECT_HIGHLIGHT = image->loadImage( "resources\\ui_editorHighlight.png" );
-	IMG_INFOBAR = image->loadImage( "resources\\ui_infoBar.png" );
+	IMG_BUTTON_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_menuHighlight.jpg" );
+	IMG_SELECT_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_editorHighlight.png" );
+	IMG_INFOBAR = image->loadImage( "rsc\\ui\\ui_infoBar.png" );
 }
 
 Editor::~Editor( )
@@ -107,7 +107,7 @@ int Editor::runEditor( )
 
 int Editor::input( )
 {
-	cout << "DEBUG:: editor input" << endl;
+	//cout << "DEBUG:: editor input" << endl;
 	SDL_Event event;
 	if ( SDL_PollEvent( &event ) )
 	{
@@ -170,7 +170,7 @@ int Editor::update( )
 
 int Editor::draw( )
 {
-	cout << "DEBUG:: editor input" << endl;
+	//cout << "DEBUG:: editor input" << endl;
 	if ( !fileOpen )
 	{
 		image->drawSurface( 0, 0, editorBackground );
@@ -288,7 +288,7 @@ int Editor::draw( )
 
 void Editor::save( )
 {
-	SDL_Surface* menu = image->loadImage( "resources\\ui_menu5.png" );
+	SDL_Surface* menu = NULL; // image->loadImage( "resources\\ui_menu5.png" );
 	image->drawSurface( 0, 0, menu );
 	SDL_Rect box;
 	box.x = 390;
@@ -331,31 +331,31 @@ void Editor::save( )
 				if ( y > 134 && y < 234 )
 				{
 					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
-					savePath = "resources\\data_s1.txt";
+					savePath = "rsc\\data\\data_s1.txt";
 					havePath = true;
 				}
 				else if ( y > 234 && y < 334 )
 				{
 					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
-					savePath = "resources\\data_s2.txt";
+					savePath = "rsc\\data\\data_s2.txt";
 					havePath = true;
 				}
 				else if ( y > 334 && y < 434 )
 				{
 					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
-					savePath = "resources\\data_s3.txt";
+					savePath = "rsc\\data\\data_s3.txt";
 					havePath = true;
 				}
 				else if ( y > 434 && y < 534 )
 				{
 					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
-					savePath = "resources\\data_s4.txt";
+					savePath = "rsc\\data\\data_s4.txt";
 					havePath = true;
 				}
 				else if ( y > 534 && y < 634 )
 				{
 					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
-					savePath = "resources\\data_s5.txt";
+					savePath = "rsc\\data\\data_s5.txt";
 					havePath = true;
 				}
 			}

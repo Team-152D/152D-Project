@@ -11,12 +11,11 @@ Application::Application( )
 		appState = Global::AS_EXIT_FAIL;
 	else
 		appState = Global::AS_MAIN_MENU;
-
 }
 
 Application::~Application( )
 {
-	//delete editor;
+	delete editor;
 	delete menu;
 }
 
@@ -49,14 +48,17 @@ int Application::runApplication( )
 				appState = Global::AS_MAIN_MENU;
 				break;
 			case Global::AS_EDITOR:
-				appState = Global::AS_MAIN_MENU;
+				editor = new Editor();
+				appState = editor -> runEditor();
+				delete editor;
+				editor = NULL;
 				break;
 			default:
 				break;
 		}
 	}
 
-	cout << "Exiting main loop" << endl;
+	cout << "Exiting main loop, appState = " << appState << endl;
 	return appState;
 }
 

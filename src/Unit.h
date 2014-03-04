@@ -14,25 +14,31 @@ const int DIR_RIGHT = 300;
 const int DIR_DOWN = 600;
 const int DIR_LEFT = 900;
 
-class Unit
-{
+class Unit {
 public:
-    Unit(){}
-    ~Unit(){}
+
+    Unit() {
+    }
+
+    ~Unit() {
+    }
     virtual void update() = 0;
     virtual void draw() = 0;
-    int getHealth() { return health; }
+
+    int getHealth() {
+        return health;
+    }
 protected:
-    int health;                   //unit health percentage
-    int xOffset;                        //the x offset
-    int yOffset;                        //the y offset
+    int health; //unit health percentage
+    int xOffset; //the x offset
+    int yOffset; //the y offset
     int xPos;
     int yPos;
-    int xVel;                     //the x velocity
-    int yVel;                     //the y velocity
+    int xVel; //the x velocity
+    int yVel; //the y velocity
     int speed;
-    int frame;                    //its current frame
-    int direction;                   //its animation status
+    int frame; //its current frame
+    int direction; //its animation status
 };
 
 #endif
