@@ -11,8 +11,16 @@ Level::Level(int levelNumber)
     else
 	player2 = NULL;
 
+    enemies;
+    projectiles;    
     currentLevelGlobal = this;
 }
+
+vector<Enemy*>* Level::getEnemies(){return enemies;}
+
+vector<Projectile*>* Level::getProjectiles(){return projectiles;}
+
+bool Level::isMultiplayer(){return multiplayer;}
 
 Level::~Level()
 {
@@ -28,18 +36,42 @@ void Level::input(char *inP1, char *inP2)
 
 void Level::update()
 {
+    Enemy* Epointer;
+    Projectile* Ppointer;
+    
     player1 -> update();
     if ( multiplayer )
 	player2 -> update();
+    
+    for(int i=0; i<enemies->size();i++){
+        Epointer = enemies.at(i);
+        Epointer.update();
+        }
+    for(int j=0; j<projectiles->size();j++){
+        Ppointer = projectiles.at(j);
+        Ppointer.update();
+        }
 }
 
 void Level::draw()
 {
     grid -> drawGrid();
 
+    Enemy* Epointer;
+    Projectile* Ppointer;
+    
     player1 -> draw();
     if ( multiplayer )
 	player2 -> draw();
+    
+    for(int i=0; i<enemies->size();i++){
+        Epointer = enemies.at(i);
+        Epointer.draw();
+        }
+    for(int j=0; j<projectiles->size();j++){
+        Ppointer = projectiles.at(j);
+        Ppointer.draw();
+        }
 }
 
 Player* Level::getPlayer(int player)

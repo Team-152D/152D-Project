@@ -18,6 +18,9 @@ Player::Player( int x, int y )
 	frame = 0;
 	direction = DIR_RIGHT;
 
+        shoot=NULL;
+        projectiles=NULL;
+        
 	set_clips( );
 
 	//Load the sprite sheet
@@ -52,13 +55,37 @@ void Player::apply_surface( int x, int y, SDL_Surface* source, SDL_Rect* clip )
 	SDL_BlitSurface( source, clip, screenSurface, &offset );
 }
 
-void Player::input( char* cmd )
+void Player::input(char* cmd)
 {
-	if ( !strcmp( cmd, "Up" ) ) yVel -= speed;
-	else if ( !strcmp( cmd, "Down" ) ) yVel += speed;
-	else if ( !strcmp( cmd, "Left" ) ) xVel -= speed;
-	else if ( !strcmp( cmd, "Right" ) ) xVel += speed;
-	else if ( !strcmp( cmd, "Shoot" ) );
+    if ( !strcmp(cmd, "Up") ) yVel -= speed;
+    else if ( !strcmp(cmd, "Down") ) yVel += speed;
+    else if ( !strcmp(cmd, "Left") ) xVel -= speed;
+    else if ( !strcmp(cmd, "Right") ) xVel += speed;
+    else if ( !strcmp(cmd, "Shoot") ) shooting();
+}
+
+void Player::shooting(){
+    int shoot_direction;
+    switch ( direction ){
+	case DIR_UP:
+	    shoot_direction=0;
+	    break;
+	case DIR_RIGHT:
+	    shoot_direction=1;
+	    break;
+	case DIR_DOWN:
+	    shoot_direction=2;
+	    break;
+	case DIR_LEFT:
+	    shoot_direction=3;
+	    break;
+    }
+    
+    int myX=getX();
+    int myY=getY();
+    shoot=new Projectile(myX,myY,direction,0);
+    projectiles=Level->getProjectiles();
+    projectiles->push_back(shoot);
 }
 
 bool Player::hit( int x, int y )

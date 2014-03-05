@@ -73,7 +73,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../../../../../MinGW/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lws2_32
+LDLIBSOPTIONS=-L../../../../../MinGW/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_ttf -lws2_32 -lSDL2_image
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
