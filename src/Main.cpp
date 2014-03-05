@@ -10,7 +10,8 @@ int main(int argc, char* args[])
 	int returnValue;
 	Application *application = new Application();
 	returnValue = application->runApplication();
-	delete application;
+	cout << "return value = " << returnValue << endl;
+	//delete application;
 	
 	cout << "*** EXITING APPLICATION WITH RETURN VALUE = " << returnValue << "***" << endl;
 	return returnValue;

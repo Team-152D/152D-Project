@@ -21,7 +21,7 @@ Game::Game( bool newGame, int socket )
 		multiPlayer = false;
 		cout << "DEBUG: Continuing singleplayer game" << endl;
 		ifstream infile;
-		infile.open( "resources\\data_saveGameData.txt" );
+		infile.open( "rsc\\data\\data_saveGameData.txt" );
 		infile >> currentLevelNumber;
 		infile.close( );
 	}
@@ -33,10 +33,10 @@ Game::Game( bool newGame, int socket )
 
 
 
-	IMG_MENU2 = image->loadImage( "resources\\ui_menu2.png" );
+	IMG_MENU2 = image->loadImage( "rsc\\ui\\ui_menu2.bmp" );
 
-	IMG_HIGHLIGHT = image->loadImage( "resources\\ui_menuHighlight.jpg" );
-	IMG_INFOBAR = image->loadImage( "resources\\ui_infoBar.png" );
+	IMG_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_menuHighlight.bmp" );
+	IMG_INFOBAR = image->loadImage( "rsc\\ui\\ui_infoBar.bmp" );
 }
 
 Game::~Game( )
@@ -74,7 +74,7 @@ int Game::runGame( )
 		currentLevelNumber++;
 
 
-		SDL_Surface* victoryMenu = image->loadImage( "Resources\\ui_menu2.png" );
+		SDL_Surface* victoryMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
 		bool atVictoryScreen = true;
 
 		while ( atVictoryScreen )
@@ -103,7 +103,7 @@ int Game::runGame( )
 								{
 									audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
 									ofstream outfile;
-									outfile.open( "resources\\data_saveGameData.txt" );
+									outfile.open( "rsc\\data\\data_saveGameData.txt" );
 									outfile << currentLevelNumber;
 									outfile.close( );
 
@@ -177,7 +177,7 @@ int Game::runGameLoop( )
 
 int Game::input( )
 {
-	cout << "DEBUG: input()" << endl;
+	//cout << "DEBUG: input()" << endl;
 	SDL_Event event;
 
 	SDL_PollEvent( &event );
@@ -210,9 +210,9 @@ int Game::input( )
 
 int Game::update( )
 {
-	cout << "DEBUG: update()" << endl;
+	//cout << "DEBUG: update()" << endl;
 	currentLevel -> update( );
-	cout << "checking victory" << endl;
+	//cout << "checking victory" << endl;
 	if ( currentLevel -> victoryCondition( ) )
 		return 1;
 	else return 0;
@@ -220,7 +220,7 @@ int Game::update( )
 
 int Game::draw( )
 {
-	cout << "DEBUG: draw()" << endl;
+	//cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
 	displayInfoBar( );
 
@@ -237,7 +237,7 @@ bool Game::pauseGame( )
 	gameTimer.pause( );
 	bool isPaused = true;
 	SDL_Event event;
-	SDL_Surface* pauseMenu = image->loadImage( "Resources\\ui_menu2.png" );
+	SDL_Surface* pauseMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
 	if ( pauseMenu == NULL )
 		cout << "Pause menu image didn't load" << endl;
 
@@ -266,7 +266,7 @@ bool Game::pauseGame( )
 							{
 								audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
 								ofstream outfile;
-								outfile.open( "resources\\data_saveGameData.txt" );
+								outfile.open( "rsc\\data\\data_saveGameData.txt" );
 								outfile << currentLevelNumber;
 								outfile.close( );
 								return true;

@@ -39,7 +39,7 @@ int Image::drawSurface( int x, int y, SDL_Surface* src )
 	offsets.y = y;
 	if ( SDL_BlitSurface( src, NULL, screenSurface, &offsets ) != 0 )
 	{
-		cout << "ERROR: ( Image::drawToScreen() ) SDL_BlitSurface failed" << endl;
+		//cout << "ERROR: ( Image::drawToScreen() ) SDL_BlitSurface failed" << endl;
 		return 1;
 	}
 	else

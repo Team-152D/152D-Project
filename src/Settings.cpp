@@ -6,12 +6,12 @@ Settings::Settings()
     gameSfxEnabled = true;
     musicEnabled = true;
     
-    cout << "\tSettings class...";
+    cout << "\tSettings class..." <<endl;
 }
 
 Settings::~Settings()
 {
-
+	
 }
 
 bool* Settings::getLinkedBool(int index)

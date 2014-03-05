@@ -10,6 +10,8 @@
 #include "Global.h"
 #include <vector>
 #include <cstdlib>
+#include "Player.h"
+#include "Enemy.h"
 
 class Game;
 
@@ -39,6 +41,9 @@ private:
     
     int shooting_direction;
     int teamID;
+    int damage;
+    
+    vector<Enemy*>* enemies;
 
     //The surfaces
     SDL_Surface *projectile_sprite_up = NULL;

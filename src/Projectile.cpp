@@ -58,23 +58,39 @@ void Projectile::apply_surface( int x, int y, SDL_Surface* source, SDL_Rect* cli
 	SDL_BlitSurface( source, clip, screenSurface, &offset );
 }
 
-void Projectile::hit( )
-{
-	if ( teamID = 1 )
-	{
-		//void has_hit;
-		Player* current = currentLevelGlobal->getPlayer( 1 );
-		//has_hit = current->hit( );
-		//if ( hit )
-		//	delete this;
-		//if multiplayer, do the same for player 2
-	}
-	//else if ID=0, do the same for all enemies in the enemy vector
+void Projectile::hit(){
+    int myX=getX();
+    int myY=getY();
+    bool has_hit;
+    
+    if(teamID=1){
+        Player* current = Level->getPlayer(1);
+        has_hit=current->hit(myX,myY,damage);
+        if(has_hit==true)
+            delete this;
+        
+        bool multiplayer=Level->isMultiplayer();
+        if (multiplayer){
+            Player* current = Level->getPlayer(2);
+            has_hit=current->hit(myX,myY,damage);
+            if(has_hit==true)
+            delete this;
+        }
+        
+    }
+    else if (teamID=0){
+        enemies=Level->getEnemies();
+        for(int i=0; i<enemies->size();i++){
+            has_hit=enemies->at(i)->hit(myX,myY,damage);
+            if(has_hit==true)
+                delete this;
+        }
+    }
 }
 
 void Projectile::update( )
 {
-
+        hit();
 	//0: Up 1: Right 2: Down 3: Left
 	switch ( direction )
 	{

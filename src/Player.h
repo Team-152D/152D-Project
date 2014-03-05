@@ -7,6 +7,9 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 #include <cstdlib>
+#include <cmath>
+#include "Enemy.h"
+#include "Projectile.h"
 
 class Game;
 
@@ -20,6 +23,7 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void input(char*);
+    void shooting();
     bool hit(int, int);
     void update();
     void draw();
@@ -34,6 +38,9 @@ private:
     const int PLAYER_WIDTH = 32;
     const int PLAYER_HEIGHT = 32;
 
+    Projectile* shoot;
+    vector<Projectile*>* projectiles;
+    
     //The surfaces
     SDL_Surface *player_sprite_up = NULL;
     SDL_Surface *player_sprite_down = NULL;

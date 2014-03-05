@@ -2,7 +2,6 @@
 #define	ENEMY_H
 
 #include "Unit.h"
-#include "Player.h"
 #include <string>
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_image.h"
@@ -10,6 +9,9 @@
 #include "Global.h"
 #include "Image.h"
 #include <cstdlib>
+#include <cmath>
+#include "Projectile.h"
+#include "Player.h"
 
 class Game;
 
@@ -23,7 +25,8 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void AI();
-    bool hit(int, int);
+    bool hit(int, int, int);
+    void shooting();
     void die();
     void update();
     void draw();
@@ -39,12 +42,14 @@ private:
     const int ENEMY_HEIGHT = 32;
     
     //whether the enemy is shooting at the player
-    bool shooting;
+    bool shootingnow;
     //whether the enemy can "see" the player
     bool seesPlayer;
 
     //current focus player
     Player* target;
+    Projectile* shoot;
+    vector<Projectile*>* projectiles;
     
     //The surfaces
     SDL_Surface *enemy_sprite_up = NULL;

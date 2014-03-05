@@ -18,15 +18,15 @@ Grid::Grid(string input)
 
     loadGrid(input);
     
-    IMG_BRICK = image->loadImage("resources\\tile_brick32.jpg");
-    IMG_DIRT = image->loadImage("resources\\tile_dirt32.jpg");
-    IMG_DIRTYBRICK = image->loadImage("resources\\tile_dirtybrick32.jpg");
-    IMG_GRASS = image->loadImage("resources\\tile_grass32.jpg");
-    IMG_LAVA = image->loadImage("resources\\tile_lava32.jpg");
-    IMG_REDCARPET = image->loadImage("resources\\tile_redcarpet32.jpg");
-    IMG_STONE = image->loadImage("resources\\tile_stone32.jpg");
-    IMG_WATER = image->loadImage("resources\\tile_water32.jpg");
-    IMG_WOOD = image->loadImage("resources\\tile_wood32.jpg");
+    IMG_BRICK = image->loadImage("rsc\\game\\tile_brick32.bmp");
+    IMG_DIRT = image->loadImage("rsc\\game\\tile_dirt32.bmp");
+    IMG_DIRTYBRICK = image->loadImage("rsc\\game\\tile_dirtybrick32.bmp");
+    IMG_GRASS = image->loadImage("rsc\\game\\tile_grass32.bmp");
+    IMG_LAVA = image->loadImage("rsc\\game\\tile_lava32.bmp");
+    IMG_REDCARPET = image->loadImage("rsc\\game\\tile_redcarpet32.bmp");
+    IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
+    IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
+    IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
 }
 
 
@@ -36,15 +36,15 @@ Grid::Grid(vector<vector<int>*>* iGrid)
     height = grid -> size();
     width = grid -> at(0) -> size();
     
-    IMG_BRICK = image->loadImage("resources\\tile_brick32.jpg");
-    IMG_DIRT = image->loadImage("resources\\tile_dirt32.jpg");
-    IMG_DIRTYBRICK = image->loadImage("resources\\tile_dirtybrick32.jpg");
-    IMG_GRASS = image->loadImage("resources\\tile_grass32.jpg");
-    IMG_LAVA = image->loadImage("resources\\tile_lava32.jpg");
-    IMG_REDCARPET = image->loadImage("resources\\tile_redcarpet32.jpg");
-    IMG_STONE = image->loadImage("resources\\tile_stone32.jpg");
-    IMG_WATER = image->loadImage("resources\\tile_water32.jpg");
-    IMG_WOOD = image->loadImage("resources\\tile_wood32.jpg");
+    IMG_BRICK = image->loadImage("rsc\\game\\tile_brick32.bmp");
+    IMG_DIRT = image->loadImage("rsc\\game\\tile_dirt32.bmp");
+    IMG_DIRTYBRICK = image->loadImage("rsc\\game\\tile_dirtybrick32.bmp");
+    IMG_GRASS = image->loadImage("rsc\\game\\tile_grass32.bmp");
+    IMG_LAVA = image->loadImage("rsc\\game\\tile_lava32.bmp");
+    IMG_REDCARPET = image->loadImage("rsc\\game\\tile_redcarpet32.bmp");
+    IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
+    IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
+    IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
 }
 
 Grid::~Grid()
@@ -154,5 +154,4 @@ int Grid::getTileAt(int x, int y)
 void Grid::setTileAt(int x,int y,int change)
 {
     grid->at(y)->at(x) = change;
-    cout<<"update\t";
 }

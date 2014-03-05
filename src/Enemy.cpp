@@ -17,10 +17,13 @@ Enemy::Enemy(int x, int y)
     frame = 0;
     direction = DIR_RIGHT;
     
-    target = currentLevelGlobal->getPlayer(1);
+    target = Level->getPlayer(1);
 
     seesPlayer=false;
-    shooting=false;
+    shootingnow=false;
+   
+    shoot=NULL;
+    projectiles=NULL;
     
     set_clips();
 
@@ -81,15 +84,17 @@ void Enemy::AI(){
     }
 }
 
-bool Enemy::hit(int x, int y){
+
+bool Enemy::hit(int x, int y, int damage){
     bool hit=false;
-    //if statement distance formula x
-    //    hit=true;
-    //if statement distance formula y
-    //    hit=true;
+    int distance;
+    distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
+    distance= sqrt( pow(distance, 2 ));//get the absolute value of distance, to be safe
+    if (distance<=16)
+        hit=true;
     
-    if(hit=true)
-        //health-=damage
+    if(hit==true)
+        health-=damage;
     return hit;
 }
 
@@ -101,6 +106,7 @@ void Enemy::die(){
 void Enemy::update()
 {
     cout<<"updating x"<<endl;
+    AI();
     if ( xVel != 0 )
     {
 	xOffset += xVel;

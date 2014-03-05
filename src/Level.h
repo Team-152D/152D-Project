@@ -25,6 +25,10 @@ public:
     void draw();
     
     Player* getPlayer(int);
+    vector<Enemy*>* getEnemies();
+    vector<Projectile*>* getProjectiles();
+    bool isMultiplayer();
+    
     Grid* getGrid();
     bool victoryCondition();
     vector<string>* getInfoBarData();
@@ -34,8 +38,8 @@ private:
     Grid* grid;
     Player* player1;
     Player* player2;
-    //vector<Enemy*>* enemies;
-    //vector<Projectile*>* projectiles;
+    vector<Enemy*>* enemies;
+    vector<Projectile*>* projectiles;
     
     SDL_Rect p1Spawn;
     SDL_Rect p2Spawn;
