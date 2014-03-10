@@ -33,7 +33,7 @@ Sight::Sight( int x, int y, int d, int ID )
 Sight::~Sight( )
 {}
 
-/*(void Projectile::hit(){
+bool Sight::hit(){
     int myX=getX();
     int myY=getY();
     bool has_hit;
@@ -41,34 +41,19 @@ Sight::~Sight( )
     if(teamID=1){
         Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
-        if(has_hit==true)
-            delete this;
         
         bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
             Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
-            if(has_hit==true)
-            delete this;
         }
-    }
-    else if (teamID=0){
-        Enemy* current;
-        enemies=currentLevelGlobal->getEnemies();
-        for(int i=0; i<enemies->size();i++){
-            current=enemies->at(i);
-            has_hit=current->hit(myX,myY,damage);
-            if(has_hit==true)
-                delete this;
-        }
-    }
-}*/
+    } 
+    return has_hit;
+}
 
 void Sight::end(){delete this;}
 
-string Sight::update( ){
-        hit_player=hit();
-	//0: Up 1: Right 2: Down 3: Left
+string Sight::update( ){	//0: Up 1: Right 2: Down 3: Left
 	switch ( direction )
 	{
 		case 0:
@@ -111,12 +96,13 @@ string Sight::update( ){
 		else if ( yVel > 0 )
 			direction = DIR_DOWN;
 	}
+        hit_player=hit();
 	if(hit_something==false&&hit_player==false){result=update();}
-        else if(hit_something==true){
-            result="I hit a wall";
-        }
         else if(hit_player==true){
             result="I hit the player";
+        }
+        else if(hit_something==true){
+            result="I hit a wall";
         }
         return result;
 }

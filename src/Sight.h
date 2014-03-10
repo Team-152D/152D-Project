@@ -24,7 +24,7 @@ public:
     Sight(int, int, int, int, int);
     ~Sight();
     
-    void hit();
+    bool hit();
     void end();
     void update();
     
