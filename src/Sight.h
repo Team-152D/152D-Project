@@ -42,6 +42,8 @@ private:
     
     string result;
     
+    int damage;
+    
     int shooting_direction;
     int teamID;
     

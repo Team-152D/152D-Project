@@ -23,6 +23,8 @@ Sight::Sight( int x, int y, int d, int ID )
 	SIGHT_WIDTH = 32;
 	SIGHT_HEIGHT = 32;
         
+        damage=0;
+        
         result="";
 
 	//Initialize animation variables
