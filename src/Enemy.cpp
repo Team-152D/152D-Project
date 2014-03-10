@@ -20,6 +20,8 @@ Enemy::Enemy(int x, int y)
     seesPlayer=false;
     shootingnow=false;
     
+    losessighttimer=0;
+    
     target = NULL;
     shoot=NULL;
     projectiles = NULL;
@@ -60,17 +62,19 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Enemy::AI(){
-    
-    //If something happens to make AI change target;
     //target = Level->getPlayer(1);
     //or
     //target = Level->getPlayer(2);
     //skip this if not multiplayer.
   
     seesPlayer=sight_check();
-    if(seesPlayer) {shootingnow=true;}
-    else {shootingnow=false;}
-    if(shootingnow) {shooting();}
+    if(seesPlayer==true){knowsPlayerlocation=true;}
+    else if(seesPlayer==false&&knowsPlayerlocation==true){
+        losessighttimer+=30;
+        if(losessighttimer>=(4*30)){
+            knowsPlayerlocation=false;
+        }
+    }
     
     target=currentLevelGlobal->getPlayer(1);
     int playerX=target->getX();
@@ -87,6 +91,8 @@ void Enemy::AI(){
         if(myX<playerX) xVel += speed;
         else if(myX>playerX){} xVel -= speed;
     }
+    int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
+    if(distance<=200&&knowsPlayerlocation==true){shooting();}
 }
 
 bool Enemy::sight_check(){
@@ -115,7 +121,8 @@ bool Enemy::sight_check(){
     canisee=look->update();
     look->end();
     
-    if(canisee="I hit the player"){return true;}
+    if(canisee="player1"){target=currentLevelGlobal->getPlayer(1); return true;}
+    else if(canisee="player2"){target=currentLevelGlobal->getPlayer(2); return true;}
     else{return false;}
 }
 
@@ -147,7 +154,6 @@ bool Enemy::hit(int x, int y, int damage){
     bool hit=false;
     int distance;
     distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    distance= sqrt( pow(distance, 2 ));//get the absolute value of distance, to be safe
     if (distance<=16)
         hit=true;
     

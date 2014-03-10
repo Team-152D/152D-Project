@@ -49,6 +49,8 @@ private:
     bool shootingnow;
     //whether the enemy can "see" the player
     bool seesPlayer;
+    bool knowsPlayerlocation;
+    int losessighttimer;
 
     //current focus player
     Player* target;

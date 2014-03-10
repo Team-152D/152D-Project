@@ -35,7 +35,7 @@ Sight::Sight( int x, int y, int d, int ID )
 Sight::~Sight( )
 {}
 
-bool Sight::hit(){
+string Sight::hit(){
     int myX=getX();
     int myY=getY();
     bool has_hit;
@@ -43,19 +43,24 @@ bool Sight::hit(){
     if(teamID=1){
         Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
+        return "player1";
         
         bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
             Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
+            return "player2";
         }
     } 
-    return has_hit;
+    return "nohit";
 }
 
 void Sight::end(){delete this;}
 
-string Sight::update( ){	//0: Up 1: Right 2: Down 3: Left
+string Sight::update( ){
+        string conditionwall="nohit";
+        string conditionplayer="nohit";
+        //0: Up 1: Right 2: Down 3: Left
 	switch ( direction )
 	{
 		case 0:
@@ -79,7 +84,7 @@ string Sight::update( ){	//0: Up 1: Right 2: Down 3: Left
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-                          hit_something=true;
+                         conditionwall="hit";
 		if ( xVel < 0 )
 			direction = DIR_LEFT;
 		else if ( xVel > 0 )
@@ -92,18 +97,18 @@ string Sight::update( ){	//0: Up 1: Right 2: Down 3: Left
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-			 hit_something=true;
+                         conditionwall="hit";
 		if ( yVel < 0 )
 			direction = DIR_UP;
 		else if ( yVel > 0 )
 			direction = DIR_DOWN;
 	}
-        hit_player=hit();
-	if(hit_something==false&&hit_player==false){result=update();}
-        else if(hit_player==true){
-            result="I hit the player";
+        conditionplayer=hit();
+	if(conditionwall=="nohit"&&conditionplayer=="nohit"){result=update();}
+        else if(conditionplayer!="nohit"){
+            result=conditionplayer;
         }
-        else if(hit_something==true){
+        else if(conditionwall=="hit"){
             result="I hit a wall";
         }
         return result;
