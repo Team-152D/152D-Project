@@ -3,13 +3,14 @@
 
 #include "Unit.h"
 #include <string>
+#include "Global.h"
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 #include <cstdlib>
 #include <cmath>
-#include "Enemy.h"
 #include "Projectile.h"
+#include "Enemy.h"
 
 class Game;
 
@@ -24,7 +25,7 @@ public:
     
     void input(char*);
     void shooting();
-    bool hit(int, int);
+    bool hit(int, int, int);
     void update();
     void draw();
     
@@ -37,7 +38,7 @@ private:
     //The dimensions of the image
     const int PLAYER_WIDTH = 32;
     const int PLAYER_HEIGHT = 32;
-
+    
     Projectile* shoot;
     vector<Projectile*>* projectiles;
     

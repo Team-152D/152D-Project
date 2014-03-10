@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Game.h"
-#include "Global.h"
 
 Player::Player( int x, int y )
 {
@@ -13,13 +12,13 @@ Player::Player( int x, int y )
 	xVel = 0;
 	yVel = 0;
 	speed = 8;
+        
+        shoot=NULL;
+        projectiles=NULL;
 
 	//Initialize animation variables
 	frame = 0;
 	direction = DIR_RIGHT;
-
-        shoot=NULL;
-        projectiles=NULL;
         
 	set_clips( );
 
@@ -83,22 +82,23 @@ void Player::shooting(){
     
     int myX=getX();
     int myY=getY();
+    shoot;
     shoot=new Projectile(myX,myY,direction,0);
-    projectiles=Level->getProjectiles();
+    projectiles=currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);
 }
 
-bool Player::hit( int x, int y )
-{
-	bool hit = false;
-	//if statement distance formula x
-	//    hit=true;
-	//if statement distance formula y
-	//    hit=true;
-
-	if ( hit = true )
-		//health-=damage
-		return hit;
+bool Player::hit( int x, int y , int damage){
+    bool hit=false;
+    int distance;
+    distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
+    distance= sqrt( pow(distance, 2 ));//get the absolute value of distance, to be safe
+    if (distance<=16)
+        hit=true;
+    
+    if(hit==true)
+        health-=damage;
+    return hit;
 }
 
 void Player::update( )

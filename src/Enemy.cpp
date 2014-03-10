@@ -16,14 +16,13 @@ Enemy::Enemy(int x, int y)
     //Initialize animation variables
     frame = 0;
     direction = DIR_RIGHT;
-    
-    target = Level->getPlayer(1);
 
     seesPlayer=false;
     shootingnow=false;
-   
+    
+    target = NULL;
     shoot=NULL;
-    projectiles=NULL;
+    projectiles = NULL;
     
     set_clips();
 
@@ -67,7 +66,10 @@ void Enemy::AI(){
     //or
     //target = Level->getPlayer(2);
     //skip this if not multiplayer.
+  
+    if(shootingnow){shooting();}
     
+    target=currentLevelGlobal->getPlayer(1);
     int playerX=target->getX();
     int playerY=target->getY();
     
@@ -84,6 +86,30 @@ void Enemy::AI(){
     }
 }
 
+void Enemy::shooting(){
+    int shoot_direction;
+    switch ( direction ){
+	case DIR_UP:
+	    shoot_direction=0;
+	    break;
+	case DIR_RIGHT:
+	    shoot_direction=1;
+	    break;
+	case DIR_DOWN:
+	    shoot_direction=2;
+	    break;
+	case DIR_LEFT:
+	    shoot_direction=3;
+	    break;
+    }
+    
+    int myX=getX();
+    int myY=getY();
+    shoot;
+    shoot=new Projectile(myX,myY,direction,0);
+    projectiles=currentLevelGlobal->getProjectiles();
+    projectiles->push_back(shoot);
+}
 
 bool Enemy::hit(int x, int y, int damage){
     bool hit=false;

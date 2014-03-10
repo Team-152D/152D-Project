@@ -10,8 +10,8 @@
 #include "Global.h"
 #include <vector>
 #include <cstdlib>
-#include "Player.h"
-#include "Enemy.h"
+class Enemy;
+class Player;
 
 class Game;
 

@@ -64,14 +64,14 @@ void Projectile::hit(){
     bool has_hit;
     
     if(teamID=1){
-        Player* current = Level->getPlayer(1);
+        Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
         if(has_hit==true)
             delete this;
         
-        bool multiplayer=Level->isMultiplayer();
+        bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
-            Player* current = Level->getPlayer(2);
+            Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
             if(has_hit==true)
             delete this;
@@ -79,7 +79,7 @@ void Projectile::hit(){
         
     }
     else if (teamID=0){
-        enemies=Level->getEnemies();
+        enemies=currentLevelGlobal->getEnemies();
         for(int i=0; i<enemies->size();i++){
             has_hit=enemies->at(i)->hit(myX,myY,damage);
             if(has_hit==true)

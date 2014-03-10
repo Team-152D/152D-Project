@@ -10,8 +10,8 @@
 #include "Image.h"
 #include <cstdlib>
 #include <cmath>
-#include "Projectile.h"
 #include "Player.h"
+#include "Projectile.h"
 
 class Game;
 
@@ -40,6 +40,8 @@ private:
     //The dimensions of the image
     const int ENEMY_WIDTH = 32;
     const int ENEMY_HEIGHT = 32;
+    
+    
     
     //whether the enemy is shooting at the player
     bool shootingnow;
