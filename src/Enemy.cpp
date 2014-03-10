@@ -67,7 +67,10 @@ void Enemy::AI(){
     //target = Level->getPlayer(2);
     //skip this if not multiplayer.
   
-    if(shootingnow){shooting();}
+    seesPlayer=sight_check();
+    if(seesPlayer) {shootingnow=true;}
+    else {shootingnow=false;}
+    if(shootingnow) {shooting();}
     
     target=currentLevelGlobal->getPlayer(1);
     int playerX=target->getX();
@@ -84,6 +87,36 @@ void Enemy::AI(){
         if(myX<playerX) xVel += speed;
         else if(myX>playerX){} xVel -= speed;
     }
+}
+
+bool Enemy::sight_check(){
+
+    string canisee;
+    
+    int shoot_direction;
+    switch ( direction ){
+	case DIR_UP:
+	    shoot_direction=0;
+	    break;
+	case DIR_RIGHT:
+	    shoot_direction=1;
+	    break;
+	case DIR_DOWN:
+	    shoot_direction=2;
+	    break;
+	case DIR_LEFT:
+	    shoot_direction=3;
+	    break;
+    }
+    
+    int myX=getX();
+    int myY=getY();
+    look=new Sight(myX,myY,direction,0);
+    canisee=look->update();
+    look->end();
+    
+    if(canisee="I hit the player"){return true;}
+    else{return false;}
 }
 
 void Enemy::shooting(){
@@ -105,7 +138,6 @@ void Enemy::shooting(){
     
     int myX=getX();
     int myY=getY();
-    shoot;
     shoot=new Projectile(myX,myY,direction,0);
     projectiles=currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);

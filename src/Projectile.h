@@ -51,9 +51,6 @@ private:
     SDL_Surface *projectile_sprite_right = NULL;
     SDL_Surface *projectile_sprite_left = NULL;
     SDL_Surface *screen = NULL;
-    
-    //The event structure
-    SDL_Event event;
 
     //The areas of the sprite sheet
     SDL_Rect spriteClips[ 4 ];

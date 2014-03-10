@@ -12,6 +12,7 @@
 #include <cmath>
 
 class Player;
+class Sight;
 class Projectile;
 class Game;
 
@@ -25,6 +26,7 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void AI();
+    bool sight_check();
     bool hit(int, int, int);
     void shooting();
     void die();
@@ -52,6 +54,7 @@ private:
     Player* target;
     Projectile* shoot;
     vector<Projectile*>* projectiles;
+    Sight* look;
     
     //The surfaces
     SDL_Surface *enemy_sprite_up = NULL;
@@ -59,9 +62,6 @@ private:
     SDL_Surface *enemy_sprite_right = NULL;
     SDL_Surface *enemy_sprite_left = NULL;
     SDL_Surface *screen = NULL;
-
-    //The event structure
-    SDL_Event event;
 
     //The areas of the sprite sheet
     SDL_Rect spriteClips[ 4 ];
