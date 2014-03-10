@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include "Game.h"
-
+//
 Enemy::Enemy(int x, int y)
 {
     //Initialize movement variables

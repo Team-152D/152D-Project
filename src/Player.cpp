@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Game.h"
-
+//
 Player::Player( int x, int y )
 {
 	//Initialize movement variables

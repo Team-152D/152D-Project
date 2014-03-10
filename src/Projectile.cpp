@@ -1,6 +1,6 @@
 #include "Projectile.h"
 #include "Game.h"
-
+//
 Projectile::Projectile( int x, int y, int d, int ID )
 {
 	//Initialize movement variables
