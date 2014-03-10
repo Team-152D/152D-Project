@@ -9,9 +9,9 @@
 #include "SDL2/SDL_mixer.h"
 #include <cstdlib>
 #include <cmath>
-#include "Projectile.h"
-#include "Enemy.h"
 
+class Projectile;
+class Enemy;
 class Game;
 
 using namespace std;

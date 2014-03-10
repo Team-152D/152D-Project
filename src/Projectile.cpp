@@ -10,7 +10,7 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	yPos = yOffset + 16;
 	xVel = 0;
 	yVel = 0;
-	speed = 8;
+	speed = 16;
 
 	//ID: 0=player, 1=enemy
 	teamID = ID;
@@ -76,12 +76,13 @@ void Projectile::hit(){
             if(has_hit==true)
             delete this;
         }
-        
     }
     else if (teamID=0){
+        Enemy* current;
         enemies=currentLevelGlobal->getEnemies();
         for(int i=0; i<enemies->size();i++){
-            has_hit=enemies->at(i)->hit(myX,myY,damage);
+            current=enemies->at(i);
+            has_hit=current->hit(myX,myY,damage);
             if(has_hit==true)
                 delete this;
         }
@@ -115,7 +116,7 @@ void Projectile::update( )
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-			delete this;
+			 delete this;
 		if ( xVel < 0 )
 			direction = DIR_LEFT;
 		else if ( xVel > 0 )
@@ -128,7 +129,7 @@ void Projectile::update( )
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-			delete this;
+			 delete this;
 		if ( yVel < 0 )
 			direction = DIR_UP;
 		else if ( yVel > 0 )

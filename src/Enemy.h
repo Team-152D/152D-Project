@@ -10,9 +10,9 @@
 #include "Image.h"
 #include <cstdlib>
 #include <cmath>
-#include "Player.h"
-#include "Projectile.h"
 
+class Player;
+class Projectile;
 class Game;
 
 using namespace std;
