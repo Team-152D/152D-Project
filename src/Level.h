@@ -28,6 +28,7 @@ public:
     vector<Enemy*>* getEnemies();
     vector<Projectile*>* getProjectiles();
     bool isMultiplayer();
+    string getDifficulty();
     
     Grid* getGrid();
     bool victoryCondition();
@@ -41,9 +42,12 @@ private:
     vector<Enemy*>* enemies;
     vector<Projectile*>* projectiles;
     
+    string difficulty;
+    
     SDL_Rect p1Spawn;
     SDL_Rect p2Spawn;
     SDL_Rect endzone;
+    SDL_Rect espawn;
 };
 
 #endif

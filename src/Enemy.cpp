@@ -62,37 +62,37 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Enemy::AI(){
-    //target = Level->getPlayer(1);
-    //or
-    //target = Level->getPlayer(2);
-    //skip this if not multiplayer.
-  
-    seesPlayer=sight_check();
-    if(seesPlayer==true){knowsPlayerlocation=true;}
-    else if(seesPlayer==false&&knowsPlayerlocation==true){
-        losessighttimer+=30;
-        if(losessighttimer>=(4*30)){
-            knowsPlayerlocation=false;
+    
+    if(knowsPlayerlocation==false){
+        seesPlayer=sight_check();
+        if(seesPlayer==true){knowsPlayerlocation=true;}
+        else if(seesPlayer==false&&knowsPlayerlocation==true){
+            losessighttimer++;
+            if(losessighttimer>=(4*30)){
+                knowsPlayerlocation=false;
+                target=NULL;
+            }
         }
     }
+    else{
+        target=currentLevelGlobal->getPlayer(1);
+        int playerX=target->getX();
+        int playerY=target->getY();
     
-    target=currentLevelGlobal->getPlayer(1);
-    int playerX=target->getX();
-    int playerY=target->getY();
+        int myX=this->getX();
+        int myY=this->getY();
     
-    int myX=this->getX();
-    int myY=this->getY();
-    
-    if(myY-playerY>=100){
-        if(myY<playerY) yVel += speed;
-        else if(myY>playerY) yVel -= speed;
+        if(myY-playerY>=100){
+            if(myY<playerY) yVel += speed;
+            else if(myY>playerY) yVel -= speed;
+        }
+        if(myX-playerX>=100){
+            if(myX<playerX) xVel += speed;
+            else if(myX>playerX){} xVel -= speed;
+        }
+        int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
+        if(distance<=200&&knowsPlayerlocation==true){shooting();}
     }
-    if(myX-playerX>=100){
-        if(myX<playerX) xVel += speed;
-        else if(myX>playerX){} xVel -= speed;
-    }
-    int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
-    if(distance<=200&&knowsPlayerlocation==true){shooting();}
 }
 
 bool Enemy::sight_check(){
@@ -119,10 +119,10 @@ bool Enemy::sight_check(){
     int myY=getY();
     look=new Sight(myX,myY,direction,0);
     canisee=look->update();
-    look->end();
+    delete look;
     
-    if(canisee="player1"){target=currentLevelGlobal->getPlayer(1); return true;}
-    else if(canisee="player2"){target=currentLevelGlobal->getPlayer(2); return true;}
+    if(canisee=="player1"){target=currentLevelGlobal->getPlayer(1); return true;}
+    else if(canisee=="player2"){target=currentLevelGlobal->getPlayer(2); return true;}
     else{return false;}
 }
 

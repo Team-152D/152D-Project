@@ -20,8 +20,8 @@ Sight::Sight( int x, int y, int d, int ID )
         hit_something=false;
         hit_player=false;
         
-	SIGHT_WIDTH = 32;
-	SIGHT_HEIGHT = 32;
+	SIGHT_WIDTH = 200;
+	SIGHT_HEIGHT = 200;
         
         damage=0;
         
@@ -43,12 +43,14 @@ string Sight::hit(){
     if(teamID=1){
         Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
+        if(has_hit==true)
         return "player1";
         
         bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
             Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
+            if(has_hit==true)
             return "player2";
         }
     } 
@@ -81,8 +83,8 @@ string Sight::update( ){
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
-		if ( xOffset + 16 <= 0 ||
-			 xOffset + 16 >= Global::GAME_WIDTH ||
+		if ( xOffset + 50 <= 0 ||
+			 xOffset + 50 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
                          conditionwall="hit";
 		if ( xVel < 0 )
@@ -94,8 +96,8 @@ string Sight::update( ){
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
-		if ( yOffset + 16 <= 0 ||
-			 yOffset + 16 >= Global::GAME_HEIGHT ||
+		if ( yOffset + 50 <= 0 ||
+			 yOffset + 50 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
                          conditionwall="hit";
 		if ( yVel < 0 )
@@ -116,12 +118,12 @@ string Sight::update( ){
 
 int Sight::getX( )
 {
-	return xOffset + 16;
+	return xOffset + 100;
 }
 
 int Sight::getY( )
 {
-	return yOffset + 16;
+	return yOffset + 100;
 }
 
 int Sight::getXVel( )

@@ -14,11 +14,15 @@ Level::Level( int levelNumber )
     enemies;
     projectiles;    
     currentLevelGlobal = this;
+    Enemy tester = new Enemy(espawn.x,espawn.y);
+    enemies->push_back(tester);
 }
 
 vector<Enemy*>* Level::getEnemies(){return enemies;}
 
 vector<Projectile*>* Level::getProjectiles(){return projectiles;}
+
+string Level::getDifficulty(){return difficulty;}
 
 bool Level::isMultiplayer(){return multiplayer;}
 
@@ -44,12 +48,12 @@ void Level::update( )
 	player2 -> update();
     
     for(int i=0; i<enemies->size();i++){
-        Epointer = enemies.at(i);
-        Epointer.update();
+        Epointer = enemies->at(i);
+        Epointer->update();
         }
     for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles.at(j);
-        Ppointer.update();
+        Ppointer = projectiles->at(j);
+        Ppointer->update();
         }
 }
 
@@ -65,12 +69,12 @@ void Level::draw( )
 	player2 -> draw();
     
     for(int i=0; i<enemies->size();i++){
-        Epointer = enemies.at(i);
-        Epointer.draw();
+        Epointer = enemies->at(i);
+        Epointer->draw();
         }
     for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles.at(j);
-        Ppointer.draw();
+        Ppointer = projectiles->at(j);
+        Ppointer->draw();
         }
 }
 
@@ -164,6 +168,8 @@ void Level::loadLevel( int level )
 	infile >> endzone.y;
 	infile >> endzone.w;
 	infile >> endzone.h;
+        infile >> espawn.x;
+        infile >> espawn.y;
 	infile.close( );
 
 	cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
