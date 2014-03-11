@@ -177,7 +177,7 @@ int Game::runGameLoop( )
 
 int Game::input( )
 {
-	//cout << "DEBUG: input()" << endl;
+	cout << "DEBUG: input()" << endl;
 	SDL_Event event;
 
 	SDL_PollEvent( &event );
@@ -210,9 +210,9 @@ int Game::input( )
 
 int Game::update( )
 {
-	//cout << "DEBUG: update()" << endl;
+	cout << "DEBUG: update()" << endl;
 	currentLevel -> update( );
-	//cout << "checking victory" << endl;
+	cout << "checking victory" << endl;
 	if ( currentLevel -> victoryCondition( ) )
 		return 1;
 	else return 0;
@@ -220,7 +220,7 @@ int Game::update( )
 
 int Game::draw( )
 {
-	//cout << "DEBUG: draw()" << endl;
+	cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
 	displayInfoBar( );
 

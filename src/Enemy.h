@@ -10,9 +10,9 @@
 #include "Image.h"
 #include <cstdlib>
 #include <cmath>
+#include "Sight.h"
 
 class Player;
-class Sight;
 class Projectile;
 class Game;
 
@@ -56,7 +56,6 @@ private:
     Player* target;
     Projectile* shoot;
     vector<Projectile*>* projectiles;
-    Sight* look;
     
     //The surfaces
     SDL_Surface *enemy_sprite_up = NULL;

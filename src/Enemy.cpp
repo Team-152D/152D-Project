@@ -117,8 +117,8 @@ bool Enemy::sight_check(){
     
     int myX=getX();
     int myY=getY();
-    look=new Sight(myX,myY,direction,0);
-    canisee=look->update();
+    Sight* look=new Sight(myX,myY,direction,0);
+    canisee=look->look();
     delete look;
     
     if(canisee=="player1"){target=currentLevelGlobal->getPlayer(1); return true;}

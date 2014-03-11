@@ -59,7 +59,7 @@ string Sight::hit(){
 
 void Sight::end(){delete this;}
 
-string Sight::update( ){
+string Sight::look( ){
         string conditionwall="nohit";
         string conditionplayer="nohit";
         //0: Up 1: Right 2: Down 3: Left
@@ -106,7 +106,7 @@ string Sight::update( ){
 			direction = DIR_DOWN;
 	}
         conditionplayer=hit();
-	if(conditionwall=="nohit"&&conditionplayer=="nohit"){result=update();}
+	if(conditionwall=="nohit"&&conditionplayer=="nohit"){result=look();}
         else if(conditionplayer!="nohit"){
             result=conditionplayer;
         }
@@ -115,6 +115,9 @@ string Sight::update( ){
         }
         return result;
 }
+
+void Sight::update( ){}
+void Sight::draw(){}
 
 int Sight::getX( )
 {

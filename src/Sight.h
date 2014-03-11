@@ -21,12 +21,14 @@ class Sight : public Unit
 {
 public:
     //starting locations, direction and team ID
-    Sight(int, int, int, int, int);
+    Sight(int, int, int, int);
     ~Sight();
     
-    bool hit();
+    string hit();
     void end();
     void update();
+    void draw();
+    string look();
     
     int getX();
     int getY();
@@ -46,8 +48,6 @@ private:
     
     int shooting_direction;
     int teamID;
-    
-    //vector<Enemy*>* enemies;
 };
 
 #endif

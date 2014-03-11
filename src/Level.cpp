@@ -14,7 +14,7 @@ Level::Level( int levelNumber )
     enemies;
     projectiles;    
     currentLevelGlobal = this;
-    Enemy tester = new Enemy(espawn.x,espawn.y);
+    Enemy* tester = new Enemy(espawn.x,espawn.y);
     enemies->push_back(tester);
 }
 
@@ -174,7 +174,8 @@ void Level::loadLevel( int level )
 
 	cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"
-		<< "Endzone = (" << endzone.x << "," << endzone.y << ")" << endl;
+		<< "Endzone = (" << endzone.x << "," << endzone.y << ")"
+                << "Enemy = (" << espawn.x << "," << espawn.y << ")" <<endl;
 
 	this->grid = new Grid( temp );
 	cout << "DEBUG: Level file loaded" << endl;
