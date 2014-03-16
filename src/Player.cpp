@@ -212,3 +212,7 @@ int Player::getYVel( )
 {
 	return xVel;
 }
+
+int Player::getHP(){
+    return health;
+}

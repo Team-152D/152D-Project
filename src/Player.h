@@ -33,6 +33,7 @@ public:
     int getY();
     int getXVel();
     int getYVel();
+    int getHP();
 private:
     void set_clips();
     //The dimensions of the image

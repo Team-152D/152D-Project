@@ -75,7 +75,7 @@ void Enemy::AI(){
         }
     }
     else{
-        target=currentLevelGlobal->getPlayer(1);
+        //target=currentLevelGlobal->getPlayer(1);
         int playerX=target->getX();
         int playerY=target->getY();
     
@@ -91,38 +91,104 @@ void Enemy::AI(){
             else if(myX>playerX){} xVel -= speed;
         }
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
-        if(distance<=200&&knowsPlayerlocation==true){shooting();}
+        if(distance<=200){shooting();}
     }
 }
 
 bool Enemy::sight_check(){
 
-    string canisee;
+    string canisee="";
+    string currsight;
+    int myX=getX();
+    int myY=getY();
     
     int shoot_direction;
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
+            for(int i=-25;i<25;i++){
+                Sight* look=new Sight(myX+i,myY,direction,0);
+                currsight=look->look();
+                look->end();
+                if(currsight=="Player 1"&&canisee=="")
+                    canisee="Player 1";
+                else if(currsight=="Player 1"&&canisee=="Player 2")
+                    canisee="Both Players";
+                else if(currsight=="Player 2"&&canisee=="")
+                    canisee="Player 2";
+                else if(currsight=="Player 2"&&canisee=="Player 1")
+                    canisee="Both Players";
+                }
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
+            for(int i=-25;i<25;i++){
+                Sight* look=new Sight(myX,myY+i,direction,0);
+                currsight=look->look();
+                look->end();
+                if(currsight=="Player 1"&&canisee=="")
+                    canisee="Player 1";
+                else if(currsight=="Player 1"&&canisee=="Player 2")
+                    canisee="Both Players";
+                else if(currsight=="Player 2"&&canisee=="")
+                    canisee="Player 2";
+                else if(currsight=="Player 2"&&canisee=="Player 1")
+                    canisee="Both Players";
+                }
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
+            for(int i=-25;i<25;i++){
+                Sight* look=new Sight(myX+i,myY,direction,0);
+                currsight=look->look();
+                look->end();
+                if(currsight=="Player 1"&&canisee=="")
+                    canisee="Player 1";
+                else if(currsight=="Player 1"&&canisee=="Player 2")
+                    canisee="Both Players";
+                else if(currsight=="Player 2"&&canisee=="")
+                    canisee="Player 2";
+                else if(currsight=="Player 2"&&canisee=="Player 1")
+                    canisee="Both Players";
+                }
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
+            for(int i=-25;i<25;i++){
+                Sight* look=new Sight(myX,myY+i,direction,0);
+                currsight=look->look();
+                look->end();
+                if(currsight=="Player 1"&&canisee=="")
+                    canisee="Player 1";
+                else if(currsight=="Player 1"&&canisee=="Player 2")
+                    canisee="Both Players";
+                else if(currsight=="Player 2"&&canisee=="")
+                    canisee="Player 2";
+                else if(currsight=="Player 2"&&canisee=="Player 1")
+                    canisee="Both Players";
+                }
 	    break;
     }
     
-    int myX=getX();
-    int myY=getY();
-    Sight* look=new Sight(myX,myY,direction,0);
-    canisee=look->look();
-    delete look;
-    
-    if(canisee=="player1"){target=currentLevelGlobal->getPlayer(1); return true;}
-    else if(canisee=="player2"){target=currentLevelGlobal->getPlayer(2); return true;}
+    if(canisee=="Player 1"){target=currentLevelGlobal->getPlayer(1); return true;}
+    else if(canisee=="Player 2"){target=currentLevelGlobal->getPlayer(2); return true;}
+    else if(canisee=="Both Players"){
+        string difficulty=currentLevelGlobal->getDifficulty();
+            if(difficulty=="Easy"){
+                target=currentLevelGlobal->getPlayer(1);
+            }
+            else if(difficulty=="Medium"||difficulty=="Hard"){
+                Player* one=currentLevelGlobal->getPlayer(1);
+                Player* two=currentLevelGlobal->getPlayer(2);
+                int hp1 = one->getHP();
+                int hp2 = two->getHP();
+                if(hp1>=hp2)
+                    target=one;
+                else
+                    target=two;
+            }
+        return true;
+    }
     else{return false;}
 }
 

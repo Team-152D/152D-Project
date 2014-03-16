@@ -13,6 +13,7 @@ Level::Level( int levelNumber )
 
     enemies;
     projectiles;    
+    difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
     Enemy* tester = new Enemy(espawn.x,espawn.y);
     enemies->push_back(tester);

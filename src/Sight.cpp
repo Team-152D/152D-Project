@@ -40,18 +40,18 @@ string Sight::hit(){
     int myY=getY();
     bool has_hit;
     
-    if(teamID=1){
+    if(teamID==1){
         Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
         if(has_hit==true)
-        return "player1";
+        return "Player 1";
         
         bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
             Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
             if(has_hit==true)
-            return "player2";
+            return "Player 2";
         }
     } 
     return "nohit";
@@ -59,7 +59,7 @@ string Sight::hit(){
 
 void Sight::end(){delete this;}
 
-string Sight::look( ){
+string Sight::look(){
         string conditionwall="nohit";
         string conditionplayer="nohit";
         //0: Up 1: Right 2: Down 3: Left
@@ -116,17 +116,17 @@ string Sight::look( ){
         return result;
 }
 
-void Sight::update( ){}
+void Sight::update(){}
 void Sight::draw(){}
 
 int Sight::getX( )
 {
-	return xOffset + 100;
+	return xOffset + 16;
 }
 
 int Sight::getY( )
 {
-	return yOffset + 100;
+	return yOffset + 16;
 }
 
 int Sight::getXVel( )
