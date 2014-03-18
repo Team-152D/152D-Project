@@ -19,6 +19,10 @@ Enemy::Enemy(int x, int y)
 
     seesPlayer=false;
     shootingnow=false;
+    knowsPlayerlocation=false;
+    
+    patroldirection=0; //0=no patrol, 1=up, 2=right, 3=bottom, 4=left
+    patroltimer=0;
     
     losessighttimer=0;
     
@@ -65,16 +69,45 @@ void Enemy::AI(){
     
     if(knowsPlayerlocation==false){
         seesPlayer=sight_check();
-        if(seesPlayer==true){knowsPlayerlocation=true;}
-        else if(seesPlayer==false&&knowsPlayerlocation==true){
-            losessighttimer++;
-            if(losessighttimer>=(4*30)){
-                knowsPlayerlocation=false;
-                target=NULL;
-            }
+        if(seesPlayer==true){
+            knowsPlayerlocation=true;
+            losessighttimer=0;
+            patroltimer=0;
         }
     }
-    else{
+    if(seesPlayer==false&&knowsPlayerlocation==true){
+        losessighttimer++;
+        if(losessighttimer>=(120)){//loses player after 4 seconds of not being able to see them
+            knowsPlayerlocation=false;
+            target=NULL;
+        }
+    }
+    if(knowsPlayerlocation==false){
+        if(patroltimer<=0)
+            patroldirection=0;
+        
+        if(patroldirection==0){
+            patroldirection = rand() % 4 + 1; //0=no patrol, 1=up, 2=right, 3=bottom, 4=left
+            patroltimer=90; //patrol in this direction for 3 seconds.
+        }
+        
+        switch (patroldirection){
+	case 1:
+	    yVel -= (speed/3);
+	    break;
+	case 2:
+	    xVel += (speed/3);
+	    break;
+	case 3:
+	    yVel += (speed/3);
+	    break;
+	case 4:
+	    xVel -= (speed/3);
+	    break;
+        }
+        patroltimer--;
+    }
+    if(knowsPlayerlocation==true){
         //target=currentLevelGlobal->getPlayer(1);
         int playerX=target->getX();
         int playerY=target->getY();
@@ -242,8 +275,11 @@ void Enemy::update()
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0 ||
 		xOffset + 16 >= Global::GAME_WIDTH ||
-		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
-	    xOffset -= xVel;
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
+                currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5){
+	        xOffset -= xVel; 
+                patroltimer=0;
+            }
 	if ( xVel < 0 )
 	    direction = DIR_LEFT;
 	else if ( xVel > 0 )
@@ -255,8 +291,11 @@ void Enemy::update()
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0 ||
 		yOffset + 16 >= Global::GAME_HEIGHT ||
-		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
-	    yOffset -= yVel;
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
+                currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 )== 5 ){
+	        yOffset -= yVel; 
+                patroltimer=0;
+            }
 	if ( yVel < 0 )
 	    direction = DIR_UP;
 	else if ( yVel > 0 )

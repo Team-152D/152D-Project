@@ -51,6 +51,8 @@ private:
     bool seesPlayer;
     bool knowsPlayerlocation;
     int losessighttimer;
+    int patroldirection;
+    int patroltimer;
 
     //current focus player
     Player* target;
