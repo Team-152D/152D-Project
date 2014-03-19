@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Game.h"
-//
+
 Player::Player( int x, int y )
 {
 	//Initialize movement variables
@@ -15,6 +15,7 @@ Player::Player( int x, int y )
         
         shoot=NULL;
         projectiles=NULL;
+        dead=false;
 
 	//Initialize animation variables
 	frame = 0;
@@ -96,8 +97,11 @@ bool Player::hit( int x, int y , int damage){
     if (distance<=16)
         hit=true;
     
-    if(hit==true)
+    if(hit==true){
         health-=damage;
+        if(health<=0)
+            dead=true;
+        }
     return hit;
 }
 
@@ -215,4 +219,8 @@ int Player::getYVel( )
 
 int Player::getHP(){
     return health;
+}
+
+bool Player::isAlive(){
+    return dead;
 }
