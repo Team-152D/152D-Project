@@ -11,8 +11,8 @@ Level::Level( int levelNumber )
 	else
 		player2 = NULL;
 
-    enemies;
-    projectiles;    
+    enemies=new vector<Enemy*>*;
+    projectiles=new vector<Projectile*>*;    
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
     Enemy* tester = new Enemy(espawn.x,espawn.y);
@@ -34,9 +34,14 @@ Level::~Level( )
 
 void Level::input( char *inP1, char *inP2 )
 {
-	player1->input( inP1 );
-	if ( multiplayer )
-		player2->input( inP2 );
+	bool isdead=player1->isAlive();
+        if(isdead==false)
+        player1 -> input();
+        if ( multiplayer ){
+	    isdead=player2->isAlive();
+            if(isdead==false)
+            player2 -> input();
+        }
 }
 
 void Level::update( )
@@ -44,9 +49,14 @@ void Level::update( )
     Enemy* Epointer;
     Projectile* Ppointer;
     
+    bool isdead=player1->isAlive();
+    if(isdead==false)
     player1 -> update();
-    if ( multiplayer )
-	player2 -> update();
+    if ( multiplayer ){
+	isdead=player2->isAlive();
+        if(isdead==false)
+        player2 -> update();
+        }
     
     for(int i=0; i<enemies->size();i++){
         Epointer = enemies->at(i);
@@ -65,9 +75,14 @@ void Level::draw( )
     Enemy* Epointer;
     Projectile* Ppointer;
     
+    bool isdead=player1->isAlive();
+    if(isdead==false)
     player1 -> draw();
-    if ( multiplayer )
-	player2 -> draw();
+    if ( multiplayer ){
+	isdead=player2->isAlive();
+        if(isdead==false)
+        player2 -> draw();
+        }
     
     for(int i=0; i<enemies->size();i++){
         Epointer = enemies->at(i);
@@ -82,7 +97,7 @@ void Level::draw( )
 Player* Level::getPlayer( int player )
 {
 	if ( player == 1 )
-		return player1;
+	    return player1;
 	else return player2;
 }
 

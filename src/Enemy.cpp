@@ -269,7 +269,8 @@ void Enemy::die(){
 void Enemy::update()
 {
     cout<<"updating x"<<endl;
-    AI();
+    die();
+    //AI();
     if ( xVel != 0 )
     {
 	xOffset += xVel;
