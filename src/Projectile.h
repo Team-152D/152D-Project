@@ -26,6 +26,7 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void hit();
+    bool checkhit();
     void update();
     void draw();
     
@@ -39,9 +40,10 @@ private:
     int PROJECTILE_WIDTH;
     int PROJECTILE_HEIGHT;
     
-    int shooting_direction;
     int teamID;
     int damage;
+    
+    bool hitsomething;
     
     vector<Enemy*>* enemies;
 

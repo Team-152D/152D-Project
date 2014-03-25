@@ -18,23 +18,19 @@ Enemy::Enemy(int x, int y)
     direction = DIR_RIGHT;
 
     seesPlayer=false;
-    shootingnow=false;
     
     losessighttimer=0;
     
     target = NULL;
-    shoot=NULL;
-    projectiles = NULL;
     
     set_clips();
 
-    //Load the sprite sheet
-    enemy_sprite_up = image->loadImage("resources\\sprite_RedUp.png"); // move up
-    enemy_sprite_right = image->loadImage("resources\\sprite_RedRight.png"); // move right
-    enemy_sprite_down = image->loadImage("resources\\sprite_RedDown.png"); // move down
-    enemy_sprite_left = image->loadImage("resources\\sprite_RedLeft.png"); // move left
-    if ( enemy_sprite_up == NULL || enemy_sprite_right == NULL || enemy_sprite_down == NULL || enemy_sprite_left == NULL )
-	cout << "Enemy sprite didn't load" << endl;
+	enemy_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
+	enemy_sprite_right = image->loadImage( "rsc\\game\\sprite_RedRight.bmp" ); // move right
+	enemy_sprite_down = image->loadImage( "rsc\\game\\sprite_RedDown.bmp" ); // move down
+	enemy_sprite_left = image->loadImage( "rsc\\game\\sprite_RedLeft.bmp" ); // move left
+	if ( enemy_sprite_up == NULL || enemy_sprite_right == NULL || enemy_sprite_down == NULL || enemy_sprite_left == NULL )
+		cout << "Enemy sprite didn't load" << endl;
 }
 
 Enemy::~Enemy()
@@ -62,7 +58,8 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Enemy::AI(){
-    
+    knowsPlayerlocation=true;
+    target=currentLevelGlobal->getPlayer(1);
     if(knowsPlayerlocation==false){
         seesPlayer=sight_check();
         if(seesPlayer==true){knowsPlayerlocation=true;}
@@ -78,19 +75,19 @@ void Enemy::AI(){
         //target=currentLevelGlobal->getPlayer(1);
         int playerX=target->getX();
         int playerY=target->getY();
+        
+        int myX=getX();
+        int myY=getY();
     
-        int myX=this->getX();
-        int myY=this->getY();
-    
-        if(myY-playerY>=100){
-            if(myY<playerY) yVel += speed;
-            else if(myY>playerY) yVel -= speed;
-        }
-        if(myX-playerX>=100){
-            if(myX<playerX) xVel += speed;
-            else if(myX>playerX){} xVel -= speed;
-        }
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
+        if(distance>=100){
+            if(myY<playerY+20) yVel += speed;
+            else if(myY>playerY+20) yVel -= speed;
+            
+            if(myX<playerX+20) xVel += speed;
+            else if(myX>playerX+20) xVel -= speed;
+        }
+        else{yVel=0;xVel=0;}
         if(distance<=200){shooting();}
     }
 }
@@ -211,8 +208,8 @@ void Enemy::shooting(){
     
     int myX=getX();
     int myY=getY();
-    shoot=new Projectile(myX,myY,direction,0);
-    projectiles=currentLevelGlobal->getProjectiles();
+    Projectile* shoot=new Projectile(myX,myY,direction,0);
+    vector<Projectile*>* projectiles = currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);
 }
 
@@ -235,8 +232,8 @@ void Enemy::die(){
 
 void Enemy::update()
 {
-    cout<<"updating x"<<endl;
     AI();
+    cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
 	xOffset += xVel;
@@ -249,7 +246,7 @@ void Enemy::update()
 	else if ( xVel > 0 )
 	    direction = DIR_RIGHT;
     }
-    cout<<"updating y"<<endl;
+    cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
 	yOffset += yVel;

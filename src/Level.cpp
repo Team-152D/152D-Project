@@ -11,8 +11,8 @@ Level::Level( int levelNumber )
 	else
 		player2 = NULL;
 
-    enemies = new vector<Enemy*>*;
-    projectiles = new vector<Projectile*>*;    
+    enemies = new vector<Enemy*>;
+    projectiles = new vector<Projectile*>;    
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
     Enemy* tester = new Enemy(espawn.x,espawn.y);
@@ -57,10 +57,18 @@ void Level::update( )
         Epointer = enemies->at(i);
         Epointer->update();
         }
+    bool hit=false;
     for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles->at(j);
-        Ppointer->update();
+        cout<<j<<endl;
+        hit=Ppointer->checkhit();
+        if(hit==true){
+            projectiles->erase(projectiles->begin()+j);
         }
+        else{
+            Ppointer = projectiles->at(j);
+            Ppointer->update();
+        }
+    }
 }
 
 void Level::draw( )

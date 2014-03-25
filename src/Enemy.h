@@ -55,7 +55,6 @@ private:
     //current focus player
     Player* target;
     Projectile* shoot;
-    vector<Projectile*>* projectiles;
     
     //The surfaces
     SDL_Surface *enemy_sprite_up = NULL;

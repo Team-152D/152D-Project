@@ -6,19 +6,38 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	xPos = xOffset + 16;
-	yPos = yOffset + 16;
-	xVel = 0;
-	yVel = 0;
+	xPos = xOffset + 4;
+	yPos = yOffset + 4;
 	speed = 16;
+        
+	//direction: 0: Up 1: Right 2: Down 3: Left
+        switch (d)
+	{
+	    case 0:
+		yVel = -1*speed;
+                xVel = 0;
+	        break;
+	    case 1:
+		xVel = speed;
+                yVel = 0;
+		break;
+	    case 2:
+		yVel = speed;
+                xVel = 0;
+		break;
+	    case 3:
+		xVel = -1*speed;
+                yVel = 0;
+		break;
+	}
 
 	//ID: 0=player, 1=enemy
 	teamID = ID;
-	//direction: 0: Up 1: Right 2: Down 3: Left
-	shooting_direction = d;
 
-	PROJECTILE_WIDTH = 32;
-	PROJECTILE_HEIGHT = 32;
+	PROJECTILE_WIDTH = 8;
+	PROJECTILE_HEIGHT = 8;
+        
+        hitsomething=false;
 
 	//Initialize animation variables
 	frame = 0;
@@ -27,10 +46,10 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	set_clips( );
 
 	//Load the sprite sheet
-	projectile_sprite_up = image->loadImage( "resources\\sprite_RedUp.png" ); // move up
-	projectile_sprite_right = image->loadImage( "resources\\sprite_RedRight.png" ); // move right
-	projectile_sprite_down = image->loadImage( "resources\\sprite_RedDown.png" ); // move down
-	projectile_sprite_left = image->loadImage( "resources\\sprite_RedLeft.png" ); // move left
+	projectile_sprite_up = image->loadImage( "rsc\\game\\Shot.bmp" ); // move up
+	projectile_sprite_right = image->loadImage( "rsc\\game\\Shot.bmp" ); // move right
+	projectile_sprite_down = image->loadImage( "rsc\\game\\Shot.bmp" );// move down
+	projectile_sprite_left = image->loadImage( "rsc\\game\\Shot.bmp" ); // move left
 	if ( projectile_sprite_up == NULL || projectile_sprite_right == NULL || projectile_sprite_down == NULL || projectile_sprite_left == NULL )
 		cout << "Projectile sprite didn't load" << endl;
 }
@@ -67,14 +86,14 @@ void Projectile::hit(){
         Player* current = currentLevelGlobal->getPlayer(1);
         has_hit=current->hit(myX,myY,damage);
         if(has_hit==true)
-            delete this;
+            hitsomething=true;
         
         bool multiplayer=currentLevelGlobal->isMultiplayer();
         if (multiplayer){
             Player* current = currentLevelGlobal->getPlayer(2);
             has_hit=current->hit(myX,myY,damage);
             if(has_hit==true)
-            delete this;
+                hitsomething=true;
         }
     }
     else if (teamID=0){
@@ -84,66 +103,49 @@ void Projectile::hit(){
             current=enemies->at(i);
             has_hit=current->hit(myX,myY,damage);
             if(has_hit==true)
-                delete this;
+                hitsomething=true;
         }
     }
 }
 
+bool Projectile::checkhit(){return hitsomething;}
+
 void Projectile::update( )
 {
         hit();
-	//0: Up 1: Right 2: Down 3: Left
-	switch ( direction )
-	{
-		case 0:
-			yVel -= speed;
-			break;
-		case 1:
-			xVel += speed;
-			break;
-		case 2:
-			yVel += speed;
-			break;
-		case 3:
-			xVel -= speed;
-			break;
-	}
+        //0: Up 1: Right 2: Down 3: Left
+	
 
-	cout << "updating x" << endl;
-	if ( xVel != 0 )
-	{
-		xOffset += xVel;
-		if ( xOffset + 16 <= 0 ||
-			 xOffset + 16 >= Global::GAME_WIDTH ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-			 delete this;
-		if ( xVel < 0 )
-			direction = DIR_LEFT;
-		else if ( xVel > 0 )
-			direction = DIR_RIGHT;
-	}
-	cout << "updating y" << endl;
-	if ( yVel != 0 )
-	{
-		yOffset += yVel;
-		if ( yOffset + 16 <= 0 ||
-			 yOffset + 16 >= Global::GAME_HEIGHT ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
-			 delete this;
-		if ( yVel < 0 )
-			direction = DIR_UP;
-		else if ( yVel > 0 )
-			direction = DIR_DOWN;
-	}
-	cout << "checking tiles" << endl;
-
-	//    switch(currentLevelGlobal->getGrid()->getTileAt( (xOffset+16)/32,(yOffset+16)/32 ))
-	//    {
-	//	case 5: //lava
-	//	    health--;
-	//	    break;
-	//	    //Other dmg tiles
-	//    }
+    cout<<"updating projectile x"<<endl;
+    if ( xVel != 0 )
+    {
+	xOffset += xVel;
+	if ( xOffset + 4 <= 0 ||
+		xOffset + 4 >= Global::GAME_WIDTH ||
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ){
+            cout<<"hit"<<endl;
+            hitsomething=true;
+        }
+	if ( xVel < 0 )
+	    direction = DIR_LEFT;
+	else if ( xVel > 0 )
+	    direction = DIR_RIGHT;
+    }
+    cout<<"updating projectile y"<<endl;
+    if ( yVel != 0 )
+    {
+	yOffset += yVel;
+	if ( yOffset + 4 <= 0 ||
+		yOffset + 4 >= Global::GAME_HEIGHT ||
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 4 ) / 32, ( yOffset + 4 ) / 32) == 8 ){
+            cout<<"hit"<<endl;
+            hitsomething=true;
+        }
+	if ( yVel < 0 )
+	    direction = DIR_UP;
+	else if ( yVel > 0 )
+	    direction = DIR_DOWN;
+    }
 }
 
 void Projectile::draw( )
@@ -160,16 +162,16 @@ void Projectile::draw( )
 	switch ( direction )
 	{
 		case DIR_UP:
-			apply_surface( xOffset - 16, yOffset - 16, projectile_sprite_up, &spriteClips[frame] );
+			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_up, &spriteClips[frame] );
 			break;
 		case DIR_RIGHT:
-			apply_surface( xOffset - 16, yOffset - 16, projectile_sprite_right, &spriteClips[frame] );
+			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_right, &spriteClips[frame] );
 			break;
 		case DIR_DOWN:
-			apply_surface( xOffset - 16, yOffset - 16, projectile_sprite_down, &spriteClips[frame] );
+			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_down, &spriteClips[frame] );
 			break;
 		case DIR_LEFT:
-			apply_surface( xOffset - 16, yOffset - 16, projectile_sprite_left, &spriteClips[frame] );
+			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_left, &spriteClips[frame] );
 			break;
 
 	}
@@ -177,12 +179,12 @@ void Projectile::draw( )
 
 int Projectile::getX( )
 {
-	return xOffset + 16;
+	return xOffset + 4;
 }
 
 int Projectile::getY( )
 {
-	return yOffset + 16;
+	return yOffset + 4;
 }
 
 void Projectile::set_clips( )
