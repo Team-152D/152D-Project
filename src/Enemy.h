@@ -50,6 +50,7 @@ private:
     //whether the enemy can "see" the player
     bool seesPlayer;
     bool knowsPlayerlocation;
+    bool dead;
     int losessighttimer;
 
     //current focus player

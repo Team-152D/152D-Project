@@ -93,12 +93,12 @@ bool Player::hit( int x, int y , int damage){
     bool hit=false;
     int distance;
     distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    distance= sqrt( pow(distance, 2 ));//get the absolute value of distance, to be safe
     if (distance<=16)
         hit=true;
     
     if(hit==true){
         health-=damage;
+        cout<<"ouch";
         if(health<=0)
             dead=true;
         }

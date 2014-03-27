@@ -59,13 +59,12 @@ void Level::update( )
         }
     bool hit=false;
     for(int j=0; j<projectiles->size();j++){
-        cout<<j<<endl;
+        Ppointer = projectiles->at(j);
         hit=Ppointer->checkhit();
         if(hit==true){
             projectiles->erase(projectiles->begin()+j);
         }
         else{
-            Ppointer = projectiles->at(j);
             Ppointer->update();
         }
     }

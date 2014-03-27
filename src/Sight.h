@@ -25,7 +25,6 @@ public:
     ~Sight();
     
     string hit();
-    void end();
     void update();
     void draw();
     string look();
@@ -38,6 +37,11 @@ private:
     //The dimensions of the image
     int SIGHT_WIDTH;
     int SIGHT_HEIGHT;
+    
+    int max_length;
+    int min_length;
+    int max_height;
+    int min_height;
     
     bool hit_something;
     bool hit_player;

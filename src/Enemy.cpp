@@ -11,17 +11,19 @@ Enemy::Enemy(int x, int y)
     yPos = yOffset + 16;
     xVel = 0;
     yVel = 0;
-    speed = 8;
+    speed = 6;
 
     //Initialize animation variables
     frame = 0;
     direction = DIR_RIGHT;
 
     seesPlayer=false;
+    dead=false;
+    knowsPlayerlocation=false;
     
     losessighttimer=0;
     
-    target = NULL;
+    target = currentLevelGlobal->getPlayer(1);
     
     set_clips();
 
@@ -58,8 +60,7 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Enemy::AI(){
-    knowsPlayerlocation=true;
-    target=currentLevelGlobal->getPlayer(1);
+    //knowsPlayerlocation=true;
     if(knowsPlayerlocation==false){
         seesPlayer=sight_check();
         if(seesPlayer==true){knowsPlayerlocation=true;}
@@ -72,7 +73,6 @@ void Enemy::AI(){
         }
     }
     else{
-        //target=currentLevelGlobal->getPlayer(1);
         int playerX=target->getX();
         int playerY=target->getY();
         
@@ -104,9 +104,9 @@ bool Enemy::sight_check(){
 	case DIR_UP:
 	    shoot_direction=0;
             for(int i=-25;i<25;i++){
-                Sight* look=new Sight(myX+i,myY,direction,0);
+                Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
-                look->end();
+                delete look;
                 if(currsight=="Player 1"&&canisee=="")
                     canisee="Player 1";
                 else if(currsight=="Player 1"&&canisee=="Player 2")
@@ -120,9 +120,9 @@ bool Enemy::sight_check(){
 	case DIR_RIGHT:
 	    shoot_direction=1;
             for(int i=-25;i<25;i++){
-                Sight* look=new Sight(myX,myY+i,direction,0);
+                Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
-                look->end();
+                delete look;
                 if(currsight=="Player 1"&&canisee=="")
                     canisee="Player 1";
                 else if(currsight=="Player 1"&&canisee=="Player 2")
@@ -136,9 +136,9 @@ bool Enemy::sight_check(){
 	case DIR_DOWN:
 	    shoot_direction=2;
             for(int i=-25;i<25;i++){
-                Sight* look=new Sight(myX+i,myY,direction,0);
+                Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
-                look->end();
+                delete look;
                 if(currsight=="Player 1"&&canisee=="")
                     canisee="Player 1";
                 else if(currsight=="Player 1"&&canisee=="Player 2")
@@ -152,9 +152,9 @@ bool Enemy::sight_check(){
 	case DIR_LEFT:
 	    shoot_direction=3;
             for(int i=-25;i<25;i++){
-                Sight* look=new Sight(myX,myY+i,direction,0);
+                Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
-                look->end();
+                delete look;
                 if(currsight=="Player 1"&&canisee=="")
                     canisee="Player 1";
                 else if(currsight=="Player 1"&&canisee=="Player 2")
@@ -190,7 +190,7 @@ bool Enemy::sight_check(){
 }
 
 void Enemy::shooting(){
-    int shoot_direction;
+    int shoot_direction=0;
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
@@ -208,7 +208,7 @@ void Enemy::shooting(){
     
     int myX=getX();
     int myY=getY();
-    Projectile* shoot=new Projectile(myX,myY,direction,0);
+    Projectile* shoot=new Projectile(myX,myY,shoot_direction,1);
     vector<Projectile*>* projectiles = currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);
 }
@@ -227,7 +227,7 @@ bool Enemy::hit(int x, int y, int damage){
 
 void Enemy::die(){
     
-    if(health<=0) delete this;
+    if(health<=0) dead=true;
 }
 
 void Enemy::update()

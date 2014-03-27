@@ -8,20 +8,43 @@ Sight::Sight( int x, int y, int d, int ID )
 	yOffset = y;
 	xPos = xOffset + 16;
 	yPos = yOffset + 16;
-	xVel = 0;
-	yVel = 0;
-	speed = 1;
+	speed = 16;
 
+        //direction: 0: Up 1: Right 2: Down 3: Left
+        switch (d)
+	{
+	    case 0:
+		yVel = -1*speed;
+                xVel = 0;
+                
+	        break;
+	    case 1:
+		xVel = speed;
+                yVel = 0;
+		break;
+	    case 2:
+		yVel = speed;
+                xVel = 0;
+		break;
+	    case 3:
+		xVel = -1*speed;
+                yVel = 0;
+		break;
+	}
+        
 	//ID: 0=player, 1=enemy
 	teamID = ID;
-	//direction: 0: Up 1: Right 2: Down 3: Left
-	shooting_direction = d;
 
+        max_height=yPos+100;
+        min_height=yPos-100;
+        max_length=xPos+100;
+        min_length=xPos-100;
+        
         hit_something=false;
         hit_player=false;
         
-	SIGHT_WIDTH = 200;
-	SIGHT_HEIGHT = 200;
+	SIGHT_WIDTH = 32;
+	SIGHT_HEIGHT = 32;
         
         damage=0;
         
@@ -32,8 +55,7 @@ Sight::Sight( int x, int y, int d, int ID )
 	direction = DIR_RIGHT;
 }
 
-Sight::~Sight( )
-{}
+Sight::~Sight( ){}
 
 string Sight::hit(){
     int myX=getX();
@@ -57,34 +79,15 @@ string Sight::hit(){
     return "nohit";
 }
 
-void Sight::end(){delete this;}
-
 string Sight::look(){
         string conditionwall="nohit";
         string conditionplayer="nohit";
-        //0: Up 1: Right 2: Down 3: Left
-	switch ( direction )
-	{
-		case 0:
-			yVel -= speed;
-			break;
-		case 1:
-			xVel += speed;
-			break;
-		case 2:
-			yVel += speed;
-			break;
-		case 3:
-			xVel -= speed;
-			break;
-	}
 
-	cout << "updating x" << endl;
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
-		if ( xOffset + 50 <= 0 ||
-			 xOffset + 50 >= Global::GAME_WIDTH ||
+		if ( xOffset + 16 <= min_length ||
+			 xOffset + 16 >= max_length ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
                          conditionwall="hit";
 		if ( xVel < 0 )
@@ -92,12 +95,11 @@ string Sight::look(){
 		else if ( xVel > 0 )
 			direction = DIR_RIGHT;
 	}
-	cout << "updating y" << endl;
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
-		if ( yOffset + 50 <= 0 ||
-			 yOffset + 50 >= Global::GAME_HEIGHT ||
+		if ( yOffset + 16 <= min_height ||
+			 yOffset + 16 >= max_height ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
                          conditionwall="hit";
 		if ( yVel < 0 )
