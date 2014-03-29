@@ -9,7 +9,7 @@ Player::Player( int x, int y )
 	yOffset = y;
 	xPos = xOffset + 16;
 	yPos = yOffset + 16;
-	xVel = 0;
+	xVel = 0; 
 	yVel = 0;
 	speed = 8;
         

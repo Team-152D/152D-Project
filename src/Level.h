@@ -32,6 +32,7 @@ public:
     
     Grid* getGrid();
     bool victoryCondition();
+    bool deathCondition();
     vector<string>* getInfoBarData();
 private:
     void loadLevel(int);

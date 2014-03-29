@@ -12,6 +12,7 @@ View::~View( )
 	for ( int i = 0; i < elements->size( ); i++ )
 		delete elements->at( i );
 	delete elements;
+	SDL_FreeSurface( backgroundImage );
 }
 
 int View::input( SDL_Event* event )
@@ -128,7 +129,7 @@ void View::loadElements( string filepath )
 
 		type.clear( );
 	}
-	cout << "DEBUG: View at " << filepath << " loaded " << elements->size( ) << " elements" << endl;
+	//cout << "DEBUG: View at " << filepath << " loaded " << elements->size( ) << " elements" << endl;
 }
 
 int View::getParentView( )

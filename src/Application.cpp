@@ -22,7 +22,7 @@ Application::~Application( )
 
 int Application::runApplication( )
 {
-	cout << "Entering main loop, appState = " << appState << endl;
+	cout << "--Entering main loop, appState = " << appState << endl;
 	while ( appState > 1 )
 	{
 		switch ( appState )
@@ -80,12 +80,14 @@ int Application::runApplication( )
 		}
 	}
 
-	cout << "Exiting main loop, appState = " << appState << endl;
+	cout << "--Exiting main loop, appState = " << appState << endl << endl;
 	return appState;
 }
 
 bool Application::initializeApplication( )
 {
+	cout << "--Initializing application" << endl;
+	
 	if ( SDL_Init( SDL_INIT_EVERYTHING ) != 0 )
 	{
 		//fail
@@ -103,7 +105,7 @@ bool Application::initializeApplication( )
 
 	//Initialize sdl_image
 
-	window = SDL_CreateWindow( "152 Project", 0, 0, 1280, 800, SDL_WINDOW_FULLSCREEN );
+	window = SDL_CreateWindow( "152 Project", 0, 0, 1280, 768, SDL_WINDOW_FULLSCREEN );
 	if ( window == NULL )
 	{
 		//fail
@@ -119,6 +121,8 @@ bool Application::initializeApplication( )
 	image = new Image( );
 	text = new Text( );
 	settings = new Settings( );
+	
+	cout << "--Application initialized" << endl << endl;
 
 	return true;
 }

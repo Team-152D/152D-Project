@@ -23,7 +23,7 @@ extern Text *text;
 
 namespace Global {
     const int SCREEN_WIDTH = 1280;
-    const int SCREEN_HEIGHT = 788;
+    const int SCREEN_HEIGHT = 768;
     const int GAME_WIDTH = 1280;
     const int GAME_HEIGHT = 640;
     const int GRID_WIDTH = 40;

@@ -53,3 +53,8 @@ void Text::writeTextCentered(SDL_Rect offsets, const char* text, int size)
 	cout << "ERROR: ( Text::writeTextCentered() ) text surface is NULL" << endl;
     image->drawSurface(x, y, surface);
 }
+
+void Text::changeColor(int r,int g,int b)
+{
+	color = { r, g, b };
+}

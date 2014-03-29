@@ -16,10 +16,15 @@ public:
     Audio();
     ~Audio();
     
-    void playSound(string);
+    void playSound(int);
     void playMusic(string);
 private:
     Mix_Chunk* loadSound(string);
+    
+    Mix_Chunk *UI_Button_click;
+    Mix_Chunk *UI_Checkbox_click;
+    Mix_Chunk *Game_readyGo;
+    Mix_Chunk *Game_victory;
 };
 
 #endif

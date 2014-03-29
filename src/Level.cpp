@@ -11,21 +11,33 @@ Level::Level( int levelNumber )
 	else
 		player2 = NULL;
 
-    enemies = new vector<Enemy*>;
-    projectiles = new vector<Projectile*>;    
-    difficulty="Easy"; //default until we get something more specific set
-    currentLevelGlobal = this;
-    Enemy* tester = new Enemy(espawn.x,espawn.y);
-    enemies->push_back(tester);
+	enemies = new vector<Enemy*>;
+	projectiles = new vector<Projectile*>;
+	difficulty = "Easy"; //default until we get something more specific set
+	currentLevelGlobal = this;
+	Enemy* tester = new Enemy( espawn.x, espawn.y );
+	enemies->push_back( tester );
 }
 
-vector<Enemy*>* Level::getEnemies(){return enemies;}
+vector<Enemy*>* Level::getEnemies( )
+{
+	return enemies;
+}
 
-vector<Projectile*>* Level::getProjectiles(){return projectiles;}
+vector<Projectile*>* Level::getProjectiles( )
+{
+	return projectiles;
+}
 
-string Level::getDifficulty(){return difficulty;}
+string Level::getDifficulty( )
+{
+	return difficulty;
+}
 
-bool Level::isMultiplayer(){return multiplayer;}
+bool Level::isMultiplayer( )
+{
+	return multiplayer;
+}
 
 Level::~Level( )
 {
@@ -41,60 +53,68 @@ void Level::input( char *inP1, char *inP2 )
 
 void Level::update( )
 {
-    Enemy* Epointer;
-    Projectile* Ppointer;
-    
-    bool isdead=player1->isAlive();
-    if(isdead==false)
-    player1 -> update();
-    if ( multiplayer ){
-	isdead=player2->isAlive();
-        if(isdead==false)
-        player2 -> update();
-        }
-    
-    for(int i=0; i<enemies->size();i++){
-        Epointer = enemies->at(i);
-        Epointer->update();
-        }
-    bool hit=false;
-    for(int j=0; j<projectiles->size();j++){
-        cout<<j<<endl;
-        hit=Ppointer->checkhit();
-        if(hit==true){
-            projectiles->erase(projectiles->begin()+j);
-        }
-        else{
-            Ppointer = projectiles->at(j);
-            Ppointer->update();
-        }
-    }
+	Enemy* Epointer;
+	Projectile* Ppointer;
+
+	bool isdead = player1->isAlive( );
+	if ( isdead == false )
+		player1 -> update( );
+	if ( multiplayer )
+	{
+		isdead = player2->isAlive( );
+		if ( isdead == false )
+			player2 -> update( );
+	}
+
+	for ( int i = 0; i < enemies->size( ); i++ )
+	{
+		Epointer = enemies->at( i );
+		Epointer->update( );
+	}
+	bool hit = false;
+	for ( int j = 0; j < projectiles->size( ); j++ )
+	{
+		//cout << j << endl;
+		hit = Ppointer->checkhit( );
+		if ( hit == true )
+		{
+			projectiles->erase( projectiles->begin( ) + j );
+		}
+		else
+		{
+			Ppointer = projectiles->at( j );
+			Ppointer->update( );
+		}
+	}
 }
 
 void Level::draw( )
 {
 	grid -> drawGrid( );
 
-    Enemy* Epointer;
-    Projectile* Ppointer;
-    
-    bool isdead=player1->isAlive();
-    if(isdead==false)
-    player1 -> draw();
-    if ( multiplayer ){
-	isdead=player2->isAlive();
-        if(isdead==false)
-        player2 -> draw();
-        }
-    
-    for(int i=0; i<enemies->size();i++){
-        Epointer = enemies->at(i);
-        Epointer->draw();
-        }
-    for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles->at(j);
-        Ppointer->draw();
-        }
+	Enemy* Epointer;
+	Projectile* Ppointer;
+
+	bool isdead = player1->isAlive( );
+	if ( isdead == false )
+		player1 -> draw( );
+	if ( multiplayer )
+	{
+		isdead = player2->isAlive( );
+		if ( isdead == false )
+			player2 -> draw( );
+	}
+
+	for ( int i = 0; i < enemies->size( ); i++ )
+	{
+		Epointer = enemies->at( i );
+		Epointer->draw( );
+	}
+	for ( int j = 0; j < projectiles->size( ); j++ )
+	{
+		Ppointer = projectiles->at( j );
+		Ppointer->draw( );
+	}
 }
 
 Player* Level::getPlayer( int player )
@@ -106,8 +126,9 @@ Player* Level::getPlayer( int player )
 
 bool Level::victoryCondition( )
 {
+	//cout << "Checking victory conditions...";
 	bool endOne = false, endTwo = false;
-	//cout << "victory- getting offsets" << endl;
+	
 	int x1 = player1->getX( );
 	int y1 = player1->getY( );
 	int x2 = 0, y2 = 0;
@@ -117,7 +138,6 @@ bool Level::victoryCondition( )
 		y2 = player2->getY( );
 	}
 
-	//cout << "victory- checking if stuff is in the bounds" << endl;
 	if ( ( x1 > endzone.x ) &&
 		 ( x1 < ( endzone.x + endzone.w ) ) &&
 		 ( y1 > endzone.y ) &&
@@ -132,9 +152,35 @@ bool Level::victoryCondition( )
 			 )
 			endTwo = true;
 	if ( currentGameGlobal->multiPlayer )
+	{
+		//cout << "\tMultiplayer victory condition check = " << ( endOne || endTwo ) << endl;
 		return (endOne || endTwo );
+	}
 	else
+	{
+		//cout << "\tSingle player victory condition check = " << endOne << endl;
 		return endOne;
+	}
+}
+
+bool Level::deathCondition( )
+{
+	//cout << "Checking death conditions...";
+	bool p1Dead = false, p2Dead = false;
+	if ( player1->getHealth( ) <= 0 )
+		p1Dead = true;
+	if ( multiplayer )
+	{
+		if ( player2->getHealth( ) <= 0 )
+			p2Dead = true;
+		//cout << "\tMultiplayer death condition check = " << ( p1Dead && p2Dead ) << endl;
+		return ( p1Dead && p2Dead );
+	}
+	else
+	{
+		//cout << "\tSingle player death condition check = " << p1Dead << endl;
+		return p1Dead;
+	}
 }
 
 void Level::loadLevel( int level )
@@ -187,14 +233,14 @@ void Level::loadLevel( int level )
 	infile >> endzone.y;
 	infile >> endzone.w;
 	infile >> endzone.h;
-        infile >> espawn.x;
-        infile >> espawn.y;
+	infile >> espawn.x;
+	infile >> espawn.y;
 	infile.close( );
 
 	cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"
 		<< "Endzone = (" << endzone.x << "," << endzone.y << ")"
-                << "Enemy = (" << espawn.x << "," << espawn.y << ")" <<endl;
+		<< "Enemy = (" << espawn.x << "," << espawn.y << ")" << endl;
 
 	this->grid = new Grid( temp );
 	cout << "DEBUG: Level file loaded" << endl;

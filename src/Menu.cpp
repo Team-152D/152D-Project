@@ -2,18 +2,16 @@
 
 Menu::Menu( string input )
 {
-	cout << "DEBUG: initializing menu...\t";
+	//cout << "DEBUG: initializing menu...\t";
+
 	currentView = 0;
 	views = new vector<View*>;
-
 	polledEvent = false;
 
 	loadViews( input );
-
 	background = image->loadImage( "rsc\\ui\\test.bmp" );
-	if ( background == NULL )
-		cout << "DEBUG: Menu Background is NULL" << endl;
-	cout << "DEBUG: Menu initialized" << endl;
+
+	//cout << "DEBUG: Menu initialized" << endl;
 }
 
 Menu::~Menu( )
@@ -21,35 +19,26 @@ Menu::~Menu( )
 	for ( int i = 0; i < views->size( ); i++ )
 		delete views->at( i );
 	delete views;
+	SDL_FreeSurface( background );
 }
 
 int Menu::runMenu( )
 {
-	if ( identifier == "Main Menu" )
-		cout << "APPSTATE CHANGE: entering main menu system" << endl;
+	cout << "\tAppstate change: MENU" << endl;
 
 	bool inMenu = true;
 	views->at( currentView )->draw( );
 
-	cout << "Entering menu loop" << endl;
 	while ( inMenu )
 	{
-		//input, update
 		int updateRValue = update( input( ) );
 
-		if ( ( updateRValue >= 0 && updateRValue <= 9 ) || ( updateRValue >= 30 && updateRValue <= 39 ) )
-		{
-			if ( identifier == "Main Menu" && updateRValue <= 9 )
-				cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
+		if ( ( updateRValue >= 0 && updateRValue <= 9 ) ||
+			 ( updateRValue >= 30 && updateRValue <= 39 ) )
 			return updateRValue;
-		}
-
-		//draw
 		draw( );
 	}
 
-	if ( identifier == "Main Menu" )
-		cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
 	return Global::AS_EXIT_FAIL;
 }
 

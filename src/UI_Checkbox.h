@@ -5,7 +5,6 @@
 
 #include "SDL2/SDL.h"
 
-#include "Settings.h"
 #include "UI_AbstractElement.h"
 
 using namespace std;

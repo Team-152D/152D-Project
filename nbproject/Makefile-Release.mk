@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Player.o \
 	${OBJECTDIR}/src/Projectile.o \
 	${OBJECTDIR}/src/Settings.o \
+	${OBJECTDIR}/src/Sight.o \
 	${OBJECTDIR}/src/Text.o \
 	${OBJECTDIR}/src/Timer.o \
 	${OBJECTDIR}/src/UI_Button.o \
@@ -77,11 +78,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152_project.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152_project.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152_project ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/src/Application.o: src/Application.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -153,6 +154,11 @@ ${OBJECTDIR}/src/Settings.o: src/Settings.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Settings.o src/Settings.cpp
 
+${OBJECTDIR}/src/Sight.o: src/Sight.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sight.o src/Sight.cpp
+
 ${OBJECTDIR}/src/Text.o: src/Text.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -199,7 +205,7 @@ ${OBJECTDIR}/src/net.o: src/net.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152_project.exe
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project.exe
 
 # Subprojects
 .clean-subprojects:

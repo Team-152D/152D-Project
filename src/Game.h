@@ -25,6 +25,7 @@ public:
     int getCurrentLevelNumber();
     
     bool multiPlayer;
+    bool newGame;
 private:
     Level* currentLevel;
     
@@ -41,10 +42,10 @@ private:
     void displayInfoBar();
     void displayDebug();
     
-    SDL_Surface* IMG_MENU2;
-    
-    SDL_Surface* IMG_HIGHLIGHT;
-    SDL_Surface* IMG_INFOBAR;
+    SDL_Surface *IMG_MENU2;
+    SDL_Surface *IMG_HIGHLIGHT;
+    SDL_Surface *IMG_INFOBAR;
+    SDL_Surface *victoryMenu;
 };
 
 #endif

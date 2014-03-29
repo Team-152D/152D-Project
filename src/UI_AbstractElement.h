@@ -7,24 +7,26 @@
 
 using namespace std;
 
-class UI_AbstractElement
-{
+class UI_AbstractElement {
 public:
-	UI_AbstractElement(){}
-	~UI_AbstractElement(){}
-	virtual int handleEvents(SDL_Event*) = 0;
-	virtual void draw() = 0;
-protected:
-	SDL_Rect bounds;
-	string identifier, label;
 
-	bool coordinatesAreInRect(int x, int y, SDL_Rect rect)
-	{
-		if ((x > rect.x) && (x < rect.x + rect.w) && (y > rect.y) && (y < rect.y + rect.h))
-			return true;
-		else
-			return false;
-	}
+    UI_AbstractElement() {
+    }
+
+    ~UI_AbstractElement() {
+    }
+    virtual int handleEvents(SDL_Event*) = 0;
+    virtual void draw() = 0;
+protected:
+    SDL_Rect bounds;
+    string identifier, label;
+
+    bool coordinatesAreInRect(int x, int y, SDL_Rect rect) {
+        if ((x > rect.x) && (x < rect.x + rect.w) && (y > rect.y) && (y < rect.y + rect.h))
+            return true;
+        else
+            return false;
+    }
 };
 
 #endif

@@ -2,32 +2,57 @@
 
 Audio::Audio( )
 {
+	UI_Button_click = loadSound( "rsc\\audio\\sfx_buttonPress.wav" );
+	UI_Checkbox_click = loadSound( "rsc\\audio\\sfx_checkboxPress.wav" );
+	Game_readyGo = loadSound( "rsc\\audio\\sfx_readyGo.wav" );
+	Game_victory = loadSound( "rsc\\audio\\sfx_victory.wav" );
+
 	cout << "\tAudio class..." << endl;
 }
 
 Audio::~Audio( )
 {
-	
+	Mix_FreeChunk( UI_Button_click );
+	Mix_FreeChunk( UI_Checkbox_click );
+	Mix_FreeChunk( Game_readyGo );
+	Mix_FreeChunk( Game_victory );
 }
 
-Mix_Chunk* Audio::loadSound(string identifier)
+Mix_Chunk* Audio::loadSound( string identifier )
 {
-	Mix_Chunk *temp = Mix_LoadWAV(identifier.c_str());
+	Mix_Chunk *temp = Mix_LoadWAV( identifier.c_str( ) );
 	return temp;
 }
 
-void Audio::playSound( string identifier )
+void Audio::playSound( int identifier )
 {
-	Mix_Chunk *sound = loadSound( identifier );
-	if ( Mix_PlayChannel( 1, sound, 0 ) == -1 )
-		cout << "ERROR: Failed to play sound" << endl;
-	Mix_FreeChunk( sound );
+	switch ( identifier )
+	{
+		case 1:
+			if ( Mix_PlayChannel( 1, UI_Button_click, 0 ) == -1 )
+				cout << "ERROR: Failed to play sound UI_Button_click" << endl;
+			break;
+		case 2:
+			if ( Mix_PlayChannel( 1, Game_readyGo, 0 ) == -1 )
+				cout << "ERROR: Failed to play sound Game_readyGo" << endl;
+			break;
+		case 3:
+			if ( Mix_PlayChannel( 1, Game_victory, 0 ) == -1 )
+				cout << "ERROR: Failed to play sound Game_victory" << endl;
+			break;
+		case 4:
+			if ( Mix_PlayChannel( 1, UI_Checkbox_click, 0 ) == -1 )
+				cout << "ERROR: Failed to play sound Game_victory" << endl;
+			break;
+		default:
+			break;
+	}
 }
 
 void Audio::playMusic( string identifier )
 {
-	Mix_Music *music = Mix_LoadMUS(identifier.c_str());
-	if( Mix_PlayMusic(music,1) == -1 )
+	Mix_Music *music = Mix_LoadMUS( identifier.c_str( ) );
+	if ( Mix_PlayMusic( music, 1 ) == -1 )
 		cout << "ERROR: Failed to play music" << endl;
-	Mix_FreeMusic(music);
+	Mix_FreeMusic( music );
 }

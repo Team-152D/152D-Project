@@ -43,25 +43,16 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	frame = 0;
 	direction = DIR_RIGHT;
 
+	cout << "DEBUG: (Projectile.cpp) set_clips()" << endl;
 	set_clips( );
 
-	//Load the sprite sheet
-	projectile_sprite_up = image->loadImage( "rsc\\game\\Shot.bmp" ); // move up
-	projectile_sprite_right = image->loadImage( "rsc\\game\\Shot.bmp" ); // move right
-	projectile_sprite_down = image->loadImage( "rsc\\game\\Shot.bmp" );// move down
-	projectile_sprite_left = image->loadImage( "rsc\\game\\Shot.bmp" ); // move left
-	if ( projectile_sprite_up == NULL || projectile_sprite_right == NULL || projectile_sprite_down == NULL || projectile_sprite_left == NULL )
-		cout << "Projectile sprite didn't load" << endl;
+	cout << "DEBUG: (Projectile.cpp) loading projectile sprite" << endl;
+	projectile_sprite = image->loadImage( "rsc\\game\\sprite_Shot.bmp" );
 }
 
 Projectile::~Projectile( )
 {
-	//Free the surface
-	SDL_FreeSurface( projectile_sprite_up );
-	SDL_FreeSurface( projectile_sprite_right );
-	SDL_FreeSurface( projectile_sprite_down );
-	SDL_FreeSurface( projectile_sprite_left );
-
+	SDL_FreeSurface( projectile_sprite );
 }
 
 void Projectile::apply_surface( int x, int y, SDL_Surface* source, SDL_Rect* clip )
@@ -116,7 +107,7 @@ void Projectile::update( )
         //0: Up 1: Right 2: Down 3: Left
 	
 
-    cout<<"updating projectile x"<<endl;
+    //cout<<"updating projectile x"<<endl;
     if ( xVel != 0 )
     {
 	xOffset += xVel;
@@ -131,7 +122,7 @@ void Projectile::update( )
 	else if ( xVel > 0 )
 	    direction = DIR_RIGHT;
     }
-    cout<<"updating projectile y"<<endl;
+    //cout<<"updating projectile y"<<endl;
     if ( yVel != 0 )
     {
 	yOffset += yVel;
@@ -159,7 +150,9 @@ void Projectile::draw( )
 	if ( frame > 3 )
 		frame = 0;
 
-	switch ( direction )
+	apply_surface( xOffset - 4, yOffset - 4, projectile_sprite, &spriteClips[frame] );
+	
+	/*switch ( direction )
 	{
 		case DIR_UP:
 			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_up, &spriteClips[frame] );
@@ -173,8 +166,7 @@ void Projectile::draw( )
 		case DIR_LEFT:
 			apply_surface( xOffset - 4, yOffset - 4, projectile_sprite_left, &spriteClips[frame] );
 			break;
-
-	}
+	}*/
 }
 
 int Projectile::getX( )
