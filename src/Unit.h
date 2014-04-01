@@ -24,8 +24,6 @@ public:
     }
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual void hit() = 0;
-    virtual void shooting() = 0;
 
     int getHealth() {return health;}
     int getX() {return xOffset + (size/2);}
