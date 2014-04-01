@@ -29,33 +29,21 @@ public:
     bool sight_check();
     bool hit(int, int, int);
     void shooting();
-    void die();
     void update();
     void draw();
-    
-    int getX();
-    int getY();
-    int getXVel();
-    int getYVel();
 private:
     void set_clips();
     //The dimensions of the image
     const int ENEMY_WIDTH = 32;
     const int ENEMY_HEIGHT = 32;
     
-    
-    
-    //whether the enemy is shooting at the player
-    bool shootingnow;
     //whether the enemy can "see" the player
     bool seesPlayer;
     bool knowsPlayerlocation;
-    bool dead;
     int losessighttimer;
 
     //current focus player
     Player* target;
-    Projectile* shoot;
     
     //The surfaces
     SDL_Surface *enemy_sprite_up = NULL;

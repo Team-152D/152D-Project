@@ -12,10 +12,9 @@ Player::Player( int x, int y )
 	xVel = 0;
 	yVel = 0;
 	speed = 8;
-        
-        shoot=NULL;
-        projectiles=NULL;
+        cooldown=0;
         dead=false;
+        size=32;
 
 	//Initialize animation variables
 	frame = 0;
@@ -65,6 +64,7 @@ void Player::input(char* cmd)
 }
 
 void Player::shooting(){
+    if(cooldown>0){cooldown--; return;}
     int shoot_direction;
     switch ( direction ){
 	case DIR_UP:
@@ -83,10 +83,11 @@ void Player::shooting(){
     
     int myX=getX();
     int myY=getY();
-    shoot;
+    Projectile* shoot;
     shoot=new Projectile(myX,myY,direction,0);
-    projectiles=currentLevelGlobal->getProjectiles();
+    vector<Projectile*>*  projectiles=currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);
+    cooldown=15;
 }
 
 bool Player::hit( int x, int y , int damage){
@@ -173,16 +174,6 @@ void Player::draw( )
 	}
 }
 
-int Player::getX( )
-{
-	return xOffset + 16;
-}
-
-int Player::getY( )
-{
-	return yOffset + 16;
-}
-
 void Player::set_clips( )
 {
 	//Clip the sprites Right move
@@ -205,22 +196,4 @@ void Player::set_clips( )
 	spriteClips[ 3 ].y = 0;
 	spriteClips[ 3 ].w = PLAYER_WIDTH;
 	spriteClips[ 3 ].h = PLAYER_HEIGHT;
-}
-
-int Player::getXVel( )
-{
-	return xVel;
-}
-
-int Player::getYVel( )
-{
-	return xVel;
-}
-
-int Player::getHP(){
-    return health;
-}
-
-bool Player::isAlive(){
-    return dead;
 }

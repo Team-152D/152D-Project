@@ -12,13 +12,15 @@ Enemy::Enemy(int x, int y)
     xVel = 0;
     yVel = 0;
     speed = 6;
+    cooldown =0;
+    dead=false;
+    size=32;
 
     //Initialize animation variables
     frame = 0;
     direction = DIR_RIGHT;
 
     seesPlayer=false;
-    dead=false;
     knowsPlayerlocation=false;
     
     losessighttimer=0;
@@ -177,8 +179,8 @@ bool Enemy::sight_check(){
             else if(difficulty=="Medium"||difficulty=="Hard"){
                 Player* one=currentLevelGlobal->getPlayer(1);
                 Player* two=currentLevelGlobal->getPlayer(2);
-                int hp1 = one->getHP();
-                int hp2 = two->getHP();
+                int hp1 = one->getHealth();
+                int hp2 = two->getHealth();
                 if(hp1>=hp2)
                     target=one;
                 else
@@ -190,6 +192,8 @@ bool Enemy::sight_check(){
 }
 
 void Enemy::shooting(){
+    if(cooldown>0){cooldown--; return;}
+    
     int shoot_direction=0;
     switch ( direction ){
 	case DIR_UP:
@@ -211,6 +215,7 @@ void Enemy::shooting(){
     Projectile* shoot=new Projectile(myX,myY,shoot_direction,1);
     vector<Projectile*>* projectiles = currentLevelGlobal->getProjectiles();
     projectiles->push_back(shoot);
+    cooldown=15;
 }
 
 bool Enemy::hit(int x, int y, int damage){
@@ -223,11 +228,6 @@ bool Enemy::hit(int x, int y, int damage){
     if(hit==true)
         health-=damage;
     return hit;
-}
-
-void Enemy::die(){
-    
-    if(health<=0) dead=true;
 }
 
 void Enemy::update()
@@ -298,16 +298,6 @@ void Enemy::draw()
     }
 }
 
-int Enemy::getX()
-{
-    return xOffset + 16;
-}
-
-int Enemy::getY()
-{
-    return yOffset + 16;
-}
-
 void Enemy::set_clips()
 {
     //Clip the sprites Right move
@@ -330,14 +320,4 @@ void Enemy::set_clips()
     spriteClips[ 3 ].y = 0;
     spriteClips[ 3 ].w = ENEMY_WIDTH;
     spriteClips[ 3 ].h = ENEMY_HEIGHT;
-}
-
-int Enemy::getXVel()
-{
-    return xVel;
-}
-
-int Enemy::getYVel()
-{
-    return xVel;
 }

@@ -24,10 +24,15 @@ public:
     }
     virtual void update() = 0;
     virtual void draw() = 0;
+    virtual void hit() = 0;
+    virtual void shooting() = 0;
 
-    int getHealth() {
-        return health;
-    }
+    int getHealth() {return health;}
+    int getX() {return xOffset + (size/2);}
+    int getY() {return yOffset + (size/2);}
+    int getXVel() {return xVel;}
+    int getYVel() {return yVel;}
+    bool isAlive() {return dead;}
 protected:
     int health; //unit health percentage
     int xOffset; //the x offset
@@ -39,6 +44,9 @@ protected:
     int speed;
     int frame; //its current frame
     int direction; //its animation status
+    int cooldown;
+    bool dead;
+    int size;
 };
 
 #endif

@@ -28,22 +28,11 @@ public:
     bool hit(int, int, int);
     void update();
     void draw();
-    
-    int getX();
-    int getY();
-    int getXVel();
-    int getYVel();
-    int getHP();
-    bool isAlive();
 private:
     void set_clips();
     //The dimensions of the image
     const int PLAYER_WIDTH = 32;
     const int PLAYER_HEIGHT = 32;
-    bool dead;
-    
-    Projectile* shoot;
-    vector<Projectile*>* projectiles;
     
     //The surfaces
     SDL_Surface *player_sprite_up = NULL;

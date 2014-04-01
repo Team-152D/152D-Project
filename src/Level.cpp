@@ -55,18 +55,20 @@ void Level::update( )
     
     for(int i=0; i<enemies->size();i++){
         Epointer = enemies->at(i);
-        Epointer->update();
+        isdead=Epointer->isAlive();
+        if(isdead==true)
+            enemies->erase(enemies->begin()+i);
+        else
+            Epointer->update();
         }
     bool hit=false;
     for(int j=0; j<projectiles->size();j++){
         Ppointer = projectiles->at(j);
         hit=Ppointer->checkhit();
-        if(hit==true){
+        if(hit==true)
             projectiles->erase(projectiles->begin()+j);
-        }
-        else{
+        else
             Ppointer->update();
-        }
     }
 }
 
