@@ -17,7 +17,7 @@ class Game;
 
 using namespace std;
 
-class Sight : public Unit
+class Sight
 {
 public:
     //starting locations, direction and team ID
@@ -52,6 +52,16 @@ private:
     
     int shooting_direction;
     int teamID;
+    
+    int xOffset; //the x offset
+    int yOffset; //the y offset
+    int xPos;
+    int yPos;
+    int xVel; //the x velocity
+    int yVel; //the y velocity
+    int speed;
+    int frame; //its current frame
+    int direction; //its animation status
 };
 
 #endif

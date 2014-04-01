@@ -140,3 +140,4 @@ int Sight::getYVel( )
 {
 	return xVel;
 }
+
