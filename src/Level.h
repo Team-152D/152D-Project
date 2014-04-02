@@ -12,6 +12,8 @@
 #include "Projectile.h"
 #include "Global.h"
 #include "Game.h"
+#include "Unit.h"
+#include "Mover.h"
 
 using namespace std;
 
@@ -25,8 +27,8 @@ public:
     void draw();
     
     Player* getPlayer(int);
-    vector<Enemy*>* getEnemies();
-    vector<Projectile*>* getProjectiles();
+    vector<Mover*>* getMovers();
+    vector<Unit*>* getCharacters();
     bool isMultiplayer();
     string getDifficulty();
     
@@ -39,8 +41,8 @@ private:
     Grid* grid;
     Player* player1;
     Player* player2;
-    vector<Enemy*>* enemies;
-    vector<Projectile*>* projectiles;
+    vector<Unit*>* characters;
+    vector<Mover*>* movers;
     
     string difficulty;
     

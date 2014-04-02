@@ -5,23 +5,27 @@ Level::Level( int levelNumber )
 	multiplayer = currentGameGlobal->multiPlayer;
 	loadLevel( levelNumber );
 
-	player1 = new Player( p1Spawn.x, p1Spawn.y );
-	if ( multiplayer )
-		player2 = new Player( p2Spawn.x, p2Spawn.y );
+    characters = new vector<Unit*>;
+    movers = new vector<Mover*>;
+        
+	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
+        characters->push_back(player1);
+	if ( multiplayer ){
+		player2 = new Player( p2Spawn.x, p2Spawn.y,0);
+                characters->push_back(player2);
+                }
 	else
 		player2 = NULL;
-
-    enemies = new vector<Enemy*>;
-    projectiles = new vector<Projectile*>;    
+        
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
-    Enemy* tester = new Enemy(espawn.x,espawn.y);
-    enemies->push_back(tester);
+    Enemy* tester = new Enemy(espawn.x,espawn.y,1);
+    characters->push_back(tester);
 }
 
-vector<Enemy*>* Level::getEnemies(){return enemies;}
+vector<Mover*>* Level::getMovers(){return movers;}
 
-vector<Projectile*>* Level::getProjectiles(){return projectiles;}
+vector<Unit*>* Level::getCharacters(){return characters;}
 
 string Level::getDifficulty(){return difficulty;}
 
@@ -41,60 +45,45 @@ void Level::input( char *inP1, char *inP2 )
 
 void Level::update( )
 {
-    Enemy* Epointer;
-    Projectile* Ppointer;
+    Unit* Upointer;
+    Mover* Mpointer;
+    bool isdead;
     
-    bool isdead=player1->isAlive();
-    if(isdead==false)
-    player1 -> update();
-    if ( multiplayer ){
-	isdead=player2->isAlive();
-        if(isdead==false)
-        player2 -> update();
-        }
-    
-    for(int i=0; i<enemies->size();i++){
-        Epointer = enemies->at(i);
-        isdead=Epointer->isAlive();
+    for(int i=0; i<characters->size();i++){
+        Upointer = characters->at(i);
+        isdead=Upointer->isAlive();
         if(isdead==true)
-            enemies->erase(enemies->begin()+i);
+            characters->erase(characters->begin()+i);
         else
-            Epointer->update();
+            Upointer->update();
         }
     bool hit=false;
-    for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles->at(j);
-        hit=Ppointer->checkhit();
+    for(int j=0; j<movers->size();j++){
+        Mpointer = movers->at(j);
+        hit=Mpointer->checkhit();
         if(hit==true)
-            projectiles->erase(projectiles->begin()+j);
+            movers->erase(movers->begin()+j);
         else
-            Ppointer->update();
+            Mpointer->update();
     }
 }
 
 void Level::draw( )
 {
-	grid -> drawGrid( );
+    grid -> drawGrid( );
 
-    Enemy* Epointer;
-    Projectile* Ppointer;
+    Unit* Upointer;
+    Mover* Mpointer;
+    bool isdead;
     
-    bool isdead=player1->isAlive();
-    if(isdead==false)
-    player1 -> draw();
-    if ( multiplayer ){
-	isdead=player2->isAlive();
-        if(isdead==false)
-        player2 -> draw();
+    for(int i=0; i<characters->size();i++){
+        Upointer = characters->at(i);
+        isdead=Upointer->isAlive();
+        if(isdead==false) Upointer->draw();
         }
-    
-    for(int i=0; i<enemies->size();i++){
-        Epointer = enemies->at(i);
-        Epointer->draw();
-        }
-    for(int j=0; j<projectiles->size();j++){
-        Ppointer = projectiles->at(j);
-        Ppointer->draw();
+    for(int j=0; j<movers->size();j++){
+        Mpointer = movers->at(j);
+        Mpointer->draw();
         }
 }
 

@@ -9,6 +9,7 @@ Sight::Sight( int x, int y, int d, int ID )
 	xPos = xOffset + 16;
 	yPos = yOffset + 16;
 	speed = 16;
+        size = 16;
 
         //direction: 0: Up 1: Right 2: Down 3: Left
         switch (d)
@@ -40,9 +41,6 @@ Sight::Sight( int x, int y, int d, int ID )
         max_length=xPos+100;
         min_length=xPos-100;
         
-        hit_something=false;
-        hit_player=false;
-        
 	SIGHT_WIDTH = 32;
 	SIGHT_HEIGHT = 32;
         
@@ -61,22 +59,20 @@ string Sight::hit(){
     int myX=getX();
     int myY=getY();
     bool has_hit;
+    vector<Unit*>* characters = currentLevelGlobal->getCharacters();
+    Unit* Upointer;
     
-    if(teamID==1){
-        Player* current = currentLevelGlobal->getPlayer(1);
-        has_hit=current->hit(myX,myY,damage);
-        if(has_hit==true)
-        return "Player 1";
-        
-        bool multiplayer=currentLevelGlobal->isMultiplayer();
-        if (multiplayer){
-            Player* current = currentLevelGlobal->getPlayer(2);
-            has_hit=current->hit(myX,myY,damage);
-            if(has_hit==true)
-            return "Player 2";
+    for(int i=0;i<characters->size();i++){
+        Upointer=characters->at(i);
+        if(teamID!=Upointer->myside()){
+            has_hit=Upointer->hit(myX,myY,damage);
+            if(has_hit==true){
+                if(i==0) return "Player 1";
+                else return "Player 2";
+            }
         }
-    } 
-    return "nohit";
+    }
+    return "no hit";
 }
 
 string Sight::look(){
@@ -118,26 +114,6 @@ string Sight::look(){
         return result;
 }
 
-void Sight::update(){}
-void Sight::draw(){}
-
-int Sight::getX( )
-{
-	return xOffset + 16;
-}
-
-int Sight::getY( )
-{
-	return yOffset + 16;
-}
-
-int Sight::getXVel( )
-{
-	return xVel;
-}
-
-int Sight::getYVel( )
-{
-	return xVel;
-}
+void Sight::update(){return;}
+void Sight::draw(){return;}
 

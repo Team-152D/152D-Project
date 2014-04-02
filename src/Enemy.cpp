@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "Game.h"
 //
-Enemy::Enemy(int x, int y)
+Enemy::Enemy(int x, int y, int ID)
 {
     //Initialize movement variables
     health = 100;
@@ -15,6 +15,7 @@ Enemy::Enemy(int x, int y)
     cooldown =0;
     dead=false;
     size=32;
+    teamID=ID;
 
     //Initialize animation variables
     frame = 0;
@@ -25,7 +26,10 @@ Enemy::Enemy(int x, int y)
     
     losessighttimer=0;
     
-    target = currentLevelGlobal->getPlayer(1);
+    player1 = currentLevelGlobal->getPlayer(1);
+    if(currentLevelGlobal->isMultiplayer()) 
+        player2 = currentLevelGlobal->getPlayer(2);
+    target = player1;
     
     set_clips();
 
@@ -169,22 +173,20 @@ bool Enemy::sight_check(){
 	    break;
     }
     
-    if(canisee=="Player 1"){target=currentLevelGlobal->getPlayer(1); return true;}
-    else if(canisee=="Player 2"){target=currentLevelGlobal->getPlayer(2); return true;}
+    if(canisee=="Player 1"){target=player1; return true;}
+    else if(canisee=="Player 2"){target=player2; return true;}
     else if(canisee=="Both Players"){
         string difficulty=currentLevelGlobal->getDifficulty();
             if(difficulty=="Easy"){
-                target=currentLevelGlobal->getPlayer(1);
+                target=player1;
             }
             else if(difficulty=="Medium"||difficulty=="Hard"){
-                Player* one=currentLevelGlobal->getPlayer(1);
-                Player* two=currentLevelGlobal->getPlayer(2);
-                int hp1 = one->getHealth();
-                int hp2 = two->getHealth();
+                int hp1 = player1->getHealth();
+                int hp2 = player2->getHealth();
                 if(hp1>=hp2)
-                    target=one;
+                    target=player1;
                 else
-                    target=two;
+                    target=player2;
             }
         return true;
     }
@@ -212,8 +214,9 @@ void Enemy::shooting(){
     
     int myX=getX();
     int myY=getY();
-    Projectile* shoot=new Projectile(myX,myY,shoot_direction,1);
-    vector<Projectile*>* projectiles = currentLevelGlobal->getProjectiles();
+    Projectile* shoot;
+    shoot=new Projectile(myX,myY,direction,0);
+    vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=15;
 }

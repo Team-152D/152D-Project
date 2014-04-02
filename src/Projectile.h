@@ -2,6 +2,7 @@
 #define	PROJECTILE_H
 //
 #include "Unit.h"
+#include "Mover.h"
 #include "Global.h"
 #include <string>
 #include "SDL2/SDL_ttf.h"
@@ -10,14 +11,12 @@
 #include "Global.h"
 #include <vector>
 #include <cstdlib>
-class Enemy;
-class Player;
 
 class Game;
 
 using namespace std;
 
-class Projectile : public Unit
+class Projectile : public Mover
 {
 public:
     //starting locations, direction and team ID
@@ -26,26 +25,13 @@ public:
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void hit();
-    bool checkhit();
     void update();
     void draw();
-    
-    int getX();
-    int getY();
-    int getXVel();
-    int getYVel();
 private:
     void set_clips();
     //The dimensions of the image
     int PROJECTILE_WIDTH;
     int PROJECTILE_HEIGHT;
-    
-    int teamID;
-    int damage;
-    
-    bool hitsomething;
-    
-    vector<Enemy*>* enemies;
 
     //The surfaces
     SDL_Surface *projectile_sprite_up = NULL;

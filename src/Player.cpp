@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player( int x, int y )
+Player::Player( int x, int y, int ID)
 {
 	//Initialize movement variables
 	health = 100;
@@ -15,6 +15,7 @@ Player::Player( int x, int y )
         cooldown=0;
         dead=false;
         size=32;
+        teamID=ID;
 
 	//Initialize animation variables
 	frame = 0;
@@ -85,7 +86,7 @@ void Player::shooting(){
     int myY=getY();
     Projectile* shoot;
     shoot=new Projectile(myX,myY,direction,0);
-    vector<Projectile*>*  projectiles=currentLevelGlobal->getProjectiles();
+    vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=15;
 }

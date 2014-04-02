@@ -9,6 +9,9 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	xPos = xOffset + 8;
 	yPos = yOffset + 8;
 	speed = 8;
+        size=16;
+        teamID = ID;
+        damage=10;
         
 	//direction: 0: Up 1: Right 2: Down 3: Left
         switch (d)
@@ -31,11 +34,6 @@ Projectile::Projectile( int x, int y, int d, int ID )
 		break;
 	}
 
-	//ID: 0=player, 1=enemy
-	teamID = ID;
-
-        damage=10;
-        
 	PROJECTILE_WIDTH = 16;
 	PROJECTILE_HEIGHT = 16;
         
@@ -83,34 +81,18 @@ void Projectile::hit(){
     int myX=getX();
     int myY=getY();
     bool has_hit;
+    vector<Unit*>* characters = currentLevelGlobal->getCharacters();
+    Unit* Upointer;
     
-    if(teamID==1){
-        Player* current = currentLevelGlobal->getPlayer(1);
-        has_hit=current->hit(myX,myY,damage);
-        if(has_hit==true)
-            hitsomething=true;
-        
-        bool multiplayer=currentLevelGlobal->isMultiplayer();
-        if (multiplayer){
-            Player* current = currentLevelGlobal->getPlayer(2);
-            has_hit=current->hit(myX,myY,damage);
-            if(has_hit==true)
-                hitsomething=true;
-        }
-    }
-    else if (teamID==0){
-        Enemy* current;
-        enemies=currentLevelGlobal->getEnemies();
-        for(int i=0; i<enemies->size();i++){
-            current=enemies->at(i);
-            has_hit=current->hit(myX,myY,damage);
+    for(int i=0;i<characters->size();i++){
+        Upointer=characters->at(i);
+        if(teamID!=Upointer->myside()){
+            has_hit=Upointer->hit(myX,myY,damage);
             if(has_hit==true)
                 hitsomething=true;
         }
     }
 }
-
-bool Projectile::checkhit(){return hitsomething;}
 
 void Projectile::update( )
 {
@@ -172,16 +154,6 @@ void Projectile::draw( )
 	}
 }
 
-int Projectile::getX( )
-{
-	return xOffset + 4;
-}
-
-int Projectile::getY( )
-{
-	return yOffset + 4;
-}
-
 void Projectile::set_clips( )
 {
 	//Clip the sprites Right move
@@ -204,14 +176,4 @@ void Projectile::set_clips( )
 	spriteClips[ 3 ].y = 0;
 	spriteClips[ 3 ].w = PROJECTILE_WIDTH;
 	spriteClips[ 3 ].h = PROJECTILE_HEIGHT;
-}
-
-int Projectile::getXVel( )
-{
-	return xVel;
-}
-
-int Projectile::getYVel( )
-{
-	return xVel;
 }

@@ -3,6 +3,7 @@
 //
 #include "Unit.h"
 #include "Global.h"
+#include "Mover.h"
 #include <string>
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_image.h"
@@ -11,13 +12,11 @@
 #include <vector>
 #include <cstdlib>
 
-class Enemy;
-class Player;
 class Game;
 
 using namespace std;
 
-class Sight
+class Sight : public Mover
 {
 public:
     //starting locations, direction and team ID
@@ -28,11 +27,6 @@ public:
     void update();
     void draw();
     string look();
-    
-    int getX();
-    int getY();
-    int getXVel();
-    int getYVel();
 private:
     //The dimensions of the image
     int SIGHT_WIDTH;
@@ -43,25 +37,9 @@ private:
     int max_height;
     int min_height;
     
-    bool hit_something;
-    bool hit_player;
-    
     string result;
     
-    int damage;
-    
     int shooting_direction;
-    int teamID;
-    
-    int xOffset; //the x offset
-    int yOffset; //the y offset
-    int xPos;
-    int yPos;
-    int xVel; //the x velocity
-    int yVel; //the y velocity
-    int speed;
-    int frame; //its current frame
-    int direction; //its animation status
 };
 
 #endif

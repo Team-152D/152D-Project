@@ -19,7 +19,7 @@ using namespace std;
 class Player : public Unit
 {
 public:
-    Player(int,int);
+    Player(int,int,int);
     ~Player();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
@@ -28,6 +28,7 @@ public:
     bool hit(int, int, int);
     void update();
     void draw();
+    
 private:
     void set_clips();
     //The dimensions of the image

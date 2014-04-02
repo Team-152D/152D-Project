@@ -21,7 +21,7 @@ using namespace std;
 class Enemy : public Unit
 {
 public:
-    Enemy(int,int);
+    Enemy(int,int,int);
     ~Enemy();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
@@ -31,6 +31,7 @@ public:
     void shooting();
     void update();
     void draw();
+    
 private:
     void set_clips();
     //The dimensions of the image
@@ -43,6 +44,8 @@ private:
     int losessighttimer;
 
     //current focus player
+    Player* player1;
+    Player* player2;
     Player* target;
     
     //The surfaces

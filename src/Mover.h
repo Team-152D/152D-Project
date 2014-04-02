@@ -1,5 +1,5 @@
-#ifndef UNIT_H
-#define	UNIT_H
+#ifndef MOVER_H
+#define	MOVER_H
 
 #include <iostream>
 #include "SDL2/SDL.h"
@@ -7,34 +7,23 @@
 #include <string>
 using namespace std;
 
-// Unit (Global characteristics for players and enemies)
-
-const int DIR_UP = 1200;
-const int DIR_RIGHT = 300;
-const int DIR_DOWN = 600;
-const int DIR_LEFT = 900;
-
-class Unit {
+class Mover {
 public:
 
-    Unit() {
+    Mover() {
     }
 
-    ~Unit() {
+    ~Mover() {
     }
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual bool hit(int, int, int) = 0;
 
-    int getHealth() {return health;}
     int getX() {return xOffset + (size/2);}
     int getY() {return yOffset + (size/2);}
     int getXVel() {return xVel;}
     int getYVel() {return yVel;}
-    bool isAlive() {return dead;}
-    int myside() {return teamID;}
+    bool checkhit() {return hitsomething;}
 protected:
-    int health; //unit health percentage
     int xOffset; //the x offset
     int yOffset; //the y offset
     int xPos;
@@ -44,10 +33,10 @@ protected:
     int speed;
     int frame; //its current frame
     int direction; //its animation status
-    int cooldown;
-    bool dead;
+    bool hitsomething;
     int size;
     int teamID;
+    int damage;
 };
 
 #endif
