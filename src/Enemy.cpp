@@ -23,6 +23,8 @@ Enemy::Enemy(int x, int y, int ID)
 
     seesPlayer=false;
     knowsPlayerlocation=false;
+    patroldirection=0;
+    patrolsteps=0;
     
     losessighttimer=0;
     
@@ -66,7 +68,6 @@ void Enemy::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Enemy::AI(){
-    //knowsPlayerlocation=true;
     if(knowsPlayerlocation==false){
         seesPlayer=sight_check();
         if(seesPlayer==true){knowsPlayerlocation=true;}
@@ -76,6 +77,30 @@ void Enemy::AI(){
                 knowsPlayerlocation=false;
                 target=NULL;
             }
+        }
+        else{
+            if(patrolsteps<=0){
+                patroldirection= rand() % 4 + 1;
+                patrolsteps=20;
+            }
+            
+            switch (patroldirection)
+	    {
+	        case 1:
+		    yVel += speed;
+	        break;
+	        case 2:
+		    xVel += speed;
+		break;
+	        case 3:
+		    yVel += speed;
+		break;
+	        case 4:
+		    xVel += speed;
+		break;
+	    }
+            
+            patrolsteps--;
         }
     }
     else{
@@ -87,11 +112,11 @@ void Enemy::AI(){
     
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
         if(distance>=100){
-            if(myY<playerY+20) yVel += speed;
-            else if(myY>playerY+20) yVel -= speed;
+            if(myY<playerY+20) yVel += (speed/2);
+            else if(myY>playerY+20) yVel -= (speed/2);
             
-            if(myX<playerX+20) xVel += speed;
-            else if(myX>playerX+20) xVel -= speed;
+            if(myX<playerX+20) xVel += (speed/2);
+            else if(myX>playerX+20) xVel -= (speed/2);
         }
         else{yVel=0;xVel=0;}
         if(distance<=200){shooting();}
@@ -172,6 +197,8 @@ bool Enemy::sight_check(){
                 }
 	    break;
     }
+    if(canisee!="")
+        patrolsteps=0;
     
     if(canisee=="Player 1"){target=player1; return true;}
     else if(canisee=="Player 2"){target=player2; return true;}
@@ -184,9 +211,9 @@ bool Enemy::sight_check(){
                 int hp1 = player1->getHealth();
                 int hp2 = player2->getHealth();
                 if(hp1>=hp2)
-                    target=player1;
-                else
                     target=player2;
+                else
+                    target=player1;
             }
         return true;
     }
@@ -236,14 +263,19 @@ bool Enemy::hit(int x, int y, int damage){
 void Enemy::update()
 {
     AI();
+    
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
+        if(knowsPlayerlocation==false){
+            xVel=xVel/2;
+        }
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0 ||
 		xOffset + 16 >= Global::GAME_WIDTH ||
-		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
-	    xOffset -= xVel;
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
+                currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ){
+	    xOffset -= xVel; patrolsteps=0;}
 	if ( xVel < 0 )
 	    direction = DIR_LEFT;
 	else if ( xVel > 0 )
@@ -252,11 +284,15 @@ void Enemy::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
+        if(knowsPlayerlocation==false){
+            yVel=yVel/2;
+        }
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0 ||
 		yOffset + 16 >= Global::GAME_HEIGHT ||
-		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 )
-	    yOffset -= yVel;
+		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
+                currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5){
+	    yOffset -= yVel; patrolsteps=0;}
 	if ( yVel < 0 )
 	    direction = DIR_UP;
 	else if ( yVel > 0 )
