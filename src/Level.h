@@ -14,6 +14,7 @@
 #include "Game.h"
 #include "Unit.h"
 #include "Mover.h"
+#include "Gate.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ public:
     Player* getPlayer(int);
     vector<Mover*>* getMovers();
     vector<Unit*>* getCharacters();
+    vector<Gate*>* getGates();
     bool isMultiplayer();
     string getDifficulty();
     
@@ -43,6 +45,7 @@ private:
     Player* player2;
     vector<Unit*>* characters;
     vector<Mover*>* movers;
+    vector<Gate*>* gates;
     
     string difficulty;
     

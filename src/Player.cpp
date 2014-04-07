@@ -107,6 +107,18 @@ bool Player::hit( int x, int y , int damage){
     return hit;
 }
 
+bool Player::checkGates(int x, int y){
+    bool stop=false;
+    vector<Gate*>* gates=currentLevelGlobal->getGates();
+    Gate* gpointer;
+    for(int i=0;i<gates->size();i++){
+        gpointer=gates->at(i);
+        if(gpointer->collision(x,y)==true)
+            stop=true;
+    }
+    return stop;
+}
+
 void Player::update( )
 {
 	//cout << "updating x" << endl;
@@ -115,7 +127,8 @@ void Player::update( )
 		xOffset += xVel;
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
+			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
+                         checkGates(xOffset+16, yOffset+16))
 			xOffset -= xVel;
 		if ( xVel < 0 )
 			direction = DIR_LEFT;
@@ -128,7 +141,8 @@ void Player::update( )
 		yOffset += yVel;
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
+			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
+                         checkGates(xOffset+16, yOffset+16))
 			yOffset -= yVel;
 		if ( yVel < 0 )
 			direction = DIR_UP;

@@ -7,6 +7,7 @@ Level::Level( int levelNumber )
 
     characters = new vector<Unit*>;
     movers = new vector<Mover*>;
+    gates = new vector<Gate*>;
         
 	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
         characters->push_back(player1);
@@ -26,6 +27,8 @@ Level::Level( int levelNumber )
 vector<Mover*>* Level::getMovers(){return movers;}
 
 vector<Unit*>* Level::getCharacters(){return characters;}
+
+vector<Gate*>* Level::getGates(){return gates;}
 
 string Level::getDifficulty(){return difficulty;}
 

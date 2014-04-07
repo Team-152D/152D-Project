@@ -28,9 +28,11 @@ public:
     void AI();
     bool sight_check();
     bool hit(int, int, int);
+    bool checkGates(int, int);
     void shooting();
     void update();
     void draw();
+    
     
 private:
     void set_clips();

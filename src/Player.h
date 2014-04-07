@@ -26,6 +26,7 @@ public:
     void input(char*);
     void shooting();
     bool hit(int, int, int);
+    bool checkGates(int, int);
     void update();
     void draw();
     
