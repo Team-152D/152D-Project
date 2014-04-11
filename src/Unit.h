@@ -5,6 +5,9 @@
 #include "SDL2/SDL.h"
 #include "Timer.h"
 #include <string>
+#include "Mover.h"
+#include "Gate.h"
+#include "Switch.h"
 using namespace std;
 
 // Unit (Global characteristics for players and enemies)

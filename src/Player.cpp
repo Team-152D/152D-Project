@@ -119,8 +119,19 @@ bool Player::checkGates(int x, int y){
     return stop;
 }
 
+void Player::checkSwitches(int x, int y){
+    vector<Switch*>* switches=currentLevelGlobal->getSwitches();
+    Switch* spointer;
+    for(int i=0;i<switches->size();i++){
+        spointer=switches->at(i);
+        if(spointer->collision(x,y)==true)
+            spointer->down();
+    }
+}
+
 void Player::update( )
 {
+    checkSwitches(xOffset+16,yOffset+16);
 	//cout << "updating x" << endl;
 	if ( xVel != 0 )
 	{

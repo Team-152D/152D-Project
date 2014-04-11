@@ -11,7 +11,6 @@
 #include <cmath>
 
 class Projectile;
-class Enemy;
 class Game;
 
 using namespace std;
@@ -27,6 +26,7 @@ public:
     void shooting();
     bool hit(int, int, int);
     bool checkGates(int, int);
+    void checkSwitches(int, int);
     void update();
     void draw();
     

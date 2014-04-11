@@ -68,7 +68,7 @@ string Sight::hit(){
             has_hit=Upointer->hit(myX,myY,damage);
             if(has_hit==true){
                 if(i==0) return "Player 1";
-                else return "Player 2";
+                else if(Upointer->myside()==0) return "Player 2";
             }
         }
     }

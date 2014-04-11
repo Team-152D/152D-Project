@@ -8,6 +8,7 @@ Level::Level( int levelNumber )
     characters = new vector<Unit*>;
     movers = new vector<Mover*>;
     gates = new vector<Gate*>;
+    switches = new vector<Switch*>;
         
 	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
         characters->push_back(player1);
@@ -20,7 +21,7 @@ Level::Level( int levelNumber )
         
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
-    Enemy* tester = new Enemy(espawn.x,espawn.y,1);
+    Guard* tester = new Guard(espawn.x,espawn.y,1);
     characters->push_back(tester);
 }
 
@@ -29,6 +30,8 @@ vector<Mover*>* Level::getMovers(){return movers;}
 vector<Unit*>* Level::getCharacters(){return characters;}
 
 vector<Gate*>* Level::getGates(){return gates;}
+
+vector<Switch*>* Level::getSwitches(){return switches;}
 
 string Level::getDifficulty(){return difficulty;}
 
@@ -187,7 +190,7 @@ void Level::loadLevel( int level )
 	cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"
 		<< "Endzone = (" << endzone.x << "," << endzone.y << ")"
-                << "Enemy = (" << espawn.x << "," << espawn.y << ")" <<endl;
+                << "Guard = (" << espawn.x << "," << espawn.y << ")" <<endl;
 
 	this->grid = new Grid( temp );
 	cout << "DEBUG: Level file loaded" << endl;
