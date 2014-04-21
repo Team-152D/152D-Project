@@ -16,6 +16,7 @@ Guard::Guard(int x, int y, int ID)
     dead=false;
     size=32;
     teamID=ID;
+    ammo=0;
 
     //Initialize animation variables
     frame = 0;

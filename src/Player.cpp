@@ -16,6 +16,7 @@ Player::Player( int x, int y, int ID)
         dead=false;
         size=32;
         teamID=ID;
+        ammo=15;
 
 	//Initialize animation variables
 	frame = 0;
@@ -66,6 +67,7 @@ void Player::input(char* cmd)
 
 void Player::shooting(){
     if(cooldown>0){cooldown--; return;}
+    else if(ammo<=0){return;}
     int shoot_direction;
     switch ( direction ){
 	case DIR_UP:
@@ -89,6 +91,7 @@ void Player::shooting(){
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=15;
+    ammo--;
 }
 
 bool Player::hit( int x, int y , int damage){

@@ -34,6 +34,8 @@ public:
     int getY() {return yOffset + (size/2);}
     int getXVel() {return xVel;}
     int getYVel() {return yVel;}
+    int getammo() {return ammo;}
+    int setammo(int in) {ammo+=in;}
     bool isAlive() {return dead;}
     int myside() {return teamID;}
 protected:
@@ -51,6 +53,7 @@ protected:
     bool dead;
     int size;
     int teamID;
+    int ammo;
 };
 
 #endif

@@ -21,7 +21,7 @@ public:
     Player(int,int,int);
     ~Player();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
-    
+  
     void input(char*);
     void shooting();
     bool hit(int, int, int);

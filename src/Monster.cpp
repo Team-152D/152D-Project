@@ -11,12 +11,13 @@ Monster::Monster(int x, int y, int ID)
     yPos = yOffset + 16;
     xVel = 0;
     yVel = 0;
-    speed = 10;
+    speed = 6;
     cooldown =0;
     dead=false;
     size=32;
     teamID=ID;
     damage=15;
+    ammo=0;
 
     //Initialize animation variables
     frame = 0;

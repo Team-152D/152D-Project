@@ -9,6 +9,7 @@ Level::Level( int levelNumber )
     movers = new vector<Mover*>;
     gates = new vector<Gate*>;
     switches = new vector<Switch*>;
+    powerups = new vector<Powerup*>;
         
 	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
         characters->push_back(player1);
@@ -33,6 +34,8 @@ vector<Gate*>* Level::getGates(){return gates;}
 
 vector<Switch*>* Level::getSwitches(){return switches;}
 
+vector<Powerup*>* Level::getPowerups(){return powerups;}
+
 string Level::getDifficulty(){return difficulty;}
 
 bool Level::isMultiplayer(){return multiplayer;}
@@ -53,6 +56,10 @@ void Level::update( )
 {
     Unit* Upointer;
     Mover* Mpointer;
+    Gate* Gpointer;
+    Switch* Spointer;
+    Powerup* Ppointer;
+    
     bool isdead;
     
     for(int i=0; i<characters->size();i++){
@@ -72,6 +79,23 @@ void Level::update( )
         else
             Mpointer->update();
     }
+    for(int j=0; j<gates->size();j++){
+        Gpointer = gates->at(j);
+        Gpointer->update();
+    }
+    for(int j=0; j<switches->size();j++){
+        Spointer = switches->at(j);
+        Spointer->update();
+    }
+    bool grabbed;
+    for(int j=0; j<powerups->size();j++){
+        Ppointer = powerups->at(j);
+        grabbed=Ppointer->status();
+        if(grabbed==true)
+            powerups->erase(powerups->begin()+j);
+        else
+            Ppointer->update();
+    }
 }
 
 void Level::draw( )
@@ -80,6 +104,9 @@ void Level::draw( )
 
     Unit* Upointer;
     Mover* Mpointer;
+    Gate* Gpointer;
+    Switch* Spointer;
+    Powerup* Ppointer;
     bool isdead;
     
     for(int i=0; i<characters->size();i++){
@@ -91,6 +118,29 @@ void Level::draw( )
         Mpointer = movers->at(j);
         Mpointer->draw();
         }
+        for(int j=0; j<gates->size();j++){
+        Gpointer = gates->at(j);
+        Gpointer->draw();
+    }
+    for(int j=0; j<switches->size();j++){
+        Spointer = switches->at(j);
+        Spointer->draw();
+    }
+    for(int j=0; j<powerups->size();j++){
+        Ppointer = powerups->at(j);
+        Ppointer->draw();
+    }
+    
+    ostringstream sstream;
+    sstream << "Ammo (Player 1) = " << player1->getammo();
+
+    text->writeText( 0, 0, sstream.str( ).c_str( ), 36 );
+    sstream.str( string( ) );
+
+    if(multiplayer==true){
+        sstream << "Ammo (Player 2) = " << player2->getammo();
+        text->writeText( 0, 50, sstream.str( ).c_str( ), 36 );
+    }
 }
 
 Player* Level::getPlayer( int player )
