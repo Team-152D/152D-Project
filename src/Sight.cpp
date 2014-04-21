@@ -56,8 +56,6 @@ Sight::Sight( int x, int y, int d, int ID )
 Sight::~Sight( ){}
 
 string Sight::hit(){
-    int myX=getX();
-    int myY=getY();
     bool has_hit;
     vector<Unit*>* characters = currentLevelGlobal->getCharacters();
     Unit* Upointer;
@@ -65,7 +63,7 @@ string Sight::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(myX,myY,damage);
+            has_hit=Upointer->hit(xOffset,yOffset,damage);
             if(has_hit==true){
                 if(i==0) return "Player 1";
                 else if(Upointer->myside()==0) return "Player 2";

@@ -13,7 +13,7 @@ Monster::Monster(int x, int y, int ID)
     yVel = 0;
     speed = 6;
     cooldown =0;
-    dead=false;
+    alive=true;
     size=32;
     teamID=ID;
     damage=15;
@@ -75,7 +75,7 @@ void Monster::AI(){
         if(seesPlayer==true){knowsPlayerlocation=true;}
         else if(seesPlayer==false&&knowsPlayerlocation==true){
             losessighttimer++;
-            if(losessighttimer>=(1*30)){
+            if(losessighttimer>=(2*30)){
                 knowsPlayerlocation=false;
                 target=NULL;
             }
@@ -211,11 +211,14 @@ bool Monster::hit(int x, int y, int damage){
     bool hit=false;
     int distance;
     distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    if (distance<=16)
+    if (distance<=32)
         hit=true;
     
-    if(hit==true)
+    if(hit==true){
         health-=damage;
+        if(health<=0)
+            alive=false;
+        }
     return hit;
 }
 
@@ -229,7 +232,7 @@ void Monster::attack(){
         for(int i=0; i<characters->size();i++){
             upointer=characters->at(i);
             if(upointer->myside()!=teamID)
-                n=upointer->hit(xOffset+16, yOffset+16, damage);
+                n=upointer->hit(xOffset, yOffset, damage);
         }
         if(n==true)
             cooldown=2*30;
@@ -256,9 +259,12 @@ void Monster::update()
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
+        if(knowsPlayerlocation==false){
+            xVel=xVel/2;
+        }        
 	xOffset += xVel;
-	if ( xOffset + 16 <= 0 ||
-		xOffset + 16 >= Global::GAME_WIDTH ||
+	if ( xOffset + 16 <= 0+32 ||
+		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 checkGates(xOffset+16, yOffset+16)){
 	    xOffset -= xVel; patrolsteps=0;}
@@ -270,9 +276,12 @@ void Monster::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
+        if(knowsPlayerlocation==false){
+            yVel=yVel/2;
+        }
 	yOffset += yVel;
-	if ( yOffset + 16 <= 0 ||
-		yOffset + 16 >= Global::GAME_HEIGHT ||
+	if ( yOffset + 16 <= 0+32 ||
+		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 checkGates(xOffset+16, yOffset+16)){
 	    yOffset -= yVel; patrolsteps=0;}

@@ -54,7 +54,8 @@ void Ammobox::update(){
         distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
         if (distance<=16){
             obtained=true;
-            target->setammo(contents);
+            target->setammo(contents); 
+            return;
         }
         if(obtained==false){
             get++;

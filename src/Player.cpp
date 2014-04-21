@@ -13,7 +13,7 @@ Player::Player( int x, int y, int ID)
 	yVel = 0;
 	speed = 8;
         cooldown=0;
-        dead=false;
+        alive=true;
         size=32;
         teamID=ID;
         ammo=15;
@@ -98,14 +98,14 @@ bool Player::hit( int x, int y , int damage){
     bool hit=false;
     int distance;
     distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    if (distance<=16)
+    if (distance<=32)
         hit=true;
     
     if(hit==true){
         health-=damage;
         cout<<"ouch";
         if(health<=0)
-            dead=true;
+            alive=false;
         }
     return hit;
 }

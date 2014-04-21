@@ -36,7 +36,7 @@ public:
     int getYVel() {return yVel;}
     int getammo() {return ammo;}
     int setammo(int in) {ammo+=in;}
-    bool isAlive() {return dead;}
+    bool isAlive() {return alive;}
     int myside() {return teamID;}
 protected:
     int health; //unit health percentage
@@ -50,7 +50,7 @@ protected:
     int frame; //its current frame
     int direction; //its animation status
     int cooldown;
-    bool dead;
+    bool alive;
     int size;
     int teamID;
     int ammo;

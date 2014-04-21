@@ -78,8 +78,6 @@ void Projectile::apply_surface( int x, int y, SDL_Surface* source, SDL_Rect* cli
 }
 
 void Projectile::hit(){
-    int myX=getX();
-    int myY=getY();
     bool has_hit;
     vector<Unit*>* characters = currentLevelGlobal->getCharacters();
     Unit* Upointer;
@@ -87,7 +85,7 @@ void Projectile::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(myX,myY,damage);
+            has_hit=Upointer->hit(xOffset,yOffset,damage);
             if(has_hit==true)
                 hitsomething=true;
         }

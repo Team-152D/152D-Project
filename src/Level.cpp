@@ -14,7 +14,7 @@ Level::Level( int levelNumber )
 	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
         characters->push_back(player1);
 	if ( multiplayer ){
-		player2 = new Player( p2Spawn.x, p2Spawn.y,0);
+		player2 = new Player(p2Spawn.x, p2Spawn.y,0);
                 characters->push_back(player2);
                 }
 	else
@@ -60,12 +60,12 @@ void Level::update( )
     Switch* Spointer;
     Powerup* Ppointer;
     
-    bool isdead;
+    bool isalive;
     
     for(int i=0; i<characters->size();i++){
         Upointer = characters->at(i);
-        isdead=Upointer->isAlive();
-        if(isdead==true)
+        isalive=Upointer->isAlive();
+        if(isalive==false)
             characters->erase(characters->begin()+i);
         else
             Upointer->update();
@@ -107,12 +107,10 @@ void Level::draw( )
     Gate* Gpointer;
     Switch* Spointer;
     Powerup* Ppointer;
-    bool isdead;
     
     for(int i=0; i<characters->size();i++){
         Upointer = characters->at(i);
-        isdead=Upointer->isAlive();
-        if(isdead==false) Upointer->draw();
+        Upointer->draw();
         }
     for(int j=0; j<movers->size();j++){
         Mpointer = movers->at(j);

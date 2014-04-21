@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "Guard.h"
+#include "Monster.h"
 #include "Grid.h"
 #include "Player.h"
 #include "Projectile.h"

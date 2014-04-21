@@ -13,7 +13,7 @@ Guard::Guard(int x, int y, int ID)
     yVel = 0;
     speed = 6;
     cooldown =0;
-    dead=false;
+    alive=true;
     size=32;
     teamID=ID;
     ammo=0;
@@ -239,11 +239,8 @@ void Guard::shooting(){
 	    shoot_direction=3;
 	    break;
     }
-    
-    int myX=getX();
-    int myY=getY();
     Projectile* shoot;
-    shoot=new Projectile(myX,myY,direction,0);
+    shoot=new Projectile(xOffset,yOffset,direction,1);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=15;
@@ -253,11 +250,14 @@ bool Guard::hit(int x, int y, int damage){
     bool hit=false;
     int distance;
     distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    if (distance<=16)
+    if (distance<=32)
         hit=true;
     
-    if(hit==true)
+   if(hit==true){
         health-=damage;
+        if(health<=0)
+            alive=false;
+        }
     return hit;
 }
 
@@ -295,8 +295,8 @@ void Guard::update()
             xVel=xVel/2;
         }
 	xOffset += xVel;
-	if ( xOffset + 16 <= 0 ||
-		xOffset + 16 >= Global::GAME_WIDTH ||
+	if ( xOffset + 16 <= 0+32 ||
+		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
                 checkGates(xOffset+16, yOffset+16)){
@@ -313,8 +313,8 @@ void Guard::update()
             yVel=yVel/2;
         }
 	yOffset += yVel;
-	if ( yOffset + 16 <= 0 ||
-		yOffset + 16 >= Global::GAME_HEIGHT ||
+	if ( yOffset + 16 <= 0+32 ||
+		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
                 checkGates(xOffset+16, yOffset+16)){
