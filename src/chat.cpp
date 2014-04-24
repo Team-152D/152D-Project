@@ -1,6 +1,6 @@
 #include "chat.h"
 #include "SDL2/SDL.h"
-
+//  //
 using namespace std;
 
 chat::chat(){
