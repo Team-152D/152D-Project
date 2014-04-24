@@ -21,14 +21,14 @@ public:
     
     void open(){status=true;}
     void shut(){status=false;}
-    bool collision(int x, int y){
+    bool getstate(){return status;}
+    bool collision(int x, int y, int radius){
         if(status==true)
             return false;
         
         bool in=false;
-        int distance;
-        distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-        if (distance<=16)
+        
+	if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius))
             in=true;
         
         return in;

@@ -1,21 +1,21 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player( int x, int y, int ID)
+Player::Player( int x, int y)
 {
 	//Initialize movement variables
 	health = 100;
 	xOffset = x;
 	yOffset = y;
-	xPos = xOffset + 16;
-	yPos = yOffset + 16;
+        xPos = xOffset + 32;
+        yPos = yOffset + 32;
 	xVel = 0;
 	yVel = 0;
 	speed = 8;
         cooldown=0;
         alive=true;
         size=32;
-        teamID=ID;
+        teamID=0;
         ammo=15;
 
 	//Initialize animation variables
@@ -84,8 +84,8 @@ void Player::shooting(){
 	    break;
     }
     
-    int myX=getX();
-    int myY=getY();
+    int myX=getXoffset();
+    int myY=getYoffset();
     Projectile* shoot;
     shoot=new Projectile(myX,myY,direction,0);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
@@ -94,55 +94,40 @@ void Player::shooting(){
     ammo--;
 }
 
-bool Player::hit( int x, int y , int damage){
-    bool hit=false;
-    int distance;
-    distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    if (distance<=32)
-        hit=true;
-    
-    if(hit==true){
-        health-=damage;
-        cout<<"ouch";
-        if(health<=0)
-            alive=false;
-        }
-    return hit;
-}
-
-bool Player::checkGates(int x, int y){
+bool Player::checkGates(){
     bool stop=false;
     vector<Gate*>* gates=currentLevelGlobal->getGates();
     Gate* gpointer;
     for(int i=0;i<gates->size();i++){
         gpointer=gates->at(i);
-        if(gpointer->collision(x,y)==true)
+        if(gpointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
             stop=true;
     }
     return stop;
 }
 
-void Player::checkSwitches(int x, int y){
+void Player::checkSwitches(){
     vector<Switch*>* switches=currentLevelGlobal->getSwitches();
     Switch* spointer;
     for(int i=0;i<switches->size();i++){
         spointer=switches->at(i);
-        if(spointer->collision(x,y)==true)
+        if(spointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
             spointer->down();
     }
 }
 
 void Player::update( )
 {
-    checkSwitches(xOffset+16,yOffset+16);
+    checkSwitches();
 	//cout << "updating x" << endl;
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
+                xPos = xOffset +32;
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
-                         checkGates(xOffset+16, yOffset+16))
+                         checkGates())
 			xOffset -= xVel;
 		if ( xVel < 0 )
 			direction = DIR_LEFT;
@@ -153,10 +138,11 @@ void Player::update( )
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
+                yPos = yOffset+32;
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
-                         checkGates(xOffset+16, yOffset+16))
+                         checkGates())
 			yOffset -= yVel;
 		if ( yVel < 0 )
 			direction = DIR_UP;

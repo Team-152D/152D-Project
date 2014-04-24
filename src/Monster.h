@@ -20,14 +20,13 @@ using namespace std;
 class Monster : public Unit
 {
 public:
-    Monster(int,int,int);
+    Monster(int,int);
     ~Monster();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void AI();
     bool sight_check();
-    bool hit(int, int, int);
-    bool checkGates(int, int);
+    bool checkGates();
     void attack();
     void update();
     void draw();
@@ -46,6 +45,7 @@ private:
     int patroldirection;
     int patrolsteps;
     int damage;
+    int sightcooldown;
 
     //current focus player
     Player* player1;

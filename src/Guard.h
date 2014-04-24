@@ -20,15 +20,14 @@ using namespace std;
 class Guard : public Unit
 {
 public:
-    Guard(int,int,int);
+    Guard(int,int);
     ~Guard();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void AI();
     bool sight_check();
-    bool hit(int, int, int);
-    bool checkGates(int, int);
-    void checkSwitches(int, int);
+    bool checkGates();
+    void checkSwitches();
     void shooting();
     void update();
     void draw();
@@ -46,6 +45,8 @@ private:
     int losessighttimer;
     int patroldirection;
     int patrolsteps;
+    
+    int sightcooldown;
 
     //current focus player
     Player* player1;

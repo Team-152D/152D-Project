@@ -1,22 +1,23 @@
 #include "Guard.h"
 #include "Game.h"
 //
-Guard::Guard(int x, int y, int ID)
+Guard::Guard(int x, int y)
 {
     //Initialize movement variables
     health = 80;
     xOffset = x;
     yOffset = y;
-    xPos = xOffset + 16;
-    yPos = yOffset + 16;
+    xPos = xOffset + 32;
+    yPos = yOffset + 32;
     xVel = 0;
     yVel = 0;
     speed = 6;
-    cooldown =0;
+    cooldown = 0;
     alive=true;
     size=32;
-    teamID=ID;
+    teamID=1;
     ammo=0;
+    sightcooldown=0;
 
     //Initialize animation variables
     frame = 0;
@@ -70,6 +71,7 @@ void Guard::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 void Guard::AI(){
     if(knowsPlayerlocation==false){
+        if(sightcooldown>0){sightcooldown--;return;}
         seesPlayer=sight_check();
         if(seesPlayer==true){knowsPlayerlocation=true;}
         else if(seesPlayer==false&&knowsPlayerlocation==true){
@@ -105,11 +107,11 @@ void Guard::AI(){
         }
     }
     else{
-        int playerX=target->getX();
-        int playerY=target->getY();
+        int playerX=target->getXoffset();
+        int playerY=target->getYoffset();
         
-        int myX=getX();
-        int myY=getY();
+        int myX=getXoffset();
+        int myY=getYoffset();
     
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
         if(distance>=100){
@@ -125,11 +127,11 @@ void Guard::AI(){
 }
 
 bool Guard::sight_check(){
-
+    
     string canisee="";
     string currsight;
-    int myX=getX();
-    int myY=getY();
+    int myX=getXoffset();
+    int myY=getYoffset();
     
     int shoot_direction;
     switch ( direction ){
@@ -246,39 +248,24 @@ void Guard::shooting(){
     cooldown=15;
 }
 
-bool Guard::hit(int x, int y, int damage){
-    bool hit=false;
-    int distance;
-    distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-    if (distance<=32)
-        hit=true;
-    
-   if(hit==true){
-        health-=damage;
-        if(health<=0)
-            alive=false;
-        }
-    return hit;
-}
-
-bool Guard::checkGates(int x, int y){
+bool Guard::checkGates(){
     bool stop=false;
     vector<Gate*>* gates=currentLevelGlobal->getGates();
     Gate* gpointer;
     for(int i=0;i<gates->size();i++){
         gpointer=gates->at(i);
-        if(gpointer->collision(x,y)==true)
+        if(gpointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
             stop=true;
     }
     return stop;
 }
 
-void Guard::checkSwitches(int x, int y){
+void Guard::checkSwitches(){
     vector<Switch*>* switches=currentLevelGlobal->getSwitches();
     Switch* spointer;
     for(int i=0;i<switches->size();i++){
         spointer=switches->at(i);
-        if(spointer->collision(x,y)==true)
+        if(spointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
             spointer->down();
     }
 }
@@ -286,7 +273,7 @@ void Guard::checkSwitches(int x, int y){
 void Guard::update()
 {
     AI();
-    checkSwitches(xOffset+16, yOffset+16);
+    checkSwitches();
     
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
@@ -295,11 +282,12 @@ void Guard::update()
             xVel=xVel/2;
         }
 	xOffset += xVel;
+        xPos = xOffset+32;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
-                checkGates(xOffset+16, yOffset+16)){
+                checkGates()){
 	    xOffset -= xVel; patrolsteps=0;}
 	if ( xVel < 0 )
 	    direction = DIR_LEFT;
@@ -313,11 +301,12 @@ void Guard::update()
             yVel=yVel/2;
         }
 	yOffset += yVel;
+        yPos = yOffset+32;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
-                checkGates(xOffset+16, yOffset+16)){
+                checkGates()){
 	    yOffset -= yVel; patrolsteps=0;}
 	if ( yVel < 0 )
 	    direction = DIR_UP;

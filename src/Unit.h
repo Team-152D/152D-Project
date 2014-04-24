@@ -27,17 +27,31 @@ public:
     }
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual bool hit(int, int, int) = 0;
+    bool hit(int x, int y, int radius, int damage){
+        bool hit=false;
+	if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius))
+            hit=true;
+    
+        if(hit==true){
+            health-=damage;
+            if(health<=0)
+                alive=false;
+            }
+        return hit;
+};
 
     int getHealth() {return health;}
-    int getX() {return xOffset + (size/2);}
-    int getY() {return yOffset + (size/2);}
+    int getXoffset() {return xOffset;}
+    int getYoffset() {return yOffset;}
+    int getXpos() {return xPos;}
+    int getYpos() {return yPos;}
     int getXVel() {return xVel;}
     int getYVel() {return yVel;}
     int getammo() {return ammo;}
-    int setammo(int in) {ammo+=in;}
+    int addammo(int in) {ammo+=in;}
     bool isAlive() {return alive;}
     int myside() {return teamID;}
+    int mysize() {return size;}
 protected:
     int health; //unit health percentage
     int xOffset; //the x offset

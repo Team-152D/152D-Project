@@ -7,6 +7,11 @@ Fixed_Switch::Fixed_Switch(int x, int y, Gate* pair)
     switchtype="fixed";
     My_Gate=pair;
     
+    xOffset = x;
+    yOffset = y;
+    xPos = xOffset+32;
+    yPos = yOffset+32;
+    
     set_clips();
 
 	fixed_switch_sprite_up = image->loadImage( "rsc\\game\\sprite_SwitchUp.bmp" ); // move up
@@ -42,6 +47,7 @@ void Fixed_Switch::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* cl
 
 void Fixed_Switch::update(){
     if(status==true)
+        if(My_Gate->getstate()==false)
         My_Gate->open();
 }
 

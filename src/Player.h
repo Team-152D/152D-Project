@@ -18,15 +18,14 @@ using namespace std;
 class Player : public Unit
 {
 public:
-    Player(int,int,int);
+    Player(int,int);
     ~Player();
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
   
     void input(char*);
     void shooting();
-    bool hit(int, int, int);
-    bool checkGates(int, int);
-    void checkSwitches(int, int);
+    bool checkGates();
+    void checkSwitches();
     void update();
     void draw();
     

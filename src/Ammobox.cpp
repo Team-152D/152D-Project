@@ -39,6 +39,7 @@ void Ammobox::update(){
     int get=0;
     int x;
     int y;
+    int radius;
     vector<Unit*>* characters;
     
     bool in=false;
@@ -48,13 +49,13 @@ void Ammobox::update(){
     
     target=characters->at(get);
     while(target->myside()==0){
-        x=target->getX();
-        y=target->getY();
+        x=(target->getXoffset()+target->getXpos())/2;
+        y=(target->getYoffset()+target->getYpos())/2;
+        radius = target->mysize()/2;
             
-        distance= sqrt( pow( x - xOffset , 2 ) + pow( y - yOffset , 2 ));
-        if (distance<=16){
+        if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius)){
             obtained=true;
-            target->setammo(contents); 
+            target->addammo(contents); 
             return;
         }
         if(obtained==false){

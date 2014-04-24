@@ -11,10 +11,10 @@ Level::Level( int levelNumber )
     switches = new vector<Switch*>;
     powerups = new vector<Powerup*>;
         
-	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
+	player1 = new Player( p1Spawn.x, p1Spawn.y);
         characters->push_back(player1);
 	if ( multiplayer ){
-		player2 = new Player(p2Spawn.x, p2Spawn.y,0);
+		player2 = new Player(p2Spawn.x, p2Spawn.y);
                 characters->push_back(player2);
                 }
 	else
@@ -22,7 +22,7 @@ Level::Level( int levelNumber )
         
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
-    Guard* tester = new Guard(espawn.x,espawn.y,1);
+    Guard* tester = new Guard(espawn.x,espawn.y);
     characters->push_back(tester);
 }
 
@@ -152,13 +152,13 @@ bool Level::victoryCondition( )
 {
 	bool endOne = false, endTwo = false;
 	//cout << "victory- getting offsets" << endl;
-	int x1 = player1->getX( );
-	int y1 = player1->getY( );
+	int x1 = player1->getXoffset( );
+	int y1 = player1->getYoffset( );
 	int x2 = 0, y2 = 0;
 	if ( currentGameGlobal->multiPlayer )
 	{
-		x2 = player2->getX( );
-		y2 = player2->getY( );
+		x2 = player2->getXoffset( );
+		y2 = player2->getYoffset( );
 	}
 
 	//cout << "victory- checking if stuff is in the bounds" << endl;
@@ -268,12 +268,12 @@ vector<string>* Level::getInfoBarData( )
 	vec->push_back( s2 );
 	ss.str( string( ) );
 
-	ss << player1->getX( );
+	ss << player1->getXoffset( );
 	strX = ss.str( );
 	vec->push_back( strX );
 	ss.str( string( ) );
 
-	ss << player1->getY( );
+	ss << player1->getYoffset( );
 	strY = ss.str( );
 	vec->push_back( strY );
 	ss.str( string( ) );
