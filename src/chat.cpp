@@ -249,3 +249,10 @@ void chat::can_type(bool x){
     
 }
 
+ string chat::get_input(){
+     return s;
+       }
+ string chat::get_player(){
+     return player; 
+       }
+
