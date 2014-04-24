@@ -34,6 +34,9 @@ using namespace std;
        void chatting2();
       
        void can_type(bool x);
+       
+       string get_input();
+       string get_player();
    
        //Future methods
        //scroll up and down to see text
@@ -47,7 +50,7 @@ using namespace std;
        string s, player;
        stringstream in, out; //input and output 
        const Uint8 * keystate; //state of keyboard , note: need to include const
-       //Text input;
+      
    }; 
 
 
