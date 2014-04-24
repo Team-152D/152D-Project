@@ -1,6 +1,6 @@
-#ifndef GATE_H
-#define	GATE_H
-//
+#ifndef SWITCH_H
+#define	SWITCH_H
+
 #include <string>
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_image.h"
@@ -9,31 +9,29 @@
 #include "Image.h"
 #include <cstdlib>
 #include <cmath>
+#include "Unit.h"
 
 using namespace std;
 
-class Gate
+class Switch
 {
 public:
-    Gate(){};
-    ~Gate(){};
+    Switch(){};
+    ~Switch(){};
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
-    void open(){status=true;}
-    void shut(){status=false;}
-    bool getstate(){return status;}
+    void down(){status=true;}
     bool collision(int x, int y, int radius){
         if(status==true)
             return false;
         
         bool in=false;
-        
 	if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius))
             in=true;
         
         return in;
     }
-    string mytype(){return gatetype;}
+    string mytype(){return switchtype;}
     virtual void update() = 0;
     virtual void draw() = 0;
     
@@ -44,7 +42,7 @@ protected:
     int xPos;
     int yPos;
     bool status;
-    string gatetype;
+    string switchtype;
 };
 
 #endif

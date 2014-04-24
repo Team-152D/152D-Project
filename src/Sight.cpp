@@ -6,10 +6,8 @@ Sight::Sight( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	xPos = xOffset + 16;
-	yPos = yOffset + 16;
-	speed = 16;
-        size = 16;
+	speed =  16;
+        radius = 16;
 
         //direction: 0: Up 1: Right 2: Down 3: Left
         switch (d)
@@ -36,10 +34,10 @@ Sight::Sight( int x, int y, int d, int ID )
 	//ID: 0=player, 1=enemy
 	teamID = ID;
 
-        max_height=yPos+100;
-        min_height=yPos-100;
-        max_length=xPos+100;
-        min_length=xPos-100;
+        max_height=yOffset+100;
+        min_height=yOffset-100;
+        max_length=xOffset+100;
+        min_length=xOffset-100;
         
 	SIGHT_WIDTH = 32;
 	SIGHT_HEIGHT = 32;
@@ -56,8 +54,6 @@ Sight::Sight( int x, int y, int d, int ID )
 Sight::~Sight( ){}
 
 string Sight::hit(){
-    int myX=getX();
-    int myY=getY();
     bool has_hit;
     vector<Unit*>* characters = currentLevelGlobal->getCharacters();
     Unit* Upointer;
@@ -65,10 +61,10 @@ string Sight::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(myX,myY,damage);
+            has_hit=Upointer->hit(xOffset,yOffset,damage,radius);
             if(has_hit==true){
                 if(i==0) return "Player 1";
-                else return "Player 2";
+                else if(Upointer->myside()==0) return "Player 2";
             }
         }
     }

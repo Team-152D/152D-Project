@@ -6,12 +6,10 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	xPos = xOffset + 8;
-	yPos = yOffset + 8;
 	speed = 8;
-        size=16;
+        radius=8;
         teamID = ID;
-        damage=10;
+        damage= 10;
         
 	//direction: 0: Up 1: Right 2: Down 3: Left
         switch (d)
@@ -78,8 +76,6 @@ void Projectile::apply_surface( int x, int y, SDL_Surface* source, SDL_Rect* cli
 }
 
 void Projectile::hit(){
-    int myX=getX();
-    int myY=getY();
     bool has_hit;
     vector<Unit*>* characters = currentLevelGlobal->getCharacters();
     Unit* Upointer;
@@ -87,7 +83,7 @@ void Projectile::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(myX,myY,damage);
+            has_hit=Upointer->hit(xOffset,yOffset,damage,radius);
             if(has_hit==true)
                 hitsomething=true;
         }
@@ -95,7 +91,8 @@ void Projectile::hit(){
 }
 
 void Projectile::update( )
-{
+{  
+    if(hitsomething==true) return;
         hit();
         //0: Up 1: Right 2: Down 3: Left
        

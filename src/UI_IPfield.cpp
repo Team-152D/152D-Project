@@ -39,7 +39,11 @@ void UI_IPfield::draw(){
 }
 
 void UI_IPfield::cursorBlink(){
-    if(!focus) return;   
+    if(!focus)
+        if(addr.back()=='|'){
+            addr.pop_back();
+            return;
+        } else return;
     int t= blink.get_ticks()/1000;
     if(t%2 && addr.back()!='|')
         addr.push_back('|');

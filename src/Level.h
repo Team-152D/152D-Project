@@ -6,7 +6,8 @@
 #include <string>
 #include <sstream>
 
-#include "Enemy.h"
+#include "Guard.h"
+#include "Monster.h"
 #include "Grid.h"
 #include "Player.h"
 #include "Projectile.h"
@@ -15,6 +16,8 @@
 #include "Unit.h"
 #include "Mover.h"
 #include "Gate.h"
+#include "Switch.h"
+#include "Powerup.h"
 
 using namespace std;
 
@@ -31,6 +34,9 @@ public:
     vector<Mover*>* getMovers();
     vector<Unit*>* getCharacters();
     vector<Gate*>* getGates();
+    vector<Switch*>* getSwitches();
+    vector<Powerup*>* getPowerups();
+
     bool isMultiplayer();
     string getDifficulty();
     
@@ -46,6 +52,8 @@ private:
     vector<Unit*>* characters;
     vector<Mover*>* movers;
     vector<Gate*>* gates;
+    vector<Switch*>* switches;
+    vector<Powerup*>* powerups;
     
     string difficulty;
     

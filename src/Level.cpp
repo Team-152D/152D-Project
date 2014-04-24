@@ -8,11 +8,13 @@ Level::Level( int levelNumber )
     characters = new vector<Unit*>;
     movers = new vector<Mover*>;
     gates = new vector<Gate*>;
+    switches = new vector<Switch*>;
+    powerups = new vector<Powerup*>;
         
-	player1 = new Player( p1Spawn.x, p1Spawn.y,0);
+	player1 = new Player( p1Spawn.x, p1Spawn.y);
         characters->push_back(player1);
 	if ( multiplayer ){
-		player2 = new Player( p2Spawn.x, p2Spawn.y,0);
+		player2 = new Player(p2Spawn.x, p2Spawn.y);
                 characters->push_back(player2);
                 }
 	else
@@ -20,7 +22,7 @@ Level::Level( int levelNumber )
         
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
-    Enemy* tester = new Enemy(espawn.x,espawn.y,1);
+    Guard* tester = new Guard(espawn.x,espawn.y);
     characters->push_back(tester);
 }
 
@@ -29,6 +31,10 @@ vector<Mover*>* Level::getMovers(){return movers;}
 vector<Unit*>* Level::getCharacters(){return characters;}
 
 vector<Gate*>* Level::getGates(){return gates;}
+
+vector<Switch*>* Level::getSwitches(){return switches;}
+
+vector<Powerup*>* Level::getPowerups(){return powerups;}
 
 string Level::getDifficulty(){return difficulty;}
 
@@ -50,12 +56,16 @@ void Level::update( )
 {
     Unit* Upointer;
     Mover* Mpointer;
-    bool isdead;
+    Gate* Gpointer;
+    Switch* Spointer;
+    Powerup* Ppointer;
+    
+    bool isalive;
     
     for(int i=0; i<characters->size();i++){
         Upointer = characters->at(i);
-        isdead=Upointer->isAlive();
-        if(isdead==true)
+        isalive=Upointer->isAlive();
+        if(isalive==false)
             characters->erase(characters->begin()+i);
         else
             Upointer->update();
@@ -69,6 +79,23 @@ void Level::update( )
         else
             Mpointer->update();
     }
+    for(int j=0; j<gates->size();j++){
+        Gpointer = gates->at(j);
+        Gpointer->update();
+    }
+    for(int j=0; j<switches->size();j++){
+        Spointer = switches->at(j);
+        Spointer->update();
+    }
+    bool grabbed;
+    for(int j=0; j<powerups->size();j++){
+        Ppointer = powerups->at(j);
+        grabbed=Ppointer->status();
+        if(grabbed==true)
+            powerups->erase(powerups->begin()+j);
+        else
+            Ppointer->update();
+    }
 }
 
 void Level::draw( )
@@ -77,17 +104,41 @@ void Level::draw( )
 
     Unit* Upointer;
     Mover* Mpointer;
-    bool isdead;
+    Gate* Gpointer;
+    Switch* Spointer;
+    Powerup* Ppointer;
     
     for(int i=0; i<characters->size();i++){
         Upointer = characters->at(i);
-        isdead=Upointer->isAlive();
-        if(isdead==false) Upointer->draw();
+        Upointer->draw();
         }
     for(int j=0; j<movers->size();j++){
         Mpointer = movers->at(j);
         Mpointer->draw();
         }
+        for(int j=0; j<gates->size();j++){
+        Gpointer = gates->at(j);
+        Gpointer->draw();
+    }
+    for(int j=0; j<switches->size();j++){
+        Spointer = switches->at(j);
+        Spointer->draw();
+    }
+    for(int j=0; j<powerups->size();j++){
+        Ppointer = powerups->at(j);
+        Ppointer->draw();
+    }
+    
+    ostringstream sstream;
+    sstream << "Ammo (Player 1) = " << player1->getammo();
+
+    text->writeText( 0, 0, sstream.str( ).c_str( ), 36 );
+    sstream.str( string( ) );
+
+    if(multiplayer==true){
+        sstream << "Ammo (Player 2) = " << player2->getammo();
+        text->writeText( 0, 50, sstream.str( ).c_str( ), 36 );
+    }
 }
 
 Player* Level::getPlayer( int player )
@@ -101,13 +152,13 @@ bool Level::victoryCondition( )
 {
 	bool endOne = false, endTwo = false;
 	//cout << "victory- getting offsets" << endl;
-	int x1 = player1->getX( );
-	int y1 = player1->getY( );
+	int x1 = player1->getXoffset( );
+	int y1 = player1->getYoffset( );
 	int x2 = 0, y2 = 0;
 	if ( currentGameGlobal->multiPlayer )
 	{
-		x2 = player2->getX( );
-		y2 = player2->getY( );
+		x2 = player2->getXoffset( );
+		y2 = player2->getYoffset( );
 	}
 
 	//cout << "victory- checking if stuff is in the bounds" << endl;
@@ -187,7 +238,7 @@ void Level::loadLevel( int level )
 	cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"
 		<< "Endzone = (" << endzone.x << "," << endzone.y << ")"
-                << "Enemy = (" << espawn.x << "," << espawn.y << ")" <<endl;
+                << "Guard = (" << espawn.x << "," << espawn.y << ")" <<endl;
 
 	this->grid = new Grid( temp );
 	cout << "DEBUG: Level file loaded" << endl;
@@ -217,12 +268,12 @@ vector<string>* Level::getInfoBarData( )
 	vec->push_back( s2 );
 	ss.str( string( ) );
 
-	ss << player1->getX( );
+	ss << player1->getXoffset( );
 	strX = ss.str( );
 	vec->push_back( strX );
 	ss.str( string( ) );
 
-	ss << player1->getY( );
+	ss << player1->getYoffset( );
 	strY = ss.str( );
 	vec->push_back( strY );
 	ss.str( string( ) );
