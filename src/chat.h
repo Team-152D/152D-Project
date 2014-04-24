@@ -10,6 +10,8 @@
 #include <sstream>
 #include "SDL2/SDL.h"
 
+#include "Text.h"
+
 using namespace std;
    class chat{
        
@@ -23,14 +25,16 @@ using namespace std;
        
        
        //move to private later
-       void old_chatting();
+       void old_chatting(SDL_Event event); //SDL_Event* event
        void chatting();
        void show_message(string str);
        void send_message(string str);
        void show_result();
+       
+       void chatting2();
       
        void can_type(bool x);
-       
+   
        //Future methods
        //scroll up and down to see text
        //Text boxes size
@@ -43,7 +47,7 @@ using namespace std;
        string s, player;
        stringstream in, out; //input and output 
        const Uint8 * keystate; //state of keyboard , note: need to include const
-       
+       //Text input;
    }; 
 
 

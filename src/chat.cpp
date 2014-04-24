@@ -24,27 +24,32 @@ chat::~chat(){
     SDL_FreeSurface(inbox);
 }
 
-void chat::old_chatting(){ //handles input from user
-    SDL_Event event;
+void chat::old_chatting(SDL_Event event){ //handles input from user
+    //note: Poll events handle more, not good for efficiency
+   // SDL_Event event;
+    //keystate = SDL_GetKeyboardState(NULL); crashes
+    //while(SDL_PollEvent(&event)){
+    string temp = "";
     
-    while(SDL_PollEvent(&event)){
+    //if ( SDL_PollEvent( &event ) ){
         switch(event.type)
         {
           case SDL_KEYDOWN:
               switch(event.key.keysym.sym)
               {
-                  
                 case SDLK_RETURN: //enter / return
                     //send message
                     //show message
                     cout<<"Return key has been pressed"<<endl; //debugging
                     if(!isTyping){
-                    SDL_StartTextInput();
-                    isTyping = true;
-                    }
-                    else{
-                        SDL_StopTextInput();
-                        isTyping = false;
+                  // SDL_StartTextInput();
+                   isTyping = true;
+                   }
+                   else{
+                       SDL_StopTextInput();
+                       isTyping = false;
+                       cout<<"<Player> "<<s<<endl;
+                       text->writeText(88,466,s.c_str(),14);
                     }
                     break;
               
@@ -52,35 +57,50 @@ void chat::old_chatting(){ //handles input from user
                     //send message
                     //show message
                     cout<<"Keypad_Return key has been pressed"<<endl; //debugging
-                    if(!isTyping){
-                    SDL_StartTextInput();
-                    isTyping = true;
-                    }
-                    else{
-                        SDL_StopTextInput();
-                        isTyping = false;
-                    }
+                    //if(!isTyping){
+                    //SDL_StartTextInput();
+                    //isTyping = true;
+                    //}
+                   // else{
+                       //DL_StopTextInput();
+                   //     isTyping = false;
+                   // }
                     break;
                     
                  
                     
                 case SDLK_BACKSPACE: //backspace 
-                if(s.length()!= 0)
-                  s.erase(s.length()-1); //remove character from the end of string
+                //if(s.length()!= 0)
+                  //s.erase(s.length()-1); //remove character from the end of string
+                    s.pop_back(); 
                 break;
                 
                 default: //entered something
-                
-                
-                    break;
-              }//end event.key.keysym.sym
-                
-                  break;
+                    break; 
+                }//end event.key.keysym.sym 
+               
                   
             case SDL_TEXTINPUT:
-                s += event.text.text;
+               // s+= (string) event->text.text; crashes
+                        //cout<<event->text.text<<endl;
+                //if(keystate[SDLK_RETURN]){
+                //if(isTyping){
+   
+                //temp = event->text.text;
+                    //cout<<event->text.text<<endl;
+                if((int) event.text.text[0] != 1){ //prevents start of heading(aka spaces) Ascii int value 1
+                    s+= event.text.text; 
+                    
+                   // input.writeTextCentered();
+                        }
+                //cout<<temp;
+                //cout<<temp<<endl; 
+                //s.append( temp ); 
+                 //cout<<"<"<<s<<">"<<endl;
+       // }
+                  
                 
-                break;
+               break;
                 
             case SDL_TEXTEDITING:
                 // event.edit.text;
@@ -88,12 +108,11 @@ void chat::old_chatting(){ //handles input from user
                 // event.edit.length; 
                 break; 
                   
-        } //end SDL_KEYDOWN
+        } 
+    //input.writeText(88,486, s.c_str(),12);
     
-    }
+   
     
-    
-    //ss<<str;
 }
 
 
@@ -125,6 +144,78 @@ void chat::chatting(){
     
     
     
+}
+
+void chat::chatting2(){
+    SDL_Event event;
+    
+    if ( SDL_PollEvent( &event ) ){
+        switch(event.type)
+        {
+          case SDL_KEYDOWN:
+              switch(event.key.keysym.sym)
+              {
+                case SDLK_RETURN: //enter / return
+                    //send message
+                    //show message
+                    cout<<"Return key has been pressed"<<endl; //debugging
+                    if(!isTyping){
+                  // SDL_StartTextInput();
+                   isTyping = true;
+                   }
+                   else{
+                       SDL_StopTextInput();
+                       isTyping = false;
+                       cout<<"<Player> "<<s<<endl;
+                    }
+                    break;
+              
+                case SDLK_KP_ENTER: //enter from keypad
+                    //send message
+                    //show message
+                    cout<<"Keypad_Return key has been pressed"<<endl; //debugging
+                    //if(!isTyping){
+                    //SDL_StartTextInput();
+                    //isTyping = true;
+                    //}
+                   // else{
+                       //DL_StopTextInput();
+                   //     isTyping = false;
+                   // }
+                    break;
+                    
+                 
+                    
+                case SDLK_BACKSPACE: //backspace 
+                //if(s.length()!= 0)
+                  //s.erase(s.length()-1); //remove character from the end of string
+                    s.pop_back(); 
+                break;
+                
+                default: //entered something
+                    break; 
+                }//end event.key.keysym.sym 
+               
+                  
+            case SDL_TEXTINPUT:
+                    //cout<<event->text.text<<endl;
+                if((int) event.text.text[0] != 1){ //prevents start of heading (aka spaces)
+                    s+= event.text.text; 
+                    //cout<<"<<"<<(int) event->text.text[0]<<">>"<<endl; 
+                        }
+                           
+               break;
+                
+            case SDL_TEXTEDITING:
+                // event.edit.text;
+                // event.edit.start;
+                // event.edit.length; 
+                break; 
+                  
+        } 
+    //input.writeText(88,486, s.c_str(),12);
+    
+}
 }
 
 

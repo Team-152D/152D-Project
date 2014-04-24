@@ -12,6 +12,8 @@
 #include "Global.h"
 #include "View.h"
 
+#include "chat.h"
+
 using namespace std;
 
 class Menu
@@ -34,6 +36,9 @@ private:
     void loadViews(string);
     
     SDL_Surface *background;
+    string str;
+    
+    chat ch;
 };
 
 #endif
