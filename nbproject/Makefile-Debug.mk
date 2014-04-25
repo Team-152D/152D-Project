@@ -35,24 +35,30 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/Ammobox.o \
 	${OBJECTDIR}/src/Application.o \
 	${OBJECTDIR}/src/Audio.o \
 	${OBJECTDIR}/src/Editor.o \
 	${OBJECTDIR}/src/Enemy.o \
+	${OBJECTDIR}/src/Fixed_Switch.o \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/Global.o \
 	${OBJECTDIR}/src/Grid.o \
+	${OBJECTDIR}/src/Guard.o \
 	${OBJECTDIR}/src/Image.o \
 	${OBJECTDIR}/src/Level.o \
 	${OBJECTDIR}/src/Main.o \
 	${OBJECTDIR}/src/Menu.o \
+	${OBJECTDIR}/src/Monster.o \
 	${OBJECTDIR}/src/Player.o \
 	${OBJECTDIR}/src/Projectile.o \
 	${OBJECTDIR}/src/Settings.o \
 	${OBJECTDIR}/src/Text.o \
+	${OBJECTDIR}/src/Timed_Gate.o \
 	${OBJECTDIR}/src/Timer.o \
 	${OBJECTDIR}/src/UI_Button.o \
 	${OBJECTDIR}/src/UI_Checkbox.o \
+	${OBJECTDIR}/src/UI_IPfield.o \
 	${OBJECTDIR}/src/UI_TextLabel.o \
 	${OBJECTDIR}/src/View.o \
 	${OBJECTDIR}/src/command.o \
@@ -83,6 +89,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/152d-project ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/src/Ammobox.o: src/Ammobox.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Ammobox.o src/Ammobox.cpp
+
 ${OBJECTDIR}/src/Application.o: src/Application.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -103,6 +114,11 @@ ${OBJECTDIR}/src/Enemy.o: src/Enemy.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Enemy.o src/Enemy.cpp
 
+${OBJECTDIR}/src/Fixed_Switch.o: src/Fixed_Switch.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Fixed_Switch.o src/Fixed_Switch.cpp
+
 ${OBJECTDIR}/src/Game.o: src/Game.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -117,6 +133,11 @@ ${OBJECTDIR}/src/Grid.o: src/Grid.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Grid.o src/Grid.cpp
+
+${OBJECTDIR}/src/Guard.o: src/Guard.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Guard.o src/Guard.cpp
 
 ${OBJECTDIR}/src/Image.o: src/Image.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -138,6 +159,11 @@ ${OBJECTDIR}/src/Menu.o: src/Menu.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Menu.o src/Menu.cpp
 
+${OBJECTDIR}/src/Monster.o: src/Monster.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Monster.o src/Monster.cpp
+
 ${OBJECTDIR}/src/Player.o: src/Player.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -158,6 +184,11 @@ ${OBJECTDIR}/src/Text.o: src/Text.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Text.o src/Text.cpp
 
+${OBJECTDIR}/src/Timed_Gate.o: src/Timed_Gate.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Timed_Gate.o src/Timed_Gate.cpp
+
 ${OBJECTDIR}/src/Timer.o: src/Timer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -172,6 +203,11 @@ ${OBJECTDIR}/src/UI_Checkbox.o: src/UI_Checkbox.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/UI_Checkbox.o src/UI_Checkbox.cpp
+
+${OBJECTDIR}/src/UI_IPfield.o: src/UI_IPfield.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/UI_IPfield.o src/UI_IPfield.cpp
 
 ${OBJECTDIR}/src/UI_TextLabel.o: src/UI_TextLabel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

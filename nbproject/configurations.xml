@@ -22,14 +22,26 @@
         <itemPath>src/Level.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Game Objects" projectFiles="true">
+        <itemPath>src/Ammobox.cpp</itemPath>
+        <itemPath>src/Ammobox.h</itemPath>
         <itemPath>src/Enemy.cpp</itemPath>
         <itemPath>src/Enemy.h</itemPath>
+        <itemPath>src/Fixed_Switch.cpp</itemPath>
+        <itemPath>src/Fixed_Switch.h</itemPath>
+        <itemPath>src/Gate.h</itemPath>
         <itemPath>src/Grid.cpp</itemPath>
         <itemPath>src/Grid.h</itemPath>
+        <itemPath>src/Guard.cpp</itemPath>
+        <itemPath>src/Guard.h</itemPath>
+        <itemPath>src/Monster.cpp</itemPath>
+        <itemPath>src/Monster.h</itemPath>
         <itemPath>src/Player.cpp</itemPath>
         <itemPath>src/Player.h</itemPath>
         <itemPath>src/Projectile.cpp</itemPath>
         <itemPath>src/Projectile.h</itemPath>
+        <itemPath>src/Switch.h</itemPath>
+        <itemPath>src/Timed_Gate.cpp</itemPath>
+        <itemPath>src/Timed_Gate.h</itemPath>
         <itemPath>src/Unit.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="GUI" projectFiles="true">
@@ -38,6 +50,8 @@
         <itemPath>src/UI_Button.h</itemPath>
         <itemPath>src/UI_Checkbox.cpp</itemPath>
         <itemPath>src/UI_Checkbox.h</itemPath>
+        <itemPath>src/UI_IPfield.cpp</itemPath>
+        <itemPath>src/UI_IPfield.h</itemPath>
         <itemPath>src/UI_TextLabel.cpp</itemPath>
         <itemPath>src/UI_TextLabel.h</itemPath>
       </logicalFolder>
@@ -73,7 +87,7 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -102,6 +116,10 @@
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Ammobox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Ammobox.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Application.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Application.h" ex="false" tool="3" flavor2="0">
@@ -120,9 +138,15 @@
       </item>
       <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Fixed_Switch.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Gate.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Global.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -131,6 +155,10 @@
       <item path="src/Grid.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Grid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Guard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Guard.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -146,6 +174,10 @@
       </item>
       <item path="src/Menu.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Monster.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Monster.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Player.h" ex="false" tool="3" flavor2="0">
@@ -158,9 +190,15 @@
       </item>
       <item path="src/Settings.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Switch.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Text.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Text.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Timed_Gate.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Timed_Gate.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -175,6 +213,10 @@
       <item path="src/UI_Checkbox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/UI_Checkbox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/UI_IPfield.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/UI_IPfield.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/UI_TextLabel.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -215,6 +257,10 @@
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Ammobox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Ammobox.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Application.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Application.h" ex="false" tool="3" flavor2="0">
@@ -233,9 +279,15 @@
       </item>
       <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Fixed_Switch.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Gate.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Global.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -244,6 +296,10 @@
       <item path="src/Grid.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Grid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Guard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Guard.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -259,6 +315,10 @@
       </item>
       <item path="src/Menu.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Monster.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Monster.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Player.h" ex="false" tool="3" flavor2="0">
@@ -271,9 +331,15 @@
       </item>
       <item path="src/Settings.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/Switch.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Text.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Text.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Timed_Gate.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Timed_Gate.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -288,6 +354,10 @@
       <item path="src/UI_Checkbox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/UI_Checkbox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/UI_IPfield.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/UI_IPfield.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/UI_TextLabel.cpp" ex="false" tool="1" flavor2="0">
       </item>
