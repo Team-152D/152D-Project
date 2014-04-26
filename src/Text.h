@@ -14,6 +14,7 @@ public:
     
     void writeText(int,int,const char*,int);
     void writeTextCentered(SDL_Rect,const char*,int);
+    void changeColor(int,int,int);
 private:
     int fontSize;
     TTF_Font *font;

@@ -23,7 +23,7 @@ extern Text *text;
 
 namespace Global {
     const int SCREEN_WIDTH = 1280;
-    const int SCREEN_HEIGHT = 788;
+    const int SCREEN_HEIGHT = 768;
     const int GAME_WIDTH = 1280;
     const int GAME_HEIGHT = 640;
     const int GRID_WIDTH = 40;
@@ -63,15 +63,13 @@ namespace Global {
     const int MMS_17 = 27;
     const int MMS_18 = 28;
     const int MMS_19 = 29;
-
-    /***** [30 - 39] Subeditors *****/
-    const int SE_MENUS = 30;
-    const int SE_LEVELS = 31;
-    const int SE_UNITS = 32;
-    const int SE_ITEMS = 33;
+    
+    /***** [30 - 39] Button Actions *****/
+    const int SET_IP = 30;
 
     /***** [100 - 199] Audio *****/
     // Sound Effects
+    // NOTE: Move these into a separate file
     const int SFX_BUTTONPRESS = 100;
     const int SFX_BEGIN = 101;
     const int SFX_END = 102;

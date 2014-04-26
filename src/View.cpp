@@ -5,6 +5,7 @@ View::View( int iParentView, string backgroundPath )
 	elements = new vector<UI_AbstractElement*>;
 	parentView = iParentView;
 	backgroundImage = image->loadImage( backgroundPath );
+	ipfield = NULL;
 }
 
 View::~View( )
@@ -23,7 +24,6 @@ int View::input( SDL_Event* event )
 			continue;
 		else if ( rValue >= 0 && rValue <= 39 )
 		{
-			//cout << "DEBUG: ( View::input() ) returning rValue " << rValue << endl;
 			return rValue;
 		}
 		else if ( rValue >= 40 && rValue <= 49 )
@@ -72,6 +72,19 @@ void View::loadElements( string filepath )
 
 			UI_Button* nButton = new UI_Button( bounds, label, actionValue );
 			elements->push_back( nButton );
+		}
+		else if( type == "IPfield" )
+		{
+			SDL_Rect bounds;
+			
+			file >> bounds.x;
+			file >> bounds.y;
+			file >> bounds.w;
+			file >> bounds.h;
+			
+			UI_IPfield *nField = new UI_IPfield( bounds, 36, true );
+			elements->push_back( nField );
+			ipfield = nField;
 		}
 		else if ( type == "Text" )
 		{
@@ -134,4 +147,9 @@ void View::loadElements( string filepath )
 int View::getParentView( )
 {
 	return parentView;
+}
+
+UI_IPfield* View::getIPfield()
+{
+	return ipfield;
 }

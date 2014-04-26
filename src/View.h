@@ -15,24 +15,26 @@
 #include "UI_Button.h"
 #include "UI_Checkbox.h"
 #include "UI_TextLabel.h"
+#include "UI_IPfield.h"
 
 using namespace std;
 
-class View
-{
+class View {
 public:
-    View(int,string);
+    View(int, string);
     ~View();
-    
+
     int input(SDL_Event*);
     void draw();
-    
+
     void loadElements(string);
-	int getParentView();
+    int getParentView();
+    UI_IPfield* getIPfield();
 private:
+    UI_IPfield *ipfield;
     vector<UI_AbstractElement*> *elements;
-	int parentView;
-	SDL_Surface *backgroundImage;
+    int parentView;
+    SDL_Surface *backgroundImage;
 };
 
 #endif

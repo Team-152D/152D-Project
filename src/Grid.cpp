@@ -27,6 +27,7 @@ Grid::Grid(string input)
     IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
     IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
     IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
+	IMG_TEMP = image->loadImage("rsc\\game\\IMG_TEMP.bmp");
 }
 
 
@@ -45,6 +46,7 @@ Grid::Grid(vector<vector<int>*>* iGrid)
     IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
     IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
     IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
+	IMG_TEMP = image->loadImage("rsc\\game\\IMG_TEMP.bmp");
 }
 
 Grid::~Grid()
@@ -58,6 +60,7 @@ Grid::~Grid()
     SDL_FreeSurface(IMG_STONE);
     SDL_FreeSurface(IMG_WATER);
     SDL_FreeSurface(IMG_WOOD);
+	SDL_FreeSurface(IMG_TEMP);
 }
 
 void Grid::loadGrid(string filePath)
@@ -101,6 +104,9 @@ void Grid::editorSave(string path,SDL_Rect one,SDL_Rect two, SDL_Rect end)
 
 void Grid::drawGrid()
 {
+	image->drawSurface(0,0,IMG_TEMP);
+
+	/*
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++)
             switch (grid->at(i)->at(j))
@@ -133,7 +139,7 @@ void Grid::drawGrid()
                     image->drawSurface(j * 32, i * 32, IMG_WOOD);
                     break;
             }
-    }
+    }*/
 }
 
 void Grid::printGrid()

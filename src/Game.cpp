@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Command.h"
+#include "Settings.h"
 
 Game::Game( bool newGame, int socket )
 {
@@ -61,13 +62,16 @@ int Game::runGame( )
 		CMD.push( event, multiPlayer );
 		CMD.take( );
 
-		audio->playMusic( "rsc\\audio\\sfx_music1.wav" );
+		if ( settings->getMusicEnabled( ) )
+			audio->playMusic( 1 );
+		text->changeColor(255,255,255);
 		if ( runGameLoop( ) == Global::AS_MAIN_MENU )
 		{
 			Mix_HaltMusic( );
 			cout << "DEBUG: (Game.cpp) game is quitting." << endl;
 			if ( multiPlayer )
 				endNet( CMD.getSocket( ) );
+			text->changeColor(0,0,0);
 			return Global::AS_MAIN_MENU;
 		}
 		cout << "DEBUG: (Game.cpp) Level complete, loading victory screen" << endl;
@@ -91,7 +95,7 @@ int Game::runGame( )
 							{
 								if ( y > 134 && y < 234 ) //Continue
 								{
-									audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+									audio->playSound( 1 );
 									delete currentLevel;
 									currentLevel = new Level( currentLevelNumber );
 									atVictoryScreen = false;
@@ -101,7 +105,7 @@ int Game::runGame( )
 								}
 								else if ( y > 234 && y < 334 ) //save & quit
 								{
-									audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+									audio->playSound( 1 );
 									ofstream outfile;
 									outfile.open( "rsc\\data\\data_saveGameData.txt" );
 									outfile << currentLevelNumber;
@@ -137,7 +141,8 @@ int Game::runGame( )
 int Game::runGameLoop( )
 {
 	cout << "Beginning game loop" << endl;
-	audio->playSound( "rsc\\audio\\sfx_readyGo.wav" );
+	if ( settings->getGameSfxEnabled( ) )
+		audio->playSound( 2 );
 
 	bool victory = false;
 
@@ -171,7 +176,8 @@ int Game::runGameLoop( )
 		if ( fps.get_ticks( ) < 1000 / Global::FRAMES_PER_SECOND )
 			SDL_Delay( ( 1000 / Global::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
 	}
-	audio->playSound( "rsc\\audio\\sfx_victory.wav" );
+	if ( settings->getGameSfxEnabled( ) )
+		audio->playSound( 3 );
 	return 1;
 }
 
@@ -259,12 +265,12 @@ bool Game::pauseGame( )
 						{
 							if ( y > 134 && y < 234 )
 							{
-								audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+								audio->playSound( 1 );
 								return false;
 							}
 							else if ( y > 234 && y < 334 )
 							{
-								audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+								audio->playSound( 1 );
 								ofstream outfile;
 								outfile.open( "rsc\\data\\data_saveGameData.txt" );
 								outfile << currentLevelNumber;
@@ -292,8 +298,7 @@ bool Game::pauseGame( )
 	return false;
 }
 
-void Game::displayDebug( ) {
- }
+void Game::displayDebug( ) { }
 
 void Game::displayInfoBar( )
 {

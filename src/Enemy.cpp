@@ -13,7 +13,7 @@ Enemy::Enemy(int x, int y, int ID)
     yVel = 0;
     speed = 6;
     cooldown =0;
-    dead=false;
+    alive=true;	//dead=false;
     size=32;
     teamID=ID;
 
@@ -104,11 +104,11 @@ void Enemy::AI(){
         }
     }
     else{
-        int playerX=target->getX();
-        int playerY=target->getY();
+        int playerX=target->getXpos();
+        int playerY=target->getYpos();
         
-        int myX=getX();
-        int myY=getY();
+        int myX=getXpos();
+        int myY=getYpos();
     
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
         if(distance>=100){
@@ -127,8 +127,8 @@ bool Enemy::sight_check(){
 
     string canisee="";
     string currsight;
-    int myX=getX();
-    int myY=getY();
+    int myX=getXpos();
+    int myY=getYpos();
     
     int shoot_direction;
     switch ( direction ){
@@ -239,8 +239,8 @@ void Enemy::shooting(){
 	    break;
     }
     
-    int myX=getX();
-    int myY=getY();
+    int myX=getXpos();
+    int myY=getYpos();
     Projectile* shoot;
     shoot=new Projectile(myX,myY,direction,0);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
@@ -266,7 +266,7 @@ bool Enemy::checkGates(int x, int y){
     Gate* gpointer;
     for(int i=0;i<gates->size();i++){
         gpointer=gates->at(i);
-        if(gpointer->collision(x,y)==true)
+        if(gpointer->collision(x,y,4)==true)
             stop=true;
     }
     return stop;

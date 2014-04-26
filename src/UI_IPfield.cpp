@@ -3,10 +3,12 @@
 UI_IPfield::UI_IPfield(SDL_Rect fieldSize, int textSize, bool center){
     addr= ""; mousedown= focus= false; centered= center;
     fontSize= textSize; bounds= fieldSize; blink.start();
+	ipSav.open("rsc\\data\\data_ip.txt",std::fstream::in);
     //the below variables are static and have room for generalization/abstraction
     bg= image->loadImage("rsc\\ui\\ui_IPfield.bmp");
-    ipSav.open("rsc\\data\\data_ip.txt");
+    
     getline(ipSav, addr);
+	ipSav.close();
 }
 
 int UI_IPfield::handleEvents(SDL_Event* ev){
@@ -53,7 +55,8 @@ void UI_IPfield::cursorBlink(){
         addr.pop_back();
 }
 
-UI_IPfield::setIP(){
-    ipSav.seekp(0);
-    ipSav.write(addr, addr.size()+1);
+void UI_IPfield::setIP(){
+	ipSav.open("rsc\\data\\data_ip.txt",std::fstream::out | std::fstream::trunc);
+	ipSav << addr;
+	ipSav.close();
 }

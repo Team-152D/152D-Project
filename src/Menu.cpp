@@ -40,8 +40,23 @@ int Menu::runMenu( )
 		if ( ( updateRValue >= 0 && updateRValue <= 9 ) || ( updateRValue >= 30 && updateRValue <= 39 ) )
 		{
 			if ( identifier == "Main Menu" && updateRValue <= 9 )
+			{
 				cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
-			return updateRValue;
+				return updateRValue;
+			}
+			else
+			{
+				switch( updateRValue )
+				{
+					case 30:
+						cout << "Received action value 30" << endl;
+						views -> at( currentView ) -> getIPfield() -> setIP();
+						cout << "set position" << endl;
+						break;
+					default:
+						break;
+				}
+			}
 		}
 
 		//draw

@@ -328,31 +328,31 @@ void Editor::save( )
 			{
 				if ( y > 134 && y < 234 )
 				{
-					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+					audio->playSound( 1 );
 					savePath = "rsc\\data\\data_s1.txt";
 					havePath = true;
 				}
 				else if ( y > 234 && y < 334 )
 				{
-					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+					audio->playSound( 1 );
 					savePath = "rsc\\data\\data_s2.txt";
 					havePath = true;
 				}
 				else if ( y > 334 && y < 434 )
 				{
-					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+					audio->playSound( 1 );
 					savePath = "rsc\\data\\data_s3.txt";
 					havePath = true;
 				}
 				else if ( y > 434 && y < 534 )
 				{
-					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+					audio->playSound( 1 );
 					savePath = "rsc\\data\\data_s4.txt";
 					havePath = true;
 				}
 				else if ( y > 534 && y < 634 )
 				{
-					audio->playSound( "rsc\\audio\\sfx_buttonPress.wav" );
+					audio->playSound( 1 );
 					savePath = "rsc\\data\\data_s5.txt";
 					havePath = true;
 				}

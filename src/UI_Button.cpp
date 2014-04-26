@@ -55,7 +55,7 @@ int UI_Button::handleEvents(SDL_Event* event)
 		//<< " received click at (" << x << "," << y << ")" << endl;
 		//if ( settings->getUiSfxEnabled() )
 		if( settings->getUiSfxEnabled() )
-		    audio->playSound("rsc\\audio\\sfx_buttonPress.wav");
+		    audio->playSound(1);
 		return action;
 	    }
 	    break;

@@ -53,6 +53,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Player.o \
 	${OBJECTDIR}/src/Projectile.o \
 	${OBJECTDIR}/src/Settings.o \
+	${OBJECTDIR}/src/Sight.o \
 	${OBJECTDIR}/src/Text.o \
 	${OBJECTDIR}/src/Timed_Gate.o \
 	${OBJECTDIR}/src/Timer.o \
@@ -61,6 +62,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/UI_IPfield.o \
 	${OBJECTDIR}/src/UI_TextLabel.o \
 	${OBJECTDIR}/src/View.o \
+	${OBJECTDIR}/src/chat.o \
 	${OBJECTDIR}/src/command.o \
 	${OBJECTDIR}/src/net.o
 
@@ -179,6 +181,11 @@ ${OBJECTDIR}/src/Settings.o: src/Settings.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Settings.o src/Settings.cpp
 
+${OBJECTDIR}/src/Sight.o: src/Sight.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sight.o src/Sight.cpp
+
 ${OBJECTDIR}/src/Text.o: src/Text.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -218,6 +225,11 @@ ${OBJECTDIR}/src/View.o: src/View.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/View.o src/View.cpp
+
+${OBJECTDIR}/src/chat.o: src/chat.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/chat.o src/chat.cpp
 
 ${OBJECTDIR}/src/command.o: src/command.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

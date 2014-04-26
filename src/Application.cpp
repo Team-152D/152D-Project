@@ -88,25 +88,29 @@ bool Application::initializeApplication( )
 {
 	if ( SDL_Init( SDL_INIT_EVERYTHING ) != 0 )
 	{
-		//fail
+		cout << endl << "ERROR: SDL failed to initialize!" << endl << SDL_GetError() << endl << "Exiting...";
+		return false;
 	}
 
 	if ( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 1024 ) != 0 )
 	{
-		//fail
+		cout << endl << "ERROR: SDL_Mixer failed to initialize!" << endl << SDL_GetError() << endl << "Exiting...";
+		return false;
 	}
 
 	if ( TTF_Init( ) != 0 )
 	{
-		//fail
+		cout << endl << "ERROR: SDL_TTF failed to initialize!" << endl << SDL_GetError() << endl << "Exiting...";
+		return false;
 	}
 
 	//Initialize sdl_image
 
-	window = SDL_CreateWindow( "152 Project", 0, 0, 1280, 800, SDL_WINDOW_FULLSCREEN );
+	window = SDL_CreateWindow( "152 Project", 0, 0, 1280, 768, SDL_WINDOW_FULLSCREEN );
 	if ( window == NULL )
 	{
-		//fail
+		cout << endl << "ERROR: Window is null!" << endl << SDL_GetError() << endl << "Exiting...";
+		return false;
 	}
 
 	screenSurface = SDL_GetWindowSurface( window );
