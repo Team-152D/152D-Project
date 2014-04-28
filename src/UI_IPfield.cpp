@@ -14,9 +14,8 @@ UI_IPfield::UI_IPfield(SDL_Rect fieldSize, int textSize, bool center){
 int UI_IPfield::handleEvents(SDL_Event* ev){
     if(ev->type== SDL_KEYDOWN && focus){
         char k= ev->key.keysym.sym;
-        if(isdigit(k) || k== '.')
-            addr.push_back(k);
-        else if(k== '\b') addr.pop_back();       
+        if(isdigit(k) || k== '.') addr.push_back(k);
+        else if(k== '\b') addr.pop_back();     
     } else{
         int x, y;
         SDL_GetMouseState(&x, &y);
@@ -35,24 +34,17 @@ void UI_IPfield::draw(){
     //note the src background must operate with increments of 10pixels (x-axis))
     for ( int i = bounds.x; i < ( bounds.x + bounds.w ); i += 10 )
         image->drawSurface(i, bounds.y, bg);
-    cursorBlink();
+    string t= addr; if(cursorBlink()) t+='|';
     if( centered )
-	text->writeTextCentered(bounds,addr.c_str(),fontSize);
+	text->writeTextCentered(bounds,t.c_str(),fontSize);
     else
-	text->writeText(bounds.x,bounds.y,addr.c_str(),fontSize);
+	text->writeText(bounds.x,bounds.y,t.c_str(),fontSize);
 }
 
-void UI_IPfield::cursorBlink(){
-    if(!focus)
-        if(addr.back()=='|'){
-            addr.pop_back();
-            return;
-        } else return;
-    int t= blink.get_ticks()/1000;
-    if(t%2 && addr.back()!='|')
-        addr.push_back('|');
-    else if(!(t%2) && addr.back()=='|')
-        addr.pop_back();
+bool UI_IPfield::cursorBlink(){
+    int t= blink.get_ticks()/900;
+    if(t%2 && focus) return true;
+    else return false;
 }
 
 void UI_IPfield::setIP(){

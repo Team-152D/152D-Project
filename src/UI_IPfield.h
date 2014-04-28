@@ -28,7 +28,7 @@ class UI_IPfield: public UI_AbstractElement{
         
         //currently uses internal timer
         //consider switch to passed down timer (gametimer)
-        void cursorBlink();
+        bool cursorBlink();
         Timer blink;
 };
 
