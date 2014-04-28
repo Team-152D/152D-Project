@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <sstream>
 #include "SDL2/SDL.h"
-
+#include <vector>
 #include "Text.h"
 
 using namespace std;
@@ -26,18 +26,22 @@ using namespace std;
        
        //move to private later
        void old_chatting(SDL_Event event); //SDL_Event* event
-       void chatting();
+      // void chatting();
        void show_message(string str);
        void send_message(string str);
        void show_result();
        
-       void chatting2();
+      // void chatting2();
       
        void can_type(bool x);
        
+       void break_down(int size);
+       void clear_vect();
        string get_input();
        string get_player();
-   
+       
+       string get_vect(int x);
+       int get_vect_end();
        //Future methods
        //scroll up and down to see text
        //Text boxes size
@@ -50,7 +54,7 @@ using namespace std;
        string s, player;
        stringstream in, out; //input and output 
        const Uint8 * keystate; //state of keyboard , note: need to include const
-      
+       vector<string> input; 
    }; 
 
 
