@@ -11,6 +11,10 @@ UI_IPfield::UI_IPfield(SDL_Rect fieldSize, int textSize, bool center){
 	ipSav.close();
 }
 
+UI_IPfield::~UI_IPfield(){
+    delete bg;
+}
+
 int UI_IPfield::handleEvents(SDL_Event* ev){
     if(ev->type== SDL_KEYDOWN && focus){
         char k= ev->key.keysym.sym;

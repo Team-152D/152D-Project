@@ -27,6 +27,7 @@ Grid::Grid(string input)
     IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
     IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
     IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
+    IMG_DET = image->loadImage("rsc\\game\\tile_det.bmp");
 	IMG_TEMP = image->loadImage("rsc\\game\\IMG_TEMP.bmp");
 }
 
@@ -46,6 +47,7 @@ Grid::Grid(vector<vector<int>*>* iGrid)
     IMG_STONE = image->loadImage("rsc\\game\\tile_stone32.bmp");
     IMG_WATER = image->loadImage("rsc\\game\\tile_water32.bmp");
     IMG_WOOD = image->loadImage("rsc\\game\\tile_wood32.bmp");
+    IMG_DET = image->loadImage("rsc\\game\\tile_det.bmp");
 	IMG_TEMP = image->loadImage("rsc\\game\\IMG_TEMP.bmp");
 }
 
@@ -60,6 +62,7 @@ Grid::~Grid()
     SDL_FreeSurface(IMG_STONE);
     SDL_FreeSurface(IMG_WATER);
     SDL_FreeSurface(IMG_WOOD);
+    SDL_FreeSurface(IMG_DET);
 	SDL_FreeSurface(IMG_TEMP);
 }
 

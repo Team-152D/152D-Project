@@ -1,10 +1,3 @@
-/* 
- * File:   net.h
- * Author: Blaize
- *
- * Created on December 10, 2013, 12:51 AM
- */
-
 #ifndef NET_H
 #define	NET_H
 

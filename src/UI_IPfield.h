@@ -1,10 +1,3 @@
-/* 
- * File:   UI_TextField.h
- * Author: Blaize
- *
- * Created on March 24, 2014, 4:11 PM
- */
-
 #ifndef UI_IPFIELD_H
 #define	UI_IPFIELD_H
 
@@ -16,6 +9,7 @@
 class UI_IPfield: public UI_AbstractElement{
     public:
         UI_IPfield(SDL_Rect, int, bool);
+        ~UI_IPfield();
         virtual void draw();
         virtual int handleEvents(SDL_Event*);
         void setIP();

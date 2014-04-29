@@ -25,7 +25,7 @@ public:
     }
     virtual void update() = 0;
     virtual void draw() = 0;
-    bool hit(int x, int y, int damage, int rin){
+    bool hit(int x, int y, int rin, int damage){
         bool hit=false;
         int distance = sqrt( pow(x-xOffset, 2 ) + pow(y-yOffset, 2 ));
         if(distance<=(radius+rin))

@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Ammobox.o \
 	${OBJECTDIR}/src/Application.o \
 	${OBJECTDIR}/src/Audio.o \
+	${OBJECTDIR}/src/DetTile.o \
 	${OBJECTDIR}/src/Editor.o \
 	${OBJECTDIR}/src/Enemy.o \
 	${OBJECTDIR}/src/Fixed_Switch.o \
@@ -105,6 +106,11 @@ ${OBJECTDIR}/src/Audio.o: src/Audio.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Audio.o src/Audio.cpp
+
+${OBJECTDIR}/src/DetTile.o: src/DetTile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DetTile.o src/DetTile.cpp
 
 ${OBJECTDIR}/src/Editor.o: src/Editor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

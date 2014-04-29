@@ -18,6 +18,7 @@
 #include "Gate.h"
 #include "Switch.h"
 #include "Powerup.h"
+#include "Object.h"
 
 using namespace std;
 
@@ -36,6 +37,9 @@ public:
     vector<Gate*>* getGates();
     vector<Switch*>* getSwitches();
     vector<Powerup*>* getPowerups();
+    vector<Object*>* getObjects(){
+        return &objects;
+    }
 
     bool isMultiplayer();
     string getDifficulty();
@@ -54,6 +58,7 @@ private:
     vector<Gate*>* gates;
     vector<Switch*>* switches;
     vector<Powerup*>* powerups;
+    vector<Object*> objects;
     
     string difficulty;
     
