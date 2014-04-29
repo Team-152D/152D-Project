@@ -242,14 +242,17 @@ void chat::can_type(bool x){
  
  void chat::break_down(int size){
      int x = s.size();
+     cout<<x<<endl; 
+     int i;
      string temp;
      //input.push_back(s.substr(x-size,size));
-     for(int i = x - size; i> 0; i= i- size){
+     for(i = x - size; i> 0; i= i- size){
      temp = "";    
      temp = s.substr(i, size); 
          input.push_back(temp);  
      } 
-     input.push_back(s.substr(0,size)); //also include the first the string at the end of the vector input
+     cout<<"i"<<i<<endl; 
+     input.push_back(s.substr(0,i+size)); //also include the first the string at the end of the vector input
  }
      
   void chat::clear_vect(){
