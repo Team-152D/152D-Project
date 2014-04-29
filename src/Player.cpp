@@ -7,14 +7,12 @@ Player::Player( int x, int y )
 	health = 100;
 	xOffset = x;
 	yOffset = y;
-	xPos = xOffset + 32;
-	yPos = yOffset + 32;
 	xVel = 0;
 	yVel = 0;
 	speed = 8;
 	cooldown = 0;
 	alive = true;
-	size = 32;
+	radius=16;
 	teamID = 0;
 	ammo = 15;
 
@@ -130,7 +128,7 @@ bool Player::checkGates( )
 	for ( int i = 0; i < gates->size( ); i++ )
 	{
 		gpointer = gates->at( i );
-		if ( gpointer->collision( ( xOffset + xPos ) / 2, ( yOffset + yPos ) / 2, size / 2 ) == true )
+		if ( gpointer->collision(xOffset, yOffset, radius) == true )
 			stop = true;
 	}
 	return stop;
@@ -143,7 +141,7 @@ void Player::checkSwitches( )
 	for ( int i = 0; i < switches->size( ); i++ )
 	{
 		spointer = switches->at( i );
-		if ( spointer->collision( ( xOffset + xPos ) / 2, ( yOffset + yPos ) / 2, size / 2 ) == true )
+		if ( spointer->collision(xOffset, yOffset, radius) == true )
 			spointer->down( );
 	}
 }
@@ -155,7 +153,6 @@ void Player::update( )
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
-		xPos = xOffset + 32;
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
@@ -170,7 +167,6 @@ void Player::update( )
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
-		yPos = yOffset + 32;
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||

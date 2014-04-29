@@ -1,13 +1,11 @@
 #ifndef UNIT_H
 #define	UNIT_H
 
-#include <iostream>
-#include "SDL2/SDL.h"
 #include "Timer.h"
-#include <string>
 #include "Mover.h"
 #include "Gate.h"
 #include "Switch.h"
+#include <math.h>
 using namespace std;
 
 // Unit (Global characteristics for players and enemies)
@@ -27,9 +25,10 @@ public:
     }
     virtual void update() = 0;
     virtual void draw() = 0;
-    bool hit(int x, int y, int radius, int damage){
+    bool hit(int x, int y, int damage, int rin){
         bool hit=false;
-	if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius))
+        int distance = sqrt( pow(x-xOffset, 2 ) + pow(y-yOffset, 2 ));
+        if(distance<=(radius+rin))
             hit=true;
     
         if(hit==true){
@@ -43,21 +42,17 @@ public:
     int getHealth() {return health;}
     int getXoffset() {return xOffset;}
     int getYoffset() {return yOffset;}
-    int getXpos() {return xPos;}
-    int getYpos() {return yPos;}
     int getXVel() {return xVel;}
     int getYVel() {return yVel;}
     int getammo() {return ammo;}
     int addammo(int in) {ammo+=in;}
     bool isAlive() {return alive;}
     int myside() {return teamID;}
-    int mysize() {return size;}
+    int myradius() {return radius;}
 protected:
     int health; //unit health percentage
     int xOffset; //the x offset
-    int yOffset; //the y offset
-    int xPos;
-    int yPos;
+    int yOffset; //the y offset (actually location))
     int xVel; //the x velocity
     int yVel; //the y velocity
     int speed;
@@ -65,7 +60,7 @@ protected:
     int direction; //its animation status
     int cooldown;
     bool alive;
-    int size;
+    int radius;
     int teamID;
     int ammo;
 };

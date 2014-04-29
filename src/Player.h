@@ -2,13 +2,7 @@
 #define	PLAYER_H
 //
 #include "Unit.h"
-#include <string>
 #include "Global.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
-#include <cstdlib>
-#include <cmath>
 
 class Projectile;
 class Game;

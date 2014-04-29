@@ -6,7 +6,7 @@ Sight::Sight( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	speed =  16;
+	speed =  4;
         radius = 16;
 
         //direction: 0: Up 1: Right 2: Down 3: Left
@@ -34,10 +34,10 @@ Sight::Sight( int x, int y, int d, int ID )
 	//ID: 0=player, 1=enemy
 	teamID = ID;
 
-        max_height=yOffset+100;
-        min_height=yOffset-100;
-        max_length=xOffset+100;
-        min_length=xOffset-100;
+        max_height=yOffset+300;
+        min_height=yOffset-300;
+        max_length=xOffset+300;
+        min_length=xOffset-300;
         
 	SIGHT_WIDTH = 32;
 	SIGHT_HEIGHT = 32;

@@ -3,14 +3,8 @@
 //
 #include "Unit.h"
 #include "Player.h"
-#include <string>
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
 #include "Global.h"
 #include "Image.h"
-#include <cstdlib>
-#include <cmath>
 #include "Sight.h"
 
 class Game;
@@ -52,13 +46,6 @@ private:
     Player* player1;
     Player* player2;
     Unit* target;
-    
-    //The surfaces
-    SDL_Surface *guard_sprite_up = NULL;
-    SDL_Surface *guard_sprite_down = NULL;
-    SDL_Surface *guard_sprite_right = NULL;
-    SDL_Surface *guard_sprite_left = NULL;
-    SDL_Surface *screen = NULL;
 
     //The areas of the sprite sheet
     SDL_Rect spriteClips[ 4 ];

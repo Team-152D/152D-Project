@@ -1,15 +1,9 @@
 #ifndef TIMED_GATE_H
 #define	TIMED_GATE_H
 //
-#include <string>
 #include "Gate.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
 #include "Global.h"
 #include "Image.h"
-#include <cstdlib>
-#include <cmath>
 
 using namespace std;
 

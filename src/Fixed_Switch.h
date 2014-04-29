@@ -1,15 +1,9 @@
 #ifndef FIXED_SWITCH_H
 #define	FIXED_SWITCH_H
 //
-#include <string>
 #include "Switch.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
 #include "Global.h"
 #include "Image.h"
-#include <cstdlib>
-#include <cmath>
 #include "Gate.h"
 
 using namespace std;

@@ -7,14 +7,12 @@ Monster::Monster(int x, int y)
     health = 125;
     xOffset = x;
     yOffset = y;
-    xPos = xOffset + 32;
-    yPos = yOffset + 32;
     xVel = 0;
     yVel = 0;
     speed = 6;
     cooldown =0;
     alive=true;
-    size=32;
+    radius=16;
     teamID=1;
     damage=15;
     ammo=0;
@@ -109,15 +107,12 @@ void Monster::AI(){
     else{
         int playerX=target->getXoffset();
         int playerY=target->getYoffset();
-        
-        int myX=getXpos();
-        int myY=getYpos();
     
-        if(myY<playerY+20) yVel += speed;
-        else if(myY>playerY+20) yVel -= speed;
+        if(xOffset<playerY+20) yVel += speed;
+        else if(yOffset>playerY+20) yVel -= speed;
             
-        if(myX<playerX+20) xVel += speed;
-        else if(myX>playerX+20) xVel -= speed;
+        if(xOffset<playerX+20) xVel += speed;
+        else if(xOffset>playerX+20) xVel -= speed;
     }
 }
 
@@ -218,7 +213,7 @@ void Monster::attack(){
         for(int i=0; i<characters->size();i++){
             upointer=characters->at(i);
             if(upointer->myside()!=teamID)
-                n=upointer->hit((xOffset+xPos)/2, (yOffset+yPos)/2, damage, size/2);
+                n=upointer->hit(xOffset,yOffset, damage, radius);
         }
         if(n==true)
             cooldown=2*30;
@@ -231,7 +226,7 @@ bool Monster::checkGates(){
     Gate* gpointer;
     for(int i=0;i<gates->size();i++){
         gpointer=gates->at(i);
-        if(gpointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
+        if(gpointer->collision(xOffset, yOffset, radius)==true)
             stop=true;
     }
     return stop;
@@ -249,7 +244,6 @@ void Monster::update()
             xVel=xVel/2;
         }        
 	xOffset += xVel;
-        xPos = xOffset+32;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
@@ -267,7 +261,6 @@ void Monster::update()
             yVel=yVel/2;
         }
 	yOffset += yVel;
-        yPos = yOffset+32;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||

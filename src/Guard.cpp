@@ -7,14 +7,12 @@ Guard::Guard(int x, int y)
     health = 80;
     xOffset = x;
     yOffset = y;
-    xPos = xOffset + 32;
-    yPos = yOffset + 32;
     xVel = 0;
     yVel = 0;
     speed = 6;
     cooldown = 0;
     alive=true;
-    size=32;
+    radius=16;
     teamID=1;
     ammo=0;
     sightcooldown=0;
@@ -37,21 +35,21 @@ Guard::Guard(int x, int y)
     
     set_clips();
 
-	guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
+	/*guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
 	guard_sprite_right = image->loadImage( "rsc\\game\\sprite_RedRight.bmp" ); // move right
 	guard_sprite_down = image->loadImage( "rsc\\game\\sprite_RedDown.bmp" ); // move down
 	guard_sprite_left = image->loadImage( "rsc\\game\\sprite_RedLeft.bmp" ); // move left
 	if ( guard_sprite_up == NULL || guard_sprite_right == NULL || guard_sprite_down == NULL || guard_sprite_left == NULL )
-		cout << "Guard sprite didn't load" << endl;
+		cout << "Guard sprite didn't load" << endl;*/
 }
 
 Guard::~Guard()
 {
     //Free the surface
-    SDL_FreeSurface(guard_sprite_up);
+    /*SDL_FreeSurface(guard_sprite_up);
     SDL_FreeSurface(guard_sprite_right);
     SDL_FreeSurface(guard_sprite_down);
-    SDL_FreeSurface(guard_sprite_left);
+    SDL_FreeSurface(guard_sprite_left);*/
 
 }
 
@@ -254,7 +252,7 @@ bool Guard::checkGates(){
     Gate* gpointer;
     for(int i=0;i<gates->size();i++){
         gpointer=gates->at(i);
-        if(gpointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
+        if(gpointer->collision(xOffset, yOffset, radius)==true)
             stop=true;
     }
     return stop;
@@ -265,7 +263,7 @@ void Guard::checkSwitches(){
     Switch* spointer;
     for(int i=0;i<switches->size();i++){
         spointer=switches->at(i);
-        if(spointer->collision((xOffset+xPos)/2,(yOffset+yPos)/2, size/2)==true)
+        if(spointer->collision(xOffset, yOffset, radius)==true)
             spointer->down();
     }
 }
@@ -282,7 +280,6 @@ void Guard::update()
             xVel=xVel/2;
         }
 	xOffset += xVel;
-        xPos = xOffset+32;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
@@ -301,7 +298,6 @@ void Guard::update()
             yVel=yVel/2;
         }
 	yOffset += yVel;
-        yPos = yOffset+32;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
@@ -336,7 +332,7 @@ void Guard::draw()
 
     switch ( direction )
     {
-	case DIR_UP:
+	/*case DIR_UP:
 	    apply_surface(xOffset - 16, yOffset - 16, guard_sprite_up, &spriteClips[frame]);
 	    break;
 	case DIR_RIGHT:
@@ -347,7 +343,7 @@ void Guard::draw()
 	    break;
 	case DIR_LEFT:
 	    apply_surface(xOffset - 16, yOffset - 16, guard_sprite_left, &spriteClips[frame]);
-	    break;
+	    break;*/
 
     }
 }

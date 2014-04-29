@@ -1,10 +1,7 @@
 #ifndef MOVER_H
 #define	MOVER_H
 
-#include <iostream>
-#include "SDL2/SDL.h"
 #include "Timer.h"
-#include <string>
 using namespace std;
 
 class Mover {

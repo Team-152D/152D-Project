@@ -1,14 +1,8 @@
 #ifndef GATE_H
 #define	GATE_H
 //
-#include <string>
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
 #include "Global.h"
 #include "Image.h"
-#include <cstdlib>
-#include <cmath>
 
 using namespace std;
 
@@ -28,7 +22,7 @@ public:
         
         bool in=false;
         
-	if(x>(xOffset-radius) && x<(xPos+radius) && y>(yOffset-radius) && y<(yPos+radius))
+	if(x+radius>=(xOffset) || x-radius<=(xPos) || y+radius>=(yOffset) || y-radius<=(yPos))
             in=true;
         
         return in;
@@ -41,6 +35,7 @@ protected:
   
     int xOffset; //the x offset
     int yOffset; //the y offset
+    int size;
     int xPos;
     int yPos;
     bool status;
