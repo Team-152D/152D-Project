@@ -58,22 +58,22 @@ void Player::input( char* cmd )
 {
 	if ( !strcmp( cmd, "Up" ) )
 	{
-		if ( yVel >= ( 0 - speed ) )
+		if ( yVel > ( 0 - speed ) )
 			yVel -= speed;
 	}
 	else if ( !strcmp( cmd, "Down" ) )
 	{
-		if ( yVel <= speed )
+		if ( yVel < speed )
 			yVel += speed;
 	}
 	else if ( !strcmp( cmd, "Left" ) )
 	{
-		if ( xVel >= ( 0 - speed ) )
+		if ( xVel > ( 0 - speed ) )
 			xVel -= speed;
 	}
 	else if ( !strcmp( cmd, "Right" ) )
 	{
-		if ( xVel <= speed )
+		if ( xVel < speed )
 			xVel += speed;
 	}
 	else if ( !strcmp( cmd, "Shoot" ) )
