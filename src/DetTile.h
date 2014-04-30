@@ -10,12 +10,13 @@ class DetTile: public Object{
     vector<Unit*> above;
     int cntMax, cntCur;
     Text number;
-    SDL_Surface *blast_1, *blast_2;
+    SDL_Surface *blast_1, *blast_2, *bg;
 public:
     DetTile(int, int, int);
     ~DetTile(){
         SDL_FreeSurface(blast_1);
         SDL_FreeSurface(blast_2);
+        SDL_FreeSurface(bg);
     }
     void draw();
     void update();

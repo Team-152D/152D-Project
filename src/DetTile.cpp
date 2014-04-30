@@ -1,14 +1,18 @@
 #include "DetTile.h"
 
 DetTile::DetTile(int x, int y, int cnt){
+    otype= "DetTile";
     if(cnt > 9 || cnt < 1) cnt= 3;
     cntMax= cntCur= cnt;
     bounds.x= x; bounds.y= y;
-    bounds.w= 32; bounds.h= 32;    
+    bounds.w= 32; bounds.h= 32; 
+    bg= image->loadImage("rsc\\game\\tile_det.bmp");   
     /*insert blast animation image loads here*/
 }
 
-void DetTile::draw(){   
+void DetTile::draw(){
+    image->drawSurface(bounds.x, bounds.y, bg);
+    
     char *t= ""; t+= cntCur+30;
     number.changeColor(244,20,20);
     number.writeTextCentered(bounds, t, 11);

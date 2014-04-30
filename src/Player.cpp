@@ -148,7 +148,13 @@ void Player::checkSwitches( )
 
 void Player::update( )
 {
-	checkSwitches( );
+        //begin object collision detection
+        vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
+        vector<Object*>::iterator it= impact.begin();
+        while(it!=impact.end()) impact->collide(this);      
+        checkSwitches( );
+        //end object collision detection
+        
 	//cout << "updating x" << endl;
 	if ( xVel != 0 )
 	{

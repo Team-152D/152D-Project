@@ -42,7 +42,6 @@ private:
     SDL_Surface* IMG_STONE;
     SDL_Surface* IMG_WATER;
     SDL_Surface* IMG_WOOD;
-    SDL_Surface* IMG_DET;
     SDL_Surface* IMG_TEMP;
 };
 

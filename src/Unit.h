@@ -5,6 +5,7 @@
 #include "Mover.h"
 #include "Gate.h"
 #include "Switch.h"
+#include "Object.h"
 #include <math.h>
 using namespace std;
 
@@ -37,8 +38,8 @@ public:
                 alive=false;
             }
         return hit;
-};
-
+    };
+    vector<Object*> objsAhead(vector<Object*>);
     int getHealth() {return health;}
     int getXoffset() {return xOffset;}
     int getYoffset() {return yOffset;}
@@ -64,5 +65,22 @@ protected:
     int teamID;
     int ammo;
 };
+
+    /*objs ahead returns any objects about to collide
+     * with the unit. Must run after speed is determined
+     * but before any actual update to position.  Takes as 
+     * its argument the list of objects to check collisions 
+     * against. */
+vector<Object*> Unit::objsAhead(vector<Object*> check){
+    int x= xOffset+xVel, y= yOffset+yVel;
+    vector<Object*> impact;
+    vector<Object*>::iterator it= check.begin();
+    while(it!=check.end())       
+        if(x+radius>=((*it)->getCord().x) && y+radius>=((*it)->getCord().y)
+        && x-radius<= ((*it)->getCord().x+(*it)->getCord().w) 
+        && y-radius<= ((*it)->getCord().y+(*it)->getCord().h))
+            impact.push_back(*it);     
+    return impact;
+}
 
 #endif

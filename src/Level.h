@@ -37,10 +37,7 @@ public:
     vector<Gate*>* getGates();
     vector<Switch*>* getSwitches();
     vector<Powerup*>* getPowerups();
-    vector<Object*>* getObjects(){
-        return &objects;
-    }
-
+    vector<Object*>* getObjects(){return objects;}
     bool isMultiplayer();
     string getDifficulty();
     
@@ -58,7 +55,7 @@ private:
     vector<Gate*>* gates;
     vector<Switch*>* switches;
     vector<Powerup*>* powerups;
-    vector<Object*> objects;
+    vector<Object*>* objects;
     
     string difficulty;
     
