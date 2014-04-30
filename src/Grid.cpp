@@ -102,9 +102,11 @@ void Grid::editorSave(string path,SDL_Rect one,SDL_Rect two, SDL_Rect end)
     outfile << 64 << " ";
 }
 
+
+
 void Grid::drawGrid()
 {
-	image->drawSurface(0,0,IMG_TEMP);
+	//image->drawSurface(0,0,IMG_TEMP);
 
 	/*
     for (int i = 0; i < height; i++) {

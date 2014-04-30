@@ -7,8 +7,6 @@ Enemy::Enemy(int x, int y, int ID)
     health = 100;
     xOffset = x;
     yOffset = y;
-    xPos = xOffset + 16;
-    yPos = yOffset + 16;
     xVel = 0;
     yVel = 0;
     speed = 6;
@@ -104,11 +102,11 @@ void Enemy::AI(){
         }
     }
     else{
-        int playerX=target->getXpos();
-        int playerY=target->getYpos();
+        int playerX=target->getXoffset();
+        int playerY=target->getYoffset();
         
-        int myX=getXpos();
-        int myY=getYpos();
+        int myX=getXoffset();
+        int myY=getYoffset();
     
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
         if(distance>=100){
@@ -127,8 +125,8 @@ bool Enemy::sight_check(){
 
     string canisee="";
     string currsight;
-    int myX=getXpos();
-    int myY=getYpos();
+    int myX=getXoffset();
+    int myY=getYoffset();
     
     int shoot_direction;
     switch ( direction ){
@@ -239,8 +237,8 @@ void Enemy::shooting(){
 	    break;
     }
     
-    int myX=getXpos();
-    int myY=getYpos();
+    int myX=getXoffset();
+    int myY=getYoffset();
     Projectile* shoot;
     shoot=new Projectile(myX,myY,direction,0);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();

@@ -23,6 +23,7 @@ public:
     
     void loadGrid(string);
     void editorSave(string,SDL_Rect,SDL_Rect, SDL_Rect);
+    void renderGrid();
     void drawGrid();
     int getTileAt(int,int);
     void setTileAt(int,int,int);
