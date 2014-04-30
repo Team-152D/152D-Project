@@ -7,11 +7,12 @@ chat::chat(){
     s = "";
     //in = "";
     //out = "";
-    player = "Player1";
+    player = "<Bob> ";
     textbox = NULL; //output
     inbox = NULL;   //input
     keystate = NULL;
-    isTyping = false; 
+    isTyping = false;
+    count = 0;
     //keystate[SDLK_XXXX]  0 = not pressed   1 = pressed
     //SDL_TEXTINPUT
     //SDL_TEXTEDITING 
@@ -29,23 +30,30 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
     //keystate = SDL_GetKeyboardState(NULL); crashes 
     string temp = "";
  
+    if(count == 0){
+        SDL_StopTextInput();
+        count++; 
+        set_player("Player1");
+    }
+    
         switch(event.type)
         {
           case SDL_KEYDOWN:
               switch(event.key.keysym.sym)
               {
                 case SDLK_RETURN: //enter / return
-                    //send message
-                    //show message
                     cout<<"Return key has been pressed"<<endl; //debugging
                     if(!isTyping){
-                  // SDL_StartTextInput();
+                   SDL_StartTextInput();
                    isTyping = true;
                    }
                    else{
                        SDL_StopTextInput();
                        isTyping = false;
-                       cout<<"<Player> "<<s<<endl;
+                       cout<<s<<endl;
+                       
+                       merge_player_input();
+                       cout<<s<<endl;
                        break_down(10);
                        //text->writeText(88,466,s.c_str(),14);
                        show_result();
@@ -53,20 +61,6 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
                    }
                     break;
               
-                case SDLK_KP_ENTER: //enter from keypad
-                    //send message
-                    //show message
-                    cout<<"Keypad_Return key has been pressed"<<endl; //debugging
-                    //if(!isTyping){
-                    //SDL_StartTextInput();
-                    //isTyping = true;
-                    //}
-                   // else{
-                       //DL_StopTextInput();
-                   //     isTyping = false;
-                   // }
-                    break;
-   
                 case SDLK_BACKSPACE: //backspace 
                     s.pop_back(); 
                 break;
@@ -90,7 +84,10 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
  
         } }
 
-/*
+void chat::merge_player_input(){
+    s.insert(0,player);
+}
+
 void chat::chatting(){
     //const     // Uint8 * keystate;
     //SDL_PumpEvents(); 
@@ -106,7 +103,7 @@ void chat::chatting(){
         }else if(keystate[SDLK_BACKSPACE]){
             //remove one character from string input
             if(s.length()!= 0)
-                  s.erase(s.length()-1);
+                  s.pop_back();
             
         }else{
             
@@ -114,12 +111,7 @@ void chat::chatting(){
             //show message
             //don't send message
         }
-        
-    
-    
-    
-    
-} */
+} 
 /*
 void chat::chatting2(){
     SDL_Event event;
@@ -193,18 +185,6 @@ void chat::chatting2(){
 }
 } */
 
-
-void chat::show_message(string str){
-   // SDL_FreeSurface(textbox);
-    
- //   textbox = TTF_RenderText_Solid(12,s,12);
-}
-
-void chat::send_message(string str){
-    
-    
-}
-
 void chat::show_result(){  
     for(int i = input.size()-1; i>= 0; i--){
     cout<<input.at(i); 
@@ -221,13 +201,14 @@ int chat::get_vect_end(){
     return (input.size() - 1) ;
 }
 
-void chat::run(){
-    
-   
-}
 
 void chat::can_type(bool x){
-    
+    isTyping = x;
+    if(x == true){
+        SDL_StartTextInput();
+    }else{
+        SDL_StopTextInput();
+    }
     
 }
 
@@ -242,20 +223,28 @@ void chat::can_type(bool x){
  
  void chat::break_down(int size){
      int x = s.size();
+     cout<<x<<endl; 
+     int i;
      string temp;
-     //input.push_back(s.substr(x-size,size));
-     for(int i = x - size; i> 0; i= i- size){
+     for(i = x - size; i> 0; i= i- size){
      temp = "";    
      temp = s.substr(i, size); 
          input.push_back(temp);  
      } 
-     input.push_back(s.substr(0,size)); //also include the first the string at the end of the vector input
+     cout<<"i"<<i<<endl; 
+     input.push_back(s.substr(0,i+size)); //also include the first the string at the end of the vector input
  }
+ 
+ void chat::set_player(string str){
+           player = "<" + str + "> ";
+       }
+ void chat::set_string(string str){
+           s = str; 
+       }
      
   void chat::clear_vect(){
       while(!input.empty()){
-          cout<<input.back(); 
+          //cout<<input.back();  //debugging
           input.pop_back(); 
       }
-      
   } 
