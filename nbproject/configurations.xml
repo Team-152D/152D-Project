@@ -37,6 +37,8 @@
         <itemPath>src/Grid.h</itemPath>
         <itemPath>src/Guard.cpp</itemPath>
         <itemPath>src/Guard.h</itemPath>
+        <itemPath>src/MobileBoxes.cpp</itemPath>
+        <itemPath>src/MobileBoxes.h</itemPath>
         <itemPath>src/Monster.cpp</itemPath>
         <itemPath>src/Monster.h</itemPath>
         <itemPath>src/Mover.h</itemPath>
@@ -185,6 +187,10 @@
       <item path="src/Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/MobileBoxes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/MobileBoxes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Monster.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -342,6 +348,10 @@
       <item path="src/Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/MobileBoxes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/MobileBoxes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Monster.cpp" ex="false" tool="1" flavor2="0">
       </item>

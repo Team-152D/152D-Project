@@ -4,7 +4,7 @@ UI_IPfield::UI_IPfield(SDL_Rect fieldSize, int textSize, bool center){
     mousedown= focus= false; centered= center;
     fontSize= textSize; bounds= fieldSize; blink.start();
     ipSav.open("rsc\\data\\data_ip.txt",std::fstream::in);
-    getline(ipSav, addr); ipSav.close(); cout<<addr<<endl;
+    getline(ipSav, addr); ipSav.close();
     bg= image->loadImage("rsc\\ui\\ui_IPfield.bmp");   	
 }
 

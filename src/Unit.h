@@ -56,7 +56,8 @@ public:
                 impact.push_back(*it);
         return impact;
     }
-
+    void stop(){xVel= 0; yVel= 0;}
+    
     int getHealth(){return health;}
     int getXoffset() {return xOffset;}
     int getYoffset() {return yOffset;}

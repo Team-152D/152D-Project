@@ -50,6 +50,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Level.o \
 	${OBJECTDIR}/src/Main.o \
 	${OBJECTDIR}/src/Menu.o \
+	${OBJECTDIR}/src/MobileBoxes.o \
 	${OBJECTDIR}/src/Monster.o \
 	${OBJECTDIR}/src/Player.o \
 	${OBJECTDIR}/src/Projectile.o \
@@ -166,6 +167,11 @@ ${OBJECTDIR}/src/Menu.o: src/Menu.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Menu.o src/Menu.cpp
+
+${OBJECTDIR}/src/MobileBoxes.o: src/MobileBoxes.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -w -I../../../../../MinGW/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/MobileBoxes.o src/MobileBoxes.cpp
 
 ${OBJECTDIR}/src/Monster.o: src/Monster.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
