@@ -22,7 +22,7 @@ public:
         
         bool in=false;
         
-	if(x+radius>=(xOffset) || x-radius<=(xPos) || y+radius>=(yOffset) || y-radius<=(yPos))
+	if(x>=(xOffset-radius) && x<=(xPos+radius) && y>=(yOffset-radius) && y<=(yPos+radius))
             in=true;
         
         return in;

@@ -47,6 +47,12 @@ private:
     Player* player2;
     Unit* target;
 
+    SDL_Surface *guard_sprite_up = NULL;
+    SDL_Surface *guard_sprite_down = NULL;
+    SDL_Surface *guard_sprite_right = NULL;
+    SDL_Surface *guard_sprite_left = NULL;
+    SDL_Surface *guard = NULL;
+    
     //The areas of the sprite sheet
     SDL_Rect spriteClips[ 4 ];
 

@@ -44,10 +44,10 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	set_clips( );
 
 	//Load the sprite sheet
-	projectile_sprite_up = image->loadImage( "rsc\\game\\Shot.bmp" ); // move up
-	projectile_sprite_right = image->loadImage( "rsc\\game\\Shot.bmp" ); // move right
-	projectile_sprite_down = image->loadImage( "rsc\\game\\Shot.bmp" );// move down
-	projectile_sprite_left = image->loadImage( "rsc\\game\\Shot.bmp" ); // move left
+	projectile_sprite_up = image->loadImage( "rsc\\game\\object_Shot.bmp" ); // move up
+	projectile_sprite_right = image->loadImage( "rsc\\game\\object_Shot.bmp" ); // move right
+	projectile_sprite_down = image->loadImage( "rsc\\game\\object_Shot.bmp" );// move down
+	projectile_sprite_left = image->loadImage( "rsc\\game\\object_Shot.bmp" ); // move left
 	if ( projectile_sprite_up == NULL || projectile_sprite_right == NULL || projectile_sprite_down == NULL || projectile_sprite_left == NULL )
 		cout << "Projectile sprite didn't load" << endl;
 }

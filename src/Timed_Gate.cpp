@@ -3,6 +3,10 @@
 //
 Timed_Gate::Timed_Gate(int x, int y, int timer)
 {
+    xOffset=x;
+    yOffset=y;
+    xPos = xOffset+16;
+    yPos = yOffset+16;
     status=false;
     gatetype="timed";
     gate_timer=(timer*30);

@@ -35,21 +35,21 @@ Guard::Guard(int x, int y)
     
     set_clips();
 
-	/*guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
+	guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
 	guard_sprite_right = image->loadImage( "rsc\\game\\sprite_RedRight.bmp" ); // move right
 	guard_sprite_down = image->loadImage( "rsc\\game\\sprite_RedDown.bmp" ); // move down
 	guard_sprite_left = image->loadImage( "rsc\\game\\sprite_RedLeft.bmp" ); // move left
 	if ( guard_sprite_up == NULL || guard_sprite_right == NULL || guard_sprite_down == NULL || guard_sprite_left == NULL )
-		cout << "Guard sprite didn't load" << endl;*/
+		cout << "Guard sprite didn't load" << endl;
 }
 
 Guard::~Guard()
 {
     //Free the surface
-    /*SDL_FreeSurface(guard_sprite_up);
+    SDL_FreeSurface(guard_sprite_up);
     SDL_FreeSurface(guard_sprite_right);
     SDL_FreeSurface(guard_sprite_down);
-    SDL_FreeSurface(guard_sprite_left);*/
+    SDL_FreeSurface(guard_sprite_left);
 
 }
 
@@ -240,7 +240,7 @@ void Guard::shooting(){
 	    break;
     }
     Projectile* shoot;
-    shoot=new Projectile(xOffset,yOffset,direction,1);
+    shoot=new Projectile(xOffset,yOffset,shoot_direction,1);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=15;
@@ -332,7 +332,7 @@ void Guard::draw()
 
     switch ( direction )
     {
-	/*case DIR_UP:
+	case DIR_UP:
 	    apply_surface(xOffset - 16, yOffset - 16, guard_sprite_up, &spriteClips[frame]);
 	    break;
 	case DIR_RIGHT:
@@ -343,7 +343,7 @@ void Guard::draw()
 	    break;
 	case DIR_LEFT:
 	    apply_surface(xOffset - 16, yOffset - 16, guard_sprite_left, &spriteClips[frame]);
-	    break;*/
+	    break;
 
     }
 }

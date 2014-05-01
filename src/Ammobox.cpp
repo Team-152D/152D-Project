@@ -3,21 +3,25 @@
 //
 Ammobox::Ammobox(int x, int y, int rounds)
 {
+    xOffset=x;
+    yOffset=y;
+    xPos = xOffset+8;
+    yPos = yOffset+8;
     obtained=false;
     poweruptype="ammo";
     contents=rounds;
     
     set_clips();
 
-	//ammobox_sprite = image->loadImage( "rsc\\game\\sprite_Ammobox.bmp" ); 
-	//if ( ammobox_sprite == NULL)
-	//	cout << "Box sprite didn't load" << endl;
+	ammobox_sprite = image->loadImage( "rsc\\game\\object_Ammobox.bmp" ); 
+	if ( ammobox_sprite == NULL)
+		cout << "Box sprite didn't load" << endl;
 }
 
 Ammobox::~Ammobox()
 {
     //Free the surface
-    //SDL_FreeSurface(ammobox_sprite);
+    SDL_FreeSurface(ammobox_sprite);
 
 }
 
@@ -48,12 +52,13 @@ void Ammobox::update(){
     characters=currentLevelGlobal->getCharacters();
     
     target=characters->at(get);
+    
     while(target->myside()==0){
         radius = target->myradius();
         x = target->getXoffset();
         y = target->getYoffset();
-            
-        if(x+radius>=(xOffset) || x-radius<=(xPos) || y+radius>=(yOffset) || y-radius<=(yPos))
+        
+        if(x>=(xOffset-radius) && x<=(xPos+radius) && y>=(yOffset-radius) && y<=(yPos+radius))
         {
             obtained=true;
             target->addammo(contents); 

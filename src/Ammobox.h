@@ -1,6 +1,6 @@
-#ifndef TIMED_GATE_H
-#define	TIMED_GATE_H
-//
+#ifndef AMMOBOX_H
+#define	AMMOBOX_H
+
 #include "Powerup.h"
 #include "Global.h"
 #include "Image.h"
@@ -26,6 +26,8 @@ private:
     
     int contents; //How many rounds this box contains
 
+    SDL_Surface *ammobox_sprite = NULL;
+    
     //The areas of the sprite sheet
     SDL_Rect spriteClips[ 4 ];
 };
