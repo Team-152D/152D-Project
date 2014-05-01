@@ -10,6 +10,7 @@ Level::Level( int levelNumber )
     gates = new vector<Gate*>;
     switches = new vector<Switch*>;
     powerups = new vector<Powerup*>;
+    objects = new vector<Object*>;
         
 	player1 = new Player( p1Spawn.x, p1Spawn.y);
         characters->push_back(player1);

@@ -1,25 +1,25 @@
 #include "UI_IPfield.h"
 
 UI_IPfield::UI_IPfield(SDL_Rect fieldSize, int textSize, bool center){
-    addr= " "; mousedown= focus= false; centered= center;
+    mousedown= focus= false; centered= center;
     fontSize= textSize; bounds= fieldSize; blink.start();
-	ipSav.open("rsc\\data\\data_ip.txt",std::fstream::in);
-    //the below variables are static and have room for generalization/abstraction
-    bg= image->loadImage("rsc\\ui\\ui_IPfield.bmp");
-    
-    getline(ipSav, addr);
-	ipSav.close();
+    ipSav.open("rsc\\data\\data_ip.txt",std::fstream::in);
+    getline(ipSav, addr); ipSav.close(); cout<<addr<<endl;
+    bg= image->loadImage("rsc\\ui\\ui_IPfield.bmp");   	
 }
 
 UI_IPfield::~UI_IPfield(){
-    delete bg;
+    SDL_FreeSurface(bg);
 }
 
 int UI_IPfield::handleEvents(SDL_Event* ev){
     if(ev->type== SDL_KEYDOWN && focus){
         char k= ev->key.keysym.sym;
         if(isdigit(k) || k== '.') addr.push_back(k);
-        else if(k== '\b' && addr.back()!=' ') addr.pop_back();     
+        else if(k== '\b'){
+            if(addr.empty()) addr+=' ';
+            addr.pop_back();
+        }
     } else{
         int x, y;
         SDL_GetMouseState(&x, &y);
@@ -52,7 +52,7 @@ bool UI_IPfield::cursorBlink(){
 }
 
 void UI_IPfield::setIP(){
-	ipSav.open("rsc\\data\\data_ip.txt",std::fstream::out | std::fstream::trunc);
+	ipSav.open("rsc\\data\\data_ip.txt",std::fstream::out | std::fstream::trunc);       
 	ipSav << addr;
 	ipSav.close();
 }
