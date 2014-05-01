@@ -15,26 +15,17 @@ public:
     //starting locations, direction and team ID
     Projectile(int, int, int, int);
     ~Projectile();
-    void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     
     void hit();
     void update();
     void draw();
 private:
-    void set_clips();
     //The dimensions of the image
     int PROJECTILE_WIDTH;
     int PROJECTILE_HEIGHT;
 
     //The surfaces
-    SDL_Surface *projectile_sprite_up = NULL;
-    SDL_Surface *projectile_sprite_down = NULL;
-    SDL_Surface *projectile_sprite_right = NULL;
-    SDL_Surface *projectile_sprite_left = NULL;
-    SDL_Surface *screen = NULL;
-
-    //The areas of the sprite sheet
-    SDL_Rect spriteClips[ 4 ];
+    SDL_Surface *projectile_sprite = NULL;
 };
 
 #endif

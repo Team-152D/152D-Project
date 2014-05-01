@@ -6,8 +6,9 @@ Sight::Sight( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	speed =  4;
-        radius = 16;
+	speed =  14;
+        radius = 8;
+        damage = 0;
 
         //direction: 0: Up 1: Right 2: Down 3: Left
         switch (d)
@@ -33,22 +34,10 @@ Sight::Sight( int x, int y, int d, int ID )
         
 	//ID: 0=player, 1=enemy
 	teamID = ID;
-
-        max_height=yOffset+300;
-        min_height=yOffset-300;
-        max_length=xOffset+300;
-        min_length=xOffset-300;
-        
-	SIGHT_WIDTH = 32;
-	SIGHT_HEIGHT = 32;
         
         damage=0;
         
         result="";
-
-	//Initialize animation variables
-	frame = 0;
-	direction = DIR_RIGHT;
 }
 
 Sight::~Sight( ){}
@@ -64,7 +53,7 @@ string Sight::hit(){
             has_hit=Upointer->hit(xOffset,yOffset,damage,radius);
             if(has_hit==true){
                 if(i==0) return "Player 1";
-                else if(Upointer->myside()==0) return "Player 2";
+                //else if(Upointer->myside()==0) return "Player 2";
             }
         }
     }
@@ -78,26 +67,16 @@ string Sight::look(){
 	if ( xVel != 0 )
 	{
 		xOffset += xVel;
-		if ( xOffset + 16 <= min_length ||
-			 xOffset + 16 >= max_length ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
+		if ( xOffset + 8 <= 0 ||
+		xOffset + 8 >= Global::GAME_WIDTH)
                          conditionwall="hit";
-		if ( xVel < 0 )
-			direction = DIR_LEFT;
-		else if ( xVel > 0 )
-			direction = DIR_RIGHT;
 	}
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
-		if ( yOffset + 16 <= min_height ||
-			 yOffset + 16 >= max_height ||
-			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 )
+		if ( yOffset + 8 <= 0 ||
+		yOffset + 8 >= Global::GAME_HEIGHT)
                          conditionwall="hit";
-		if ( yVel < 0 )
-			direction = DIR_UP;
-		else if ( yVel > 0 )
-			direction = DIR_DOWN;
 	}
         conditionplayer=hit();
 	if(conditionwall=="nohit"&&conditionplayer=="nohit"){result=look();}

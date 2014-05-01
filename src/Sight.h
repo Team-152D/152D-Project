@@ -22,9 +22,6 @@ public:
     void draw();
     string look();
 private:
-    //The dimensions of the image
-    int SIGHT_WIDTH;
-    int SIGHT_HEIGHT;
     
     int max_length;
     int min_length;
