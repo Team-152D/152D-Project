@@ -13,7 +13,6 @@ class Ammobox : public Powerup
 public:
     Ammobox(int, int, int);
     ~Ammobox();
-    void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
     void update();
     void draw();
     void pickup();
@@ -27,9 +26,6 @@ private:
     int contents; //How many rounds this box contains
 
     SDL_Surface *ammobox_sprite = NULL;
-    
-    //The areas of the sprite sheet
-    SDL_Rect spriteClips[ 4 ];
 };
 
 #endif

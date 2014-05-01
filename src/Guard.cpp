@@ -119,6 +119,9 @@ void Guard::AI(){
             if(myX<playerX+20) xVel += speed;
             else if(myX>playerX+20) xVel -= speed;
         }
+        /*else{
+            
+        }*/
         else{yVel=0;xVel=0;}
         if(distance<=200){shooting();}
     }
@@ -135,7 +138,7 @@ bool Guard::sight_check(){
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
-            for(int i=-25;i<25;i++){
+            for(int i=-25;i<=25;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -151,7 +154,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
-            for(int i=-25;i<25;i++){
+            for(int i=-25;i<=25;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -167,7 +170,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
-            for(int i=-25;i<25;i++){
+            for(int i=-25;i<=25;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -183,7 +186,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
-            for(int i=-25;i<25;i++){
+            for(int i=-25;i<=25;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;

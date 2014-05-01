@@ -16,6 +16,8 @@ public:
     void open(){status=true;}
     void shut(){status=false;}
     bool getstate(){return status;}
+    //Status True = gate OPEN.
+    //Status False = gate CLOSED.
     bool collision(int x, int y, int radius){
         if(status==true)
             return false;

@@ -13,7 +13,8 @@ public:
     Switch(){};
     ~Switch(){};
     void apply_surface( int, int, SDL_Surface*, SDL_Rect* );
-    
+    //Status True = switch ON.
+    //Status False = switch OFF.
     void down(){status=true;}
     bool collision(int x, int y, int radius){
         if(status==true)
