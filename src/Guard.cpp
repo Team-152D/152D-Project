@@ -68,43 +68,9 @@ void Guard::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Guard::AI(){
-    if(knowsPlayerlocation==false){
-        if(sightcooldown>0){sightcooldown--;return;}
-        seesPlayer=sight_check();
-        if(seesPlayer==true){knowsPlayerlocation=true;}
-        else if(seesPlayer==false&&knowsPlayerlocation==true){
-            losessighttimer++;
-            if(losessighttimer>=(4*30)){
-                knowsPlayerlocation=false;
-                target=NULL;
-            }
-        }
-        else{
-            if(patrolsteps<=0){
-                patroldirection= rand() % 4 + 1;
-                patrolsteps=20;
-            }
-            
-            switch (patroldirection)
-	    {
-	        case 1:
-		    yVel += speed;
-	        break;
-	        case 2:
-		    xVel += speed;
-		break;
-	        case 3:
-		    yVel += speed;
-		break;
-	        case 4:
-		    xVel += speed;
-		break;
-	    }
-            
-            patrolsteps--;
-        }
-    }
-    else{
+    seesPlayer=sight_check();
+    if(seesPlayer==true){knowsPlayerlocation=true;}
+    if(knowsPlayerlocation==true){
         int playerX=target->getXoffset();
         int playerY=target->getYoffset();
         
@@ -113,17 +79,66 @@ void Guard::AI(){
     
         int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
         if(distance>=100){
-            if(myY<playerY+20) yVel += speed;
-            else if(myY>playerY+20) yVel -= speed;
-            
-            if(myX<playerX+20) xVel += speed;
-            else if(myX>playerX+20) xVel -= speed;
+            if(myY<playerY+20){
+		if ( yVel < speed )
+			yVel += speed;
+            }
+            else if(myY>playerY+20){
+		if ( xVel > ( 0 - speed ) )
+			xVel -= speed;
+            }            
+            if(myX<playerX+20){
+		if ( xVel < speed )
+			xVel += speed;
+	    }
+            else if(myX>playerX+20){
+		if ( xVel > ( 0 - speed ) )
+			xVel -= speed;
+	    }
         }
-        /*else{
+        else{
+            xVel=0;yVel=0;
+            int up= sqrt( pow(myX-playerX, 2 ) + pow((myY-radius)-playerY, 2 ));
+            int right= sqrt( pow((myX+radius)-playerX, 2 ) + pow(myY-playerY, 2 ));
+            int down= sqrt( pow(myX-playerX, 2 ) + pow((myY+radius)-playerY, 2 ));
+            int left= sqrt( pow((myX-radius)-playerX, 2 ) + pow(myY-playerY, 2 ));
             
-        }*/
-        else{yVel=0;xVel=0;}
+            if(up>=right && up>=left && up>=down){direction = DIR_DOWN;}
+            else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
+            else if(down>=up && down>=right && down>=left){direction = DIR_UP;}
+            else{direction = DIR_RIGHT;}
+        }
         if(distance<=200){shooting();}
+    }
+    if(seesPlayer==false&&knowsPlayerlocation==true){
+        losessighttimer++;
+        if(losessighttimer>=(8*30)){
+            knowsPlayerlocation=false;
+            target=NULL;
+        }
+    }
+    if(knowsPlayerlocation==false){
+        if(patrolsteps<=0){
+            patroldirection= rand() % 4 + 1;
+            patrolsteps=20;
+        }
+            
+        switch (patroldirection)
+	{
+	    case 1:
+		yVel += speed;
+	    break;
+	    case 2:
+		xVel += speed;
+            break;
+	    case 3:
+		yVel += speed;
+            break;
+	    case 4:
+		xVel += speed;
+            break;
+	}    
+        patrolsteps--;
     }
 }
 
@@ -138,7 +153,7 @@ bool Guard::sight_check(){
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
-            for(int i=-25;i<=25;i+=16){
+            for(int i=-100;i<=100;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -154,7 +169,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
-            for(int i=-25;i<=25;i+=16){
+            for(int i=-100;i<=100;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -170,7 +185,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
-            for(int i=-25;i<=25;i+=16){
+            for(int i=-100;i<=100;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -186,7 +201,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
-            for(int i=-25;i<=25;i+=16){
+            for(int i=-100;i<=100;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -246,7 +261,7 @@ void Guard::shooting(){
     shoot=new Projectile(xOffset,yOffset,shoot_direction,1);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
-    cooldown=15;
+    cooldown=30;
 }
 
 bool Guard::checkGates(){
@@ -279,9 +294,7 @@ void Guard::update()
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
-        if(knowsPlayerlocation==false){
-            xVel=xVel/2;
-        }
+        xVel/=2;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
@@ -297,9 +310,7 @@ void Guard::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
-        if(knowsPlayerlocation==false){
-            yVel=yVel/2;
-        }
+        yVel/=2;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||

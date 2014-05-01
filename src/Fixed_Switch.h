@@ -18,9 +18,6 @@ public:
     
 private:
     void set_clips();
-    //The dimensions of the image
-    const int FIXED_SWITCH_WIDTH = 32;
-    const int FIXED_SWITCH_HEIGHT = 32;
     
     Gate* My_Gate; //Gate paired to this switch
     

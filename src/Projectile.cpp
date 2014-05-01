@@ -7,7 +7,7 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	xOffset = x;
 	yOffset = y;
 	speed = 8;
-        radius=8;
+        radius = 8;
         teamID = ID;
         damage= 10;
         
@@ -31,15 +31,8 @@ Projectile::Projectile( int x, int y, int d, int ID )
                 yVel = 0;
 		break;
 	}
-
-	PROJECTILE_WIDTH = 16;
-	PROJECTILE_HEIGHT = 16;
         
         hitsomething=false;
-
-	//Initialize animation variables
-	frame = 0;
-	direction = DIR_RIGHT;
 
 	//Load the sprite sheet
 	projectile_sprite = image->loadImage( "rsc\\game\\object_Shot.bmp" ); // move up
@@ -81,10 +74,6 @@ void Projectile::update( )
 		xOffset + 8 >= Global::GAME_WIDTH){
             hitsomething=true;
         }
-	if ( xVel < 0 )
-	    direction = DIR_LEFT;
-	else if ( xVel > 0 )
-	    direction = DIR_RIGHT;
     }
     if ( yVel != 0 )
     {
@@ -93,10 +82,6 @@ void Projectile::update( )
 		yOffset + 8 >= Global::GAME_HEIGHT){
             hitsomething=true;
         }
-	if ( yVel < 0 )
-	    direction = DIR_UP;
-	else if ( yVel > 0 )
-	    direction = DIR_DOWN;
     }
 }
 
