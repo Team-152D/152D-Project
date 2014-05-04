@@ -19,8 +19,6 @@ Player::Player( int x, int y )
 	//Initialize animation variables
 	frame = 0;
 	direction = DIR_RIGHT;
-        
-        invul = 0;
 
 	set_clips( );
 
@@ -161,7 +159,6 @@ void Player::checkSwitches( )
 
 void Player::update( )
 {
-        cout<<"Player location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
     
         //begin object collision detection
         vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
@@ -170,8 +167,6 @@ void Player::update( )
         
         if(cooldown>0)
             cooldown--;
-        if(invul>0)
-            invul--;
 		
         checkSwitches( );
         //end object collision detection

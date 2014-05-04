@@ -35,8 +35,8 @@ void Fixed_Switch::update(){
 void Fixed_Switch::draw()
 {
     if(status==true)
-        image->drawSurface(xOffset,yOffset,fixed_switch_sprite_on);
+        image->drawSurface(xOffset+8,yOffset+8,fixed_switch_sprite_on);
     else
-        image->drawSurface(xOffset,yOffset,fixed_switch_sprite_off);
+        image->drawSurface(xOffset+8,yOffset+8,fixed_switch_sprite_off);
 }
 

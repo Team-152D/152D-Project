@@ -23,8 +23,12 @@ Level::Level( int levelNumber )
         
     difficulty="Easy"; //default until we get something more specific set
     currentLevelGlobal = this;
-    Guard* tester = new Guard(espawn.x,espawn.y);
-    characters->push_back(tester);
+    Guard* utester = new Guard(espawn.x,espawn.y);
+    characters->push_back(utester);
+    Timed_Gate* gtester = new Timed_Gate(100,400,1);
+    Fixed_Switch* stester = new Fixed_Switch(600,100,gtester);
+    gates->push_back(gtester);
+    switches->push_back(stester);
 }
 
 vector<Mover*>* Level::getMovers(){return movers;}

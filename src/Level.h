@@ -19,6 +19,9 @@
 #include "Switch.h"
 #include "Powerup.h"
 #include "Object.h"
+#include "Fixed_Switch.h"
+#include "Timed_Gate.h"
+#include "Ammobox.h"
 
 using namespace std;
 

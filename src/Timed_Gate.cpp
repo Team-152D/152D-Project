@@ -39,8 +39,8 @@ void Timed_Gate::update(){
 void Timed_Gate::draw()
 {
     if(status==true)
-        image->drawSurface(xOffset,yOffset,timed_gate_sprite_open);
+        image->drawSurface(xOffset+8,yOffset+8,timed_gate_sprite_open);
     else
-        image->drawSurface(xOffset,yOffset,timed_gate_sprite_closed);
+        image->drawSurface(xOffset+8,yOffset+8,timed_gate_sprite_closed);
 }
 

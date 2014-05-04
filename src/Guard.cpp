@@ -33,8 +33,6 @@ Guard::Guard(int x, int y)
         player2 = currentLevelGlobal->getPlayer(2);
     target = player1;
     
-    invul = 0;
-    
     set_clips();
 
 	guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
@@ -304,8 +302,6 @@ void Guard::update()
     
     if(cooldown>0)
         cooldown--;
-    if(invul>0)
-        invul--;
     
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
