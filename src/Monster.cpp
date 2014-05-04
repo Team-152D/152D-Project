@@ -77,7 +77,7 @@ void Monster::AI(){
         int playerY=target->getYoffset();
     
         int distance=sqrt( pow(xOffset-playerX, 2 ) + pow(yOffset-playerY, 2 ));
-        if(distance>=radius+16){
+        //if(distance>radius){
             if(yOffset<playerY){
 		if ( yVel < speed )
 			yVel += speed;
@@ -94,10 +94,10 @@ void Monster::AI(){
 		if ( xVel > ( 0 - speed ) )
 			xVel -= speed;
 	    }
-        }
+        /*}
         else{
             xVel=0;
-            yVel=0;
+            yVel=0;*/
             int up= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset-radius)-playerY, 2 ));
             int right= sqrt( pow((xOffset+radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
             int down= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset+radius)-playerY, 2 ));
@@ -107,7 +107,7 @@ void Monster::AI(){
             else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
             else if(down>=up && down>=right && down>=left){direction = DIR_UP;}
             else{direction = DIR_RIGHT;}
-        }
+        //}
     }
     if(seesPlayer==false&&knowsPlayerlocation==true){
         losessighttimer++;
@@ -228,20 +228,6 @@ bool Monster::sight_check(){
     else{return false;}
 }
 
-void Monster::attack(){
-    if(cooldown<=0){
-        bool n;
-        vector<Unit*>* characters = currentLevelGlobal->getCharacters();
-        Unit* upointer;
-        for(int i=0; i<characters->size();i++){
-            upointer=characters->at(i);
-            n=upointer->hit(xOffset,yOffset, radius, damage);
-        }
-        if(n==true)
-            cooldown=30;
-    }
-}
-
 bool Monster::checkGates(){
     bool stop=false;
     vector<Gate*>* gates=currentLevelGlobal->getGates();
@@ -256,12 +242,18 @@ bool Monster::checkGates(){
 
 bool Monster::checkCharacters(){
     bool stop=false;
+    int hurt=0;
     vector<Unit*>* characters=currentLevelGlobal->getCharacters();
     Unit* upointer;
     for(int i=0;i<characters->size();i++){
         upointer=characters->at(i);
-        if(upointer->hit(xOffset,yOffset,radius,0)==true && upointer!=this)
+        if(upointer->myside()!=teamID&&cooldown<=0){
+            hurt=damage;
+            cooldown=30;
+        }
+        if(upointer->hit(xOffset,yOffset,radius,hurt)==true && upointer!=this)
             stop=true;
+        hurt=0;
     }
     return stop;
 }
@@ -269,7 +261,6 @@ bool Monster::checkCharacters(){
 void Monster::update()
 {
     AI();
-    attack();
     cout<<"Monster location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
     
     if(cooldown>0)

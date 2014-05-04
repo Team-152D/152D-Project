@@ -34,9 +34,8 @@ public:
             hit = true;
         cout<<distance;
 
-        if (hit == true&&invul<=0) {
+        if (hit == true) {
             health -= damage;
-            invul=30;
             if (health <= 0)
                 alive = false;
         }
@@ -85,7 +84,6 @@ protected:
     int teamID;
     int ammo;
     int size;
-    int invul;
 };
 
 #endif
