@@ -21,6 +21,7 @@ public:
     void AI();
     bool sight_check();
     bool checkGates();
+    bool checkCharacters();
     void attack();
     void update();
     void draw();

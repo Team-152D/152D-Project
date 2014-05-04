@@ -19,6 +19,7 @@ public:
     void input(char*);
     void shooting();
     bool checkGates();
+    bool checkCharacters();
     void checkSwitches();
     void update();
     void draw();

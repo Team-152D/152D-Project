@@ -21,6 +21,7 @@ private:
     const int TIMED_GATE_HEIGHT = 32;
     
     int gate_timer; //How long the gate stays open.
+    int seconds; //the number of seconds the gate stays open.
     
     //The surfaces
     SDL_Surface *timed_gate_sprite_open = NULL;

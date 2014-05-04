@@ -33,6 +33,8 @@ Guard::Guard(int x, int y)
         player2 = currentLevelGlobal->getPlayer(2);
     target = player1;
     
+    invul = 0;
+    
     set_clips();
 
 	guard_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
@@ -69,39 +71,36 @@ void Guard::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 void Guard::AI(){
     seesPlayer=sight_check();
-    if(seesPlayer==true){knowsPlayerlocation=true;}
+    if(seesPlayer==true){knowsPlayerlocation=true; losessighttimer=0;}
     if(knowsPlayerlocation==true){
         int playerX=target->getXoffset();
         int playerY=target->getYoffset();
-        
-        int myX=getXoffset();
-        int myY=getYoffset();
     
-        int distance=sqrt( pow(myX-playerX, 2 ) + pow(myY-playerY, 2 ));
+        int distance=sqrt( pow(xOffset-playerX, 2 ) + pow(yOffset-playerY, 2 ));
         if(distance>=100){
-            if(myY<playerY+20){
+            if(yOffset<playerY){
 		if ( yVel < speed )
 			yVel += speed;
             }
-            else if(myY>playerY+20){
-		if ( xVel > ( 0 - speed ) )
-			xVel -= speed;
+            else if(yOffset>playerY){
+		if ( yVel > ( 0 - speed ) )
+			yVel -= speed;
             }            
-            if(myX<playerX+20){
+            if(xOffset<playerX){
 		if ( xVel < speed )
 			xVel += speed;
 	    }
-            else if(myX>playerX+20){
+            else if(xOffset>playerX){
 		if ( xVel > ( 0 - speed ) )
 			xVel -= speed;
 	    }
         }
         else{
             xVel=0;yVel=0;
-            int up= sqrt( pow(myX-playerX, 2 ) + pow((myY-radius)-playerY, 2 ));
-            int right= sqrt( pow((myX+radius)-playerX, 2 ) + pow(myY-playerY, 2 ));
-            int down= sqrt( pow(myX-playerX, 2 ) + pow((myY+radius)-playerY, 2 ));
-            int left= sqrt( pow((myX-radius)-playerX, 2 ) + pow(myY-playerY, 2 ));
+            int up= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset-radius)-playerY, 2 ));
+            int right= sqrt( pow((xOffset+radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
+            int down= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset+radius)-playerY, 2 ));
+            int left= sqrt( pow((xOffset-radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
             
             if(up>=right && up>=left && up>=down){direction = DIR_DOWN;}
             else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
@@ -112,18 +111,18 @@ void Guard::AI(){
     }
     if(seesPlayer==false&&knowsPlayerlocation==true){
         losessighttimer++;
-        if(losessighttimer>=(8*30)){
+        if(losessighttimer>=(10*30)){
             knowsPlayerlocation=false;
             target=NULL;
         }
     }
     if(knowsPlayerlocation==false){
         if(patrolsteps<=0){
-            patroldirection= rand() % 4 + 1;
+            patroldirection= rand() % 100 + 1;
             patrolsteps=20;
         }
             
-        switch (patroldirection)
+        switch (patroldirection%4)
 	{
 	    case 1:
 		yVel += speed;
@@ -240,7 +239,7 @@ bool Guard::sight_check(){
 }
 
 void Guard::shooting(){
-    if(cooldown>0){cooldown--; return;}
+    if(cooldown>0){return;}
     
     int shoot_direction=0;
     switch ( direction ){
@@ -276,6 +275,18 @@ bool Guard::checkGates(){
     return stop;
 }
 
+bool Guard::checkCharacters(){
+    bool stop=false;
+    vector<Unit*>* characters=currentLevelGlobal->getCharacters();
+    Unit* upointer;
+    for(int i=0;i<characters->size();i++){
+        upointer=characters->at(i);
+        if(upointer->hit(xOffset,yOffset,radius,0)==true  && upointer!=this)
+            stop=true;
+    }
+    return stop;
+}
+
 void Guard::checkSwitches(){
     vector<Switch*>* switches=currentLevelGlobal->getSwitches();
     Switch* spointer;
@@ -291,6 +302,11 @@ void Guard::update()
     AI();
     checkSwitches();
     
+    if(cooldown>0)
+        cooldown--;
+    if(invul>0)
+        invul--;
+    
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
@@ -300,7 +316,7 @@ void Guard::update()
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
-                checkGates()){
+                checkGates()||checkCharacters()){
 	    xOffset -= xVel; patrolsteps=0;}
 	if ( xVel < 0 )
 	    direction = DIR_LEFT;
@@ -316,7 +332,7 @@ void Guard::update()
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
-                checkGates()){
+                checkGates()||checkCharacters()){
 	    yOffset -= yVel; patrolsteps=0;}
 	if ( yVel < 0 )
 	    direction = DIR_UP;

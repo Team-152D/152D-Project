@@ -19,6 +19,8 @@ Player::Player( int x, int y )
 	//Initialize animation variables
 	frame = 0;
 	direction = DIR_RIGHT;
+        
+        invul = 0;
 
 	set_clips( );
 
@@ -86,7 +88,6 @@ void Player::shooting( )
 {
 	if ( cooldown > 0 )
 	{
-		cooldown--;
 		return;
 	}
 	else if ( ammo <= 0 )
@@ -134,6 +135,18 @@ bool Player::checkGates( )
 	return stop;
 }
 
+bool Player::checkCharacters(){
+    bool stop=false;
+    vector<Unit*>* characters=currentLevelGlobal->getCharacters();
+    Unit* upointer;
+    for(int i=0;i<characters->size();i++){
+        upointer=characters->at(i);
+        if(upointer->hit(xOffset,yOffset,radius,0)==true && upointer!=this)
+            stop=true;
+    }
+    return stop;
+}
+
 void Player::checkSwitches( )
 {
 	vector<Switch*>* switches = currentLevelGlobal->getSwitches( );
@@ -148,10 +161,17 @@ void Player::checkSwitches( )
 
 void Player::update( )
 {
+        cout<<"Player location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
+    
         //begin object collision detection
         vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
         vector<Object*>::iterator it= impact.begin();
-        //while(it!=impact.end()) impact.collide(this);    
+        //while(it!=impact.end()) impact.collide(this);   
+        
+        if(cooldown>0)
+            cooldown--;
+        if(invul>0)
+            invul--;
 		
         checkSwitches( );
         //end object collision detection
@@ -163,7 +183,7 @@ void Player::update( )
 		if ( xOffset + 16 <= 0 ||
 			 xOffset + 16 >= Global::GAME_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
-			 checkGates( ) )
+			 checkGates( )||checkCharacters() )
 			xOffset -= xVel;
 		if ( xVel < 0 )
 			direction = DIR_LEFT;
@@ -177,7 +197,7 @@ void Player::update( )
 		if ( yOffset + 16 <= 0 ||
 			 yOffset + 16 >= Global::GAME_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
-			 checkGates( ) )
+			 checkGates( )||checkCharacters() )
 			yOffset -= yVel;
 		if ( yVel < 0 )
 			direction = DIR_UP;

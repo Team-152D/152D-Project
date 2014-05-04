@@ -9,11 +9,11 @@ Fixed_Switch::Fixed_Switch(int x, int y, Gate* pair)
     
     xOffset = x;
     yOffset = y;
-    xPos = xOffset+32;
-    yPos = yOffset+32;
+    xPos = xOffset+16;
+    yPos = yOffset+16;
 
-	fixed_switch_sprite_on = image->loadImage( "rsc\\game\\sprite_SwitchUp.bmp" ); // move up
-	fixed_switch_sprite_off = image->loadImage( "rsc\\game\\sprite_SwitchRight.bmp" ); // move right
+	fixed_switch_sprite_on = image->loadImage( "rsc\\game\\object_switchOn.bmp" ); // move up
+	fixed_switch_sprite_off = image->loadImage( "rsc\\game\\object_switchOff.bmp" ); // move right
 	if ( fixed_switch_sprite_on == NULL || fixed_switch_sprite_off == NULL)
 		cout << "switch sprite didn't load" << endl;
 }

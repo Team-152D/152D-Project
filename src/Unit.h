@@ -32,9 +32,11 @@ public:
         int distance = sqrt(pow(x - xOffset, 2) + pow(y - yOffset, 2));
         if (distance <= (radius + rin))
             hit = true;
+        cout<<distance;
 
-        if (hit == true) {
+        if (hit == true&&invul<=0) {
             health -= damage;
+            invul=30;
             if (health <= 0)
                 alive = false;
         }
@@ -83,6 +85,7 @@ protected:
     int teamID;
     int ammo;
     int size;
+    int invul;
 };
 
 #endif

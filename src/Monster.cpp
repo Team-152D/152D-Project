@@ -33,6 +33,8 @@ Monster::Monster(int x, int y)
         player2 = currentLevelGlobal->getPlayer(2);
     target = player1;
     
+    invul = 0;
+    
     set_clips();
 
 	monster_sprite_up = image->loadImage( "rsc\\game\\sprite_RedUp.bmp" ); // move up
@@ -68,51 +70,74 @@ void Monster::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Monster::AI(){
-    if(knowsPlayerlocation==false){
-        if(sightcooldown>0){sightcooldown--;return;}
-        seesPlayer=sight_check();
-        if(seesPlayer==true){knowsPlayerlocation=true;}
-        else if(seesPlayer==false&&knowsPlayerlocation==true){
-            losessighttimer++;
-            if(losessighttimer>=(2*30)){
-                knowsPlayerlocation=false;
-                target=NULL;
-            }
-        }
-        else{
-            if(patrolsteps<=0){
-                patroldirection= rand() % 4 + 1;
-                patrolsteps=10;
-            }
-            
-            switch (patroldirection)
-	    {
-	        case 1:
-		    yVel += speed;
-	        break;
-	        case 2:
-		    xVel += speed;
-		break;
-	        case 3:
-		    yVel += speed;
-		break;
-	        case 4:
-		    xVel += speed;
-		break;
-	    }
-            
-            patrolsteps--;
-        }
-    }
-    else{
+    seesPlayer=sight_check();
+    if(seesPlayer==true){knowsPlayerlocation=true; losessighttimer=0;}
+    if(knowsPlayerlocation==true){
         int playerX=target->getXoffset();
         int playerY=target->getYoffset();
     
-        if(xOffset<playerY+20) yVel += speed;
-        else if(yOffset>playerY+20) yVel -= speed;
+        int distance=sqrt( pow(xOffset-playerX, 2 ) + pow(yOffset-playerY, 2 ));
+        if(distance>=radius+16){
+            if(yOffset<playerY){
+		if ( yVel < speed )
+			yVel += speed;
+            }
+            else if(yOffset>playerY){
+		if ( yVel > ( 0 - speed ) )
+			yVel -= speed;
+            }            
+            if(xOffset<playerX){
+		if ( xVel < speed )
+			xVel += speed;
+	    }
+            else if(xOffset>playerX){
+		if ( xVel > ( 0 - speed ) )
+			xVel -= speed;
+	    }
+        }
+        else{
+            xVel=0;
+            yVel=0;
+            int up= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset-radius)-playerY, 2 ));
+            int right= sqrt( pow((xOffset+radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
+            int down= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset+radius)-playerY, 2 ));
+            int left= sqrt( pow((xOffset-radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
             
-        if(xOffset<playerX+20) xVel += speed;
-        else if(xOffset>playerX+20) xVel -= speed;
+            if(up>=right && up>=left && up>=down){direction = DIR_DOWN;}
+            else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
+            else if(down>=up && down>=right && down>=left){direction = DIR_UP;}
+            else{direction = DIR_RIGHT;}
+        }
+    }
+    if(seesPlayer==false&&knowsPlayerlocation==true){
+        losessighttimer++;
+        if(losessighttimer>=(3*30)){
+            knowsPlayerlocation=false;
+            target=NULL;
+        }
+    }
+    if(knowsPlayerlocation==false){
+        if(patrolsteps<=0){
+            patroldirection= rand() % 100 + 1;
+            patrolsteps=20;
+        }
+            
+        switch (patroldirection%4)
+	{
+	    case 1:
+		yVel += speed;
+	    break;
+	    case 2:
+		xVel += speed;
+            break;
+	    case 3:
+		yVel += speed;
+            break;
+	    case 4:
+		xVel += speed;
+            break;
+	}    
+        patrolsteps--;
     }
 }
 
@@ -127,7 +152,7 @@ bool Monster::sight_check(){
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
-            for(int i=-10;i<10;i++){
+            for(int i=-40;i<40;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -143,7 +168,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
-            for(int i=-10;i<10;i++){
+            for(int i=-40;i<40;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -159,7 +184,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
-            for(int i=-10;i<10;i++){
+            for(int i=-40;i<40;i+=16){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -175,7 +200,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
-            for(int i=-10;i<10;i++){
+            for(int i=-40;i<40;i+=16){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -204,19 +229,16 @@ bool Monster::sight_check(){
 }
 
 void Monster::attack(){
-    if(cooldown>0)
-        cooldown--;
-    else{
+    if(cooldown<=0){
         bool n;
         vector<Unit*>* characters = currentLevelGlobal->getCharacters();
         Unit* upointer;
         for(int i=0; i<characters->size();i++){
             upointer=characters->at(i);
-            if(upointer->myside()!=teamID)
-                n=upointer->hit(xOffset,yOffset, damage, radius);
+            n=upointer->hit(xOffset,yOffset, radius, damage);
         }
         if(n==true)
-            cooldown=2*30;
+            cooldown=30;
     }
 }
 
@@ -232,23 +254,40 @@ bool Monster::checkGates(){
     return stop;
 }
 
+bool Monster::checkCharacters(){
+    bool stop=false;
+    vector<Unit*>* characters=currentLevelGlobal->getCharacters();
+    Unit* upointer;
+    for(int i=0;i<characters->size();i++){
+        upointer=characters->at(i);
+        if(upointer->hit(xOffset,yOffset,radius,0)==true && upointer!=this)
+            stop=true;
+    }
+    return stop;
+}
+
 void Monster::update()
 {
     AI();
     attack();
+    cout<<"Monster location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
+    
+    if(cooldown>0)
+        cooldown--;
+    
+    if(invul>0)
+        invul--;
     
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
-        if(knowsPlayerlocation==false){
-            xVel=xVel/2;
-        }        
+        xVel=xVel/2;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Global::GAME_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
-                checkGates()){
-	    xOffset -= xVel; patrolsteps=0;}
+                checkGates()||checkCharacters()){
+	    xOffset -= xVel;}
 	if ( xVel < 0 )
 	    direction = DIR_LEFT;
 	else if ( xVel > 0 )
@@ -257,15 +296,13 @@ void Monster::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
-        if(knowsPlayerlocation==false){
-            yVel=yVel/2;
-        }
+        yVel=yVel/2;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
-                checkGates()){
-	    yOffset -= yVel; patrolsteps=0;}
+                checkGates()||checkCharacters()){
+	    yOffset -= yVel;}
 	if ( yVel < 0 )
 	    direction = DIR_UP;
 	else if ( yVel > 0 )

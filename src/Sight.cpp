@@ -50,7 +50,7 @@ string Sight::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(xOffset,yOffset,damage,radius);
+            has_hit=Upointer->hit(xOffset,yOffset,radius,0);
             if(has_hit==true){
                 if(i==0) return "Player 1";
                 //else if(Upointer->myside()==0) return "Player 2";

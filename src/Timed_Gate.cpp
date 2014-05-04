@@ -9,10 +9,11 @@ Timed_Gate::Timed_Gate(int x, int y, int timer)
     yPos = yOffset+16;
     status=false;
     gatetype="timed";
-    gate_timer=(timer*30);
+    seconds=timer;
+    gate_timer=seconds*30;
 
-	timed_gate_sprite_open = image->loadImage( "rsc\\game\\sprite_GateUp.bmp" ); // move up
-	timed_gate_sprite_closed = image->loadImage( "rsc\\game\\sprite_GateRight.bmp" ); // move right
+	timed_gate_sprite_open = image->loadImage( "rsc\\game\\object_GateOpen.bmp" ); // move up
+	timed_gate_sprite_closed = image->loadImage( "rsc\\game\\object_GateClosed.bmp" ); // move right
 	if ( timed_gate_sprite_open == NULL || timed_gate_sprite_closed == NULL)
 		cout << "Gate sprite didn't load" << endl;
 }
@@ -26,9 +27,13 @@ Timed_Gate::~Timed_Gate()
 }
 
 void Timed_Gate::update(){
-    gate_timer-=30;
-    if(gate_timer<=0)
-        status=false;
+    if(status==true){
+        gate_timer--;
+        if(gate_timer<=0){
+            status=false;
+            gate_timer = seconds*30;
+        }
+    }
 }
 
 void Timed_Gate::draw()

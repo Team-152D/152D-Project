@@ -7,7 +7,7 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	xOffset = x;
 	yOffset = y;
 	speed = 8;
-        radius = 8;
+        radius = 4;
         teamID = ID;
         damage= 10;
         
@@ -54,7 +54,7 @@ void Projectile::hit(){
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(xOffset,yOffset,damage,radius);
+            has_hit=Upointer->hit(xOffset,yOffset,radius,damage);
             if(has_hit==true)
                 hitsomething=true;
         }
