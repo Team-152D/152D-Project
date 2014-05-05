@@ -27,8 +27,10 @@ Level::Level( int levelNumber )
     characters->push_back(utester);
     Timed_Gate* gtester = new Timed_Gate(100,400,1);
     Fixed_Switch* stester = new Fixed_Switch(600,100,gtester);
+    Ammobox* atester = new Ammobox(100,500,10);
     gates->push_back(gtester);
     switches->push_back(stester);
+    powerups->push_back(atester);
 }
 
 vector<Mover*>* Level::getMovers(){return movers;}

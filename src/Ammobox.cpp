@@ -49,13 +49,11 @@ void Ammobox::update(){
             target->addammo(contents); 
             return;
         }
-        if(obtained==false){
-            get++;
-            target=characters->at(get);
-        }    
+        get++;
+        target=characters->at(get);
     }
 }
 
 void Ammobox::draw(){
-    image->drawSurface(xOffset,yOffset,ammobox_sprite);
+    image->drawSurface(xOffset+4,yOffset+4,ammobox_sprite);
 }

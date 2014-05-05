@@ -1,14 +1,8 @@
 #ifndef POWERUP_H
 #define	POWERUP_H
 
-#include <string>
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
 #include "Global.h"
 #include "Image.h"
-#include <cstdlib>
-#include <cmath>
 #include "Unit.h"
 
 using namespace std;

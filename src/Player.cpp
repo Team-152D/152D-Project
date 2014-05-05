@@ -82,41 +82,32 @@ void Player::input( char* cmd )
 	}
 }
 
-void Player::shooting( )
-{
-	if ( cooldown > 0 )
-	{
-		return;
-	}
-	else if ( ammo <= 0 )
-	{
-		return;
-	}
-	int shoot_direction;
-	switch ( direction )
-	{
-		case DIR_UP:
-			shoot_direction = 0;
-			break;
-		case DIR_RIGHT:
-			shoot_direction = 1;
-			break;
-		case DIR_DOWN:
-			shoot_direction = 2;
-			break;
-		case DIR_LEFT:
-			shoot_direction = 3;
-			break;
-	}
-
-	int myX = getXoffset( );
-	int myY = getYoffset( );
-	Projectile* shoot;
-	shoot = new Projectile( myX, myY, direction, 0 );
-	vector<Mover*>*  projectiles = currentLevelGlobal->getMovers( );
-	projectiles->push_back( shoot );
-	cooldown = 15;
-	ammo--;
+void Player::shooting(){
+    
+    if(cooldown>0){return;}
+    if(ammo<=0){return;}
+    
+    int shoot_direction=0;
+    switch ( direction ){
+	case DIR_UP:
+	    shoot_direction=0;
+	    break;
+	case DIR_RIGHT:
+	    shoot_direction=1;
+	    break;
+	case DIR_DOWN:
+	    shoot_direction=2;
+	    break;
+	case DIR_LEFT:
+	    shoot_direction=3;
+	    break;
+    }
+    Projectile* shoot;
+    shoot=new Projectile(xOffset,yOffset,shoot_direction,0);
+    vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
+    projectiles->push_back(shoot);
+    cooldown=30;
+    ammo--;
 }
 
 bool Player::checkGates( )
