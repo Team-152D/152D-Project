@@ -154,7 +154,7 @@ void Player::update( )
         //begin object collision detection
         vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
         vector<Object*>::iterator it= impact.begin();
-        //while(it!=impact.end()) impact.collide(this);   
+        while(it!=impact.end()) (*it).collide(this);   
         
         if(cooldown>0)
             cooldown--;

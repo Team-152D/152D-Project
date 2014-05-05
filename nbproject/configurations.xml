@@ -28,8 +28,6 @@
         <itemPath>src/Ammobox.h</itemPath>
         <itemPath>src/DetTile.cpp</itemPath>
         <itemPath>src/DetTile.h</itemPath>
-        <itemPath>src/Enemy.cpp</itemPath>
-        <itemPath>src/Enemy.h</itemPath>
         <itemPath>src/Fixed_Switch.cpp</itemPath>
         <itemPath>src/Fixed_Switch.h</itemPath>
         <itemPath>src/Gate.h</itemPath>
@@ -147,10 +145,6 @@
       <item path="src/Editor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Editor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -308,10 +302,6 @@
       <item path="src/Editor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Editor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
       </item>

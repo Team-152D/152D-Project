@@ -261,6 +261,12 @@ void Monster::update()
     AI();
     cout<<"Monster location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
     
+    //begin object collision detection
+    vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
+    vector<Object*>::iterator it= impact.begin();
+    while(it!=impact.end()) (*it).collide(this);
+    //end object collision detection
+    
     if(cooldown>0)
         cooldown--;
     
