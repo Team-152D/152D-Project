@@ -13,11 +13,23 @@ chat::chat(){
     keystate = NULL;
     isTyping = false;
     count = 0;
+    state_out = false; 
     //keystate[SDLK_XXXX]  0 = not pressed   1 = pressed
     //SDL_TEXTINPUT
     //SDL_TEXTEDITING 
     //SDL_StartTextInput() // SDL_StopTextInput()
     //SDL_TextInputRect(SDL_Rect *rect);
+    out.x = 30; 
+    out.y = 330;
+    out.h = 330;
+    out.w = 400;
+    
+    in.x = 30;
+    in.y = 620;
+    in.h = 20;
+    in.w = 400;
+    //text_out(out,14,false);
+    //text_in(in,14,false);
 }
 
 chat::~chat(){
@@ -51,13 +63,16 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
                        SDL_StopTextInput();
                        isTyping = false;
                        cout<<s<<endl;
-                       
+                       if(s != ""){
                        merge_player_input();
+                       input_text(); 
+                       show_output();
                        cout<<s<<endl;
                        break_down(10);
                        //text->writeText(88,466,s.c_str(),14);
                        show_result();
-                       //clear_vect();
+                       s = "";
+                       clear_vect();}
                    }
                     break;
               
@@ -65,13 +80,26 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
                     s.pop_back(); 
                 break;
                 
+                  case SDLK_t:
+                      if(isTyping == false){
+                          state_out = true;
+                          
+                      }else{
+                          state_out = false;
+                      }
+                      
+                      
+                      break;
+                
                 default: 
                     break; 
                 }//end event.key.keysym.sym 
    
             case SDL_TEXTINPUT:
                 if((int) event.text.text[0] != 1){ //prevents start of heading(aka spaces) Ascii int value 1
+                    if(s.size()<Limit)
                     s+= event.text.text; 
+                }
                break;
                 
             case SDL_TEXTEDITING:
@@ -81,8 +109,8 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
                 break; 
                   
         } 
- 
-        } }
+        toggle(); 
+        } 
 
 void chat::merge_player_input(){
     s.insert(0,player);
@@ -112,78 +140,6 @@ void chat::chatting(){
             //don't send message
         }
 } 
-/*
-void chat::chatting2(){
-    SDL_Event event;
-    
-    if ( SDL_PollEvent( &event ) ){
-        switch(event.type)
-        {
-          case SDL_KEYDOWN:
-              switch(event.key.keysym.sym)
-              {
-                case SDLK_RETURN: //enter / return
-                    //send message
-                    //show message
-                    cout<<"Return key has been pressed"<<endl; //debugging
-                    if(!isTyping){
-                  // SDL_StartTextInput();
-                   isTyping = true;
-                   }
-                   else{
-                       SDL_StopTextInput();
-                       isTyping = false;
-                       cout<<"<Player> "<<s<<endl;
-                    }
-                    break;
-              
-                case SDLK_KP_ENTER: //enter from keypad
-                    //send message
-                    //show message
-                    cout<<"Keypad_Return key has been pressed"<<endl; //debugging
-                    //if(!isTyping){
-                    //SDL_StartTextInput();
-                    //isTyping = true;
-                    //}
-                   // else{
-                       //DL_StopTextInput();
-                   //     isTyping = false;
-                   // }
-                    break;
-                    
-                 
-                    
-                case SDLK_BACKSPACE: //backspace 
-                //if(s.length()!= 0)
-                  //s.erase(s.length()-1); //remove character from the end of string
-                    s.pop_back(); 
-                break;
-                
-                default: //entered something
-                    break; 
-                }//end event.key.keysym.sym 
-               
-                  
-            case SDL_TEXTINPUT:
-                    //cout<<event->text.text<<endl;
-                if((int) event.text.text[0] != 1){ //prevents start of heading (aka spaces)
-                    s+= event.text.text; 
-                    //cout<<"<<"<<(int) event->text.text[0]<<">>"<<endl; 
-                        }
-                           
-               break;
-                
-            case SDL_TEXTEDITING:
-                // event.edit.text;
-                // event.edit.start;
-                // event.edit.length; 
-                break; 
-                  
-        } 
-    //input.writeText(88,486, s.c_str(),12);
-    
-}
-} */
 
 void chat::show_result(){  
     for(int i = input.size()-1; i>= 0; i--){
@@ -202,14 +158,8 @@ int chat::get_vect_end(){
 }
 
 
-void chat::can_type(bool x){
-    isTyping = x;
-    if(x == true){
-        SDL_StartTextInput();
-    }else{
-        SDL_StopTextInput();
-    }
-    
+bool chat::can_type(){
+    return isTyping;
 }
 
  string chat::get_input(){
@@ -248,3 +198,48 @@ void chat::can_type(bool x){
           input.pop_back(); 
       }
   } 
+  
+   void chat::show_input(){
+      // text_in.draw();
+      // keystate = SDL_GetKeyboardState(NULL); 
+       show_output(); 
+       text->changeColor(0,0,0);
+       text->writeText(30,620,s.c_str(),20);
+       
+     //  if(keystate[SDLK_BACKSPACE]){
+     //      text->~Text();
+      // }
+   }
+   
+   void chat::show_output(){
+       //text_out.draw(); 
+       //text->writeText(30,330,s.c_str(),20);
+       
+       if(output.size()>5)
+           output.pop_front(); 
+           
+       int x = 340;
+       for(list<string>::iterator it = output.begin() ; it != output.end() ; it++){
+           string temp = *it;
+           text->writeText(30,x,temp.c_str(), 20);
+           x+= 22; 
+       }
+   
+   
+   }
+   
+   void chat::input_text(){
+        if(output.size()>5){
+           output.pop_front();
+       }else{
+       output.push_back(s);
+       }
+   }
+  
+   void chat::toggle(){
+       if(state_out){
+           show_output();
+       }
+   }
+   
+   
