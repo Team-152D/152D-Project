@@ -220,7 +220,7 @@ bool Monster::sight_check(){
             case 1:
                 target = player1;
             break;
-            case 1:
+            case 2:
                 target = player2;
             break;            
         }
