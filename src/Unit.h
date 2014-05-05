@@ -69,6 +69,7 @@ public:
     bool isAlive() {return alive;}
     int myside() {return teamID;}
     int myradius() {return radius;}  
+    int mynum() {return num;}
 protected:
     int health; //unit health percentage
     int xOffset; //the x offset
@@ -84,6 +85,7 @@ protected:
     int teamID;
     int ammo;
     int size;
+    int num;
 };
 
 #endif

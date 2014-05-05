@@ -6,7 +6,7 @@ Projectile::Projectile( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	speed = 8;
+	speed = 12;
         radius = 4;
         teamID = ID;
         damage= 10;

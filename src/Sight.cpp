@@ -6,8 +6,8 @@ Sight::Sight( int x, int y, int d, int ID )
 	//Initialize movement variables
 	xOffset = x;
 	yOffset = y;
-	speed =  14;
-        radius = 8;
+	speed =  20;
+        radius = 10;
         damage = 0;
 
         //direction: 0: Up 1: Right 2: Down 3: Left
@@ -32,6 +32,11 @@ Sight::Sight( int x, int y, int d, int ID )
 		break;
 	}
         
+        max_length = x +300;
+        min_length = x -300;
+        max_height = y +300;
+        min_height = y -300;       
+        
 	//ID: 0=player, 1=enemy
 	teamID = ID;
         
@@ -44,20 +49,22 @@ Sight::~Sight( ){}
 
 string Sight::hit(){
     bool has_hit;
+    string result;
     vector<Unit*>* characters = currentLevelGlobal->getCharacters();
     Unit* Upointer;
     
     for(int i=0;i<characters->size();i++){
         Upointer=characters->at(i);
         if(teamID!=Upointer->myside()){
-            has_hit=Upointer->hit(xOffset,yOffset,radius,0);
-            if(has_hit==true){
-                if(i==0) return "Player 1";
-                //else if(Upointer->myside()==0) return "Player 2";
+            has_hit=Upointer->hit(xOffset,yOffset,radius,damage);
+            if(has_hit==true&&Upointer->mynum()>0){
+                //result = "Player "+Upointer->mynum();
+                result = "Player 1";
+                return result;
             }
         }
     }
-    return "no hit";
+    return "nohit";
 }
 
 string Sight::look(){
@@ -68,14 +75,14 @@ string Sight::look(){
 	{
 		xOffset += xVel;
 		if ( xOffset + 8 <= 0 ||
-		xOffset + 8 >= Global::GAME_WIDTH)
+		xOffset + 8 >= Global::GAME_WIDTH || xOffset<=min_length || xOffset >=max_length)
                          conditionwall="hit";
 	}
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
 		if ( yOffset + 8 <= 0 ||
-		yOffset + 8 >= Global::GAME_HEIGHT)
+		yOffset + 8 >= Global::GAME_HEIGHT || yOffset<=min_height || yOffset >=max_height)
                          conditionwall="hit";
 	}
         conditionplayer=hit();
