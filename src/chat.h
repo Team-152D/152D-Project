@@ -3,7 +3,7 @@
 #ifndef CHAT_H
 #define	CHAT_H
 
-#define Limit 115
+#define Limit 75
 
 #include <iostream>
 #include <cstdlib>
@@ -36,7 +36,7 @@ using namespace std;
        int get_vect_end();
        void show_input();
        void show_output();
-       void toggle();
+       int toggle();
        void input_text();
        //Future methods
        //scroll up and down to see text
@@ -50,7 +50,7 @@ using namespace std;
        SDL_Surface * inbox, * textbox ; //input box, output box
        bool isTyping; //0 = not typing, 1 = typing
        int count; //initial state for SDL_StopTextInput()
-       bool state_out; 
+       int state_out; 
        string s, player;
        //stringstream in, out; //input and output 
        const Uint8 * keystate; //state of keyboard , note: need to include const

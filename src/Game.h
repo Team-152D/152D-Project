@@ -13,6 +13,8 @@
 #include "Command.h"
 #include "Audio.h"
 #include "Text.h"
+#include "chat.h"
+
 
 class Game
 {
@@ -45,6 +47,8 @@ private:
     
     SDL_Surface* IMG_HIGHLIGHT;
     SDL_Surface* IMG_INFOBAR;
+    
+    chat ch_box; 
 };
 
 #endif

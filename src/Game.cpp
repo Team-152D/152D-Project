@@ -203,27 +203,35 @@ int Game::input( )
 
 	while ( SDL_PollEvent( &event ) != 0 )
 	{
-		CMD.push( event, multiPlayer );
-		CMD.take( );
+		//chatbox input stuff
+		ch_box.old_chatting( event );
+		if ( ch_box.can_type( ) == false )
+		{
+			CMD.push( event, multiPlayer );
+			CMD.take( );
+		}
 
 		if ( multiPlayer )
 			currentLevel->input( CMD.slfCmd, CMD.othCmd );
 		else
 		{
 			currentLevel->input( CMD.slfCmd, NULL );
-			
-			// Check for escape key, if received run pause menu
+
 			if ( event.type == SDL_KEYUP )
 				if ( event.key.keysym.sym == SDLK_ESCAPE )
 				{
 					bool x = pauseGame( );
 					switch ( x )
 					{
-						case false:
-							break;
-						case true:
-							return 2;
-							break;
+							bool x = pauseGame( );
+							switch ( x )
+							{
+								case false:
+									break;
+								case true:
+									return 2;
+									break;
+							}
 					}
 				}
 		}
@@ -246,6 +254,15 @@ int Game::draw( )
 	// cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
 	displayInfoBar( );
+
+	if ( ch_box.can_type( ) == true )
+	{
+		ch_box.show_input( );
+	}
+	if ( ch_box.toggle( ) == 1 )
+	{
+		ch_box.show_output( );
+	}
 
 	//displayDebug();
 
