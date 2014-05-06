@@ -275,7 +275,7 @@ void Monster::update()
     if(sightcooldown>0)
         sightcooldown--;
     
-    cout<<"updating enemy x"<<endl;
+    //cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
         if(knowsPlayerlocation==true)
@@ -293,7 +293,7 @@ void Monster::update()
 	else if ( xVel > 0 )
 	    direction = DIR_RIGHT;
     }
-    cout<<"updating enemy y"<<endl;
+    //cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
         if(knowsPlayerlocation==true)
@@ -311,7 +311,7 @@ void Monster::update()
 	else if ( yVel > 0 )
 	    direction = DIR_DOWN;
     }
-    cout<<"checking tiles"<<endl;
+    //cout<<"checking tiles"<<endl;
     switch(currentLevelGlobal->getGrid()->getTileAt( (xOffset+16)/32,(yOffset+16)/32 ))
     {
 	case 5: //lava

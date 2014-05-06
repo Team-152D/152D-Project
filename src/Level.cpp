@@ -18,15 +18,6 @@ Level::Level( int levelNumber )
 	objects = new vector<Object*>;
 
 	currentLevelGlobal = this;
-
-	/*Guard* utester = new Guard(espawn.x,espawn.y);
-	  characters->push_back(utester);
-	  Timed_Gate* gtester = new Timed_Gate(100,400,1);
-	  Fixed_Switch* stester = new Fixed_Switch(600,100,gtester);
-	  Ammobox* atester = new Ammobox(100,500,10);
-	  gates->push_back(gtester);
-	  switches->push_back(stester);
-	  powerups->push_back(atester);*/
 }
 
 vector<Mover*>* Level::getMovers( )
@@ -178,8 +169,6 @@ void Level::draw( )
 
 Player* Level::getPlayer( int player )
 {
-	cout << "Level::getPlayer - argument value = " << player << endl;
-	
 	Player *temp = NULL;
 	switch( player )
 	{
@@ -192,7 +181,6 @@ Player* Level::getPlayer( int player )
 		default:
 			cout << "ERROR	Level::getPlayer() argument value invalid" << endl;
 	}
-	cout << "end Level::getPlayer" << endl;
 	return temp;
 }
 
@@ -231,7 +219,7 @@ bool Level::victoryCondition( )
 
 void Level::loadLevel()
 {
-	cout << "DEBUG: Level is loading file" << endl;
+	//cout << "DEBUG: Level is loading file" << endl;
 	vector<vector<int>*>* temp = new vector<vector<int>*>;
 
 	for ( int i = 0; i < Enumerations::GRID_HEIGHT; i++ )
@@ -284,12 +272,7 @@ void Level::loadLevel()
 	infile >> endzone.h;
 
 	player1 = new Player( p1Spawn.x, p1Spawn.y, 1 );
-	if( player1 == NULL )
-		cout << "ERROR: player1 is null" << endl;
-	else
-		cout << "DEBUG: player1 is fine..." << endl;
 	characters->push_back( player1 );
-	
 	if ( multiplayer )
 	{
 		player2 = new Player( p2Spawn.x, p2Spawn.y, 2 );
@@ -303,22 +286,15 @@ void Level::loadLevel()
 	{
 		if ( input == "Guard" )
 		{
-			cout << "Loading a guard at ";
 			int x, y;
 			infile >> x;
 			infile >> y;
 			cout << x << "," << y << endl;
 			Guard *guard = new Guard( x, y );
-			if ( guard == NULL )
-				cout << "guard is null" << endl;
-			else
-				cout << "guard obj is good" << endl;
 			characters->push_back( guard );
-			cout << "Loaded guard" << endl;
 		}
 		else if ( input == "Monster" )
 		{
-			cout << "Loading a monster" << endl;
 			int x, y;
 			infile >> x;
 			infile >> y;
@@ -327,7 +303,6 @@ void Level::loadLevel()
 		}
 		else if ( input == "Timed_Gate" )
 		{
-			cout << "Loading a timed gate" << endl;
 			int x, y, timer, id;
 			infile >> x;
 			infile >> y;
@@ -338,7 +313,6 @@ void Level::loadLevel()
 		}
 		else if ( input == "Fixed_Switch" )
 		{
-			cout << "Loading a fixed switch" << endl;
 			int x, y, id;
 			Gate *gate = NULL;
 			infile >> x;
@@ -354,7 +328,6 @@ void Level::loadLevel()
 		}
 		else if ( input == "Ammobox" )
 		{
-			cout << "Loading an ammobox" << endl;
 			int x, y, rounds;
 			infile >> x;
 			infile >> y;
@@ -372,7 +345,7 @@ void Level::loadLevel()
 				<< "Guard = (" << espawn.x << "," << espawn.y << ")" <<endl;*/
 
 	this->grid = new Grid( temp );
-	cout << "DEBUG: Level file loaded" << endl;
+	//cout << "DEBUG: Level file loaded" << endl;
 }
 
 Grid* Level::getGrid( )
@@ -418,7 +391,5 @@ vector<string>* Level::getInfoBarData( )
 	strYVel = ss.str( );
 	vec->push_back( strYVel );
 	ss.str( string( ) );
-
-
 	return vec;
 }

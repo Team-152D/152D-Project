@@ -3,7 +3,7 @@
 
 Menu::Menu( string input )
 {
-	cout << "DEBUG: initializing menu...\t";
+	//cout << "DEBUG: initializing menu..." << endl;
 	currentView = 0;
 	views = new vector<View*>;
 
@@ -12,9 +12,7 @@ Menu::Menu( string input )
 	loadViews( input );
 
 	background = image->loadImage( "rsc\\ui\\test.bmp" );
-	if ( background == NULL )
-		cout << "DEBUG: Menu Background is NULL" << endl;
-	cout << "DEBUG: Menu initialized" << endl;
+	//cout << "DEBUG: Menu initialized" << endl;
 }
 
 Menu::~Menu( )
@@ -26,25 +24,20 @@ Menu::~Menu( )
 
 int Menu::runMenu( )
 {
-	if ( identifier == "Main Menu" )
-		cout << "APPSTATE CHANGE: entering main menu system" << endl;
+	cout << "APPSTATE CHANGE: " << identifier << endl;
 
 	bool inMenu = true;
 	views->at( currentView )->draw( );
 
-	cout << "Entering menu loop" << endl;
+	//cout << "DEBUG: Entering menu loop" << endl;
 	while ( inMenu )
-	{	// menu loop
-		// input, update
+	{
 		int updateRValue = update( input( ) );
 
 		if ( ( updateRValue >= 0 && updateRValue <= 9 ) || ( updateRValue >= 30 && updateRValue <= 39 ) )
 		{
 			if ( identifier == "Main Menu" && updateRValue <= 9 )
-			{
-				cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
 				return updateRValue;
-			}
 			else
 			{
 				switch( updateRValue )
@@ -63,8 +56,6 @@ int Menu::runMenu( )
 		draw( );
 	} // End menu loop
 
-	if ( identifier == "Main Menu" )
-		cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
 	return Enumerations::AS_EXIT_FAIL;
 }
 

@@ -6,21 +6,21 @@ Game::Game( bool newGame, int socket )
 {
 	if ( socket > 0 )
 	{
-		cout << "DEBUG: Starting multiPlayer game" << endl;
+		//cout << "DEBUG: Starting multiPlayer game" << endl;
 		multiPlayer = true;
 		CMD.setSocket( socket );
 		currentLevelNumber = 1;
 	}
 	else if ( newGame )
 	{
-		cout << "DEBUG: Starting new singleplayer game" << endl;
+		//cout << "DEBUG: Starting new singleplayer game" << endl;
 		currentLevelNumber = 1;
 		multiPlayer = false;
 	}
 	else
 	{
 		multiPlayer = false;
-		cout << "DEBUG: Continuing singleplayer game" << endl;
+		//cout << "DEBUG: Continuing singleplayer game" << endl;
 		ifstream infile;
 		infile.open( "rsc\\data\\data_saveGameData.txt" );
 		infile >> currentLevelNumber;
@@ -30,7 +30,7 @@ Game::Game( bool newGame, int socket )
 	frameCounter = 0;
 	currentGameGlobal = this;
 	currentLevel = new Level( currentLevelNumber );
-	currentLevel->loadLevel();
+	currentLevel->loadLevel( );
 
 	IMG_MENU2 = image->loadImage( "rsc\\ui\\ui_menu2.bmp" );
 
@@ -62,14 +62,14 @@ int Game::runGame( )
 
 		if ( settings->getMusicEnabled( ) )
 			audio->playMusic( 1 );
-		text->changeColor(255,255,255);
+		text->changeColor( 255, 255, 255 );
 		if ( runGameLoop( ) == Enumerations::AS_MAIN_MENU )
 		{
 			Mix_HaltMusic( );
 			cout << "DEBUG: (Game.cpp) game is quitting." << endl;
 			if ( multiPlayer )
 				endNet( CMD.getSocket( ) );
-			text->changeColor(0,0,0);
+			text->changeColor( 0, 0, 0 );
 			return Enumerations::AS_MAIN_MENU;
 		}
 		cout << "DEBUG: (Game.cpp) Level complete, loading victory screen" << endl;
@@ -83,7 +83,7 @@ int Game::runGame( )
 			- Continue: increment the current level number and return Enumerations::AS_GAME_CONT
 			- Exit: return Enumerations::AS_MAIN_MENU
 		 - Finally, Game::runGame() should return the value the menu object returned
-		*/
+		 */
 		SDL_Surface* victoryMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
 		bool atVictoryScreen = true;
 		while ( atVictoryScreen )
@@ -154,6 +154,7 @@ int Game::runGameLoop( )
 	while ( !victory )
 	{
 		fps.start( );
+		int iTime, uTime, dTime;
 
 		switch ( input( ) )
 		{
@@ -161,6 +162,8 @@ int Game::runGameLoop( )
 			case 2: return Enumerations::AS_MAIN_MENU;
 			default: break;
 		}
+		iTime = fps.get_ticks( );
+
 		switch ( update( ) )
 		{
 			case 0: break;
@@ -168,17 +171,25 @@ int Game::runGameLoop( )
 				break;
 			default: break;
 		}
+		uTime = fps.get_ticks( );
+
 		switch ( draw( ) )
 		{
 			case 0: break;
 			case 2: return Enumerations::AS_MAIN_MENU;
 			default: break;
 		}
+		dTime = fps.get_ticks( );
+
 		frameCounter++;
 		if ( frameCounter > 30 )
 			frameCounter = 0;
+
 		if ( fps.get_ticks( ) < 1000 / Enumerations::FRAMES_PER_SECOND )
 			SDL_Delay( ( 1000 / Enumerations::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
+		else if ( fps.get_ticks( ) > 1000 / Enumerations::FRAMES_PER_SECOND )
+			cout << "WARNING: Frame took too long to draw. "
+			<< endl << "\tinput: " << iTime << "\tupdate: " << uTime << "\tdraw: " << dTime << endl;
 	}
 	if ( settings->getGameSfxEnabled( ) )
 		audio->playSound( 3 );
@@ -187,42 +198,44 @@ int Game::runGameLoop( )
 
 int Game::input( )
 {
-	cout << "DEBUG: input()" << endl;
+	// cout << "DEBUG: input()" << endl;
 	SDL_Event event;
 
-	SDL_PollEvent( &event );
+	while ( SDL_PollEvent( &event ) != 0 )
+	{
+		CMD.push( event, multiPlayer );
+		CMD.take( );
 
-	CMD.push( event, multiPlayer );
-	CMD.take( );
-	if ( multiPlayer )
-		currentLevel->input( CMD.slfCmd, CMD.othCmd );
-	else
-		currentLevel->input( CMD.slfCmd, NULL );
-
-
-	if ( !multiPlayer )
-		if ( event.type == SDL_KEYUP )
-			if ( event.key.keysym.sym == SDLK_ESCAPE )
-			{
-				bool x = pauseGame( );
-				switch ( x )
+		if ( multiPlayer )
+			currentLevel->input( CMD.slfCmd, CMD.othCmd );
+		else
+		{
+			currentLevel->input( CMD.slfCmd, NULL );
+			
+			// Check for escape key, if received run pause menu
+			if ( event.type == SDL_KEYUP )
+				if ( event.key.keysym.sym == SDLK_ESCAPE )
 				{
-					case false:
-						break;
-					case true:
-						return 2;
-						break;
+					bool x = pauseGame( );
+					switch ( x )
+					{
+						case false:
+							break;
+						case true:
+							return 2;
+							break;
+					}
 				}
-			}
-
+		}
+	}
 	return 0;
 }
 
 int Game::update( )
 {
-	cout << "DEBUG: update()" << endl;
+	// cout << "DEBUG: update()" << endl;
 	currentLevel -> update( );
-	cout << "checking victory" << endl;
+
 	if ( currentLevel -> victoryCondition( ) )
 		return 1;
 	else return 0;
@@ -230,7 +243,7 @@ int Game::update( )
 
 int Game::draw( )
 {
-	cout << "DEBUG: draw()" << endl;
+	// cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
 	displayInfoBar( );
 
@@ -300,7 +313,9 @@ bool Game::pauseGame( )
 	return false;
 }
 
-void Game::displayDebug( ) { }
+void Game::displayDebug( )
+{
+}
 
 void Game::displayInfoBar( )
 {

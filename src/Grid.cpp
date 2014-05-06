@@ -108,7 +108,7 @@ void Grid::drawGrid()
 {
 	//image->drawSurface(0,0,IMG_TEMP);
 
-    for (int i = 0; i < height; i++)
+	for (int i = 0; i < height; i++)
 	{
         for (int j = 0; j < width; j++)
             switch (grid->at(i)->at(j))

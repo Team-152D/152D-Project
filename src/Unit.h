@@ -32,7 +32,7 @@ public:
         int distance = sqrt(pow(x - xOffset, 2) + pow(y - yOffset, 2));
         if (distance <= (radius + rin))
             hit = true;
-        cout<<distance;
+        //cout<<distance;
 
         if (hit == true) {
             health -= damage;

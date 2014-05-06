@@ -142,7 +142,7 @@ void View::loadElements( string filepath )
 
 		type.clear( );
 	}
-	cout << "DEBUG: View at " << filepath << " loaded " << elements->size( ) << " elements" << endl;
+	//cout << "DEBUG: View at " << filepath << " loaded " << elements->size( ) << " elements" << endl;
 }
 
 int View::getParentView( )
