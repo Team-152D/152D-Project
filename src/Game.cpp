@@ -240,6 +240,9 @@ int Game::draw( )
         if(ch_box.can_type() == true){
             ch_box.show_input(); 
         }
+        if(ch_box.toggle() == 1){
+            ch_box.show_output(); 
+        }
         
 	//displayDebug();
 
