@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Enumerations.h"
 
 Editor::Editor( )
 {
@@ -16,11 +17,10 @@ Editor::Editor( )
 	endzone.y = 0;
 	endzone.w = 0;
 	endzone.h = 0;
+	
+	text->changeColor(255,255,255);
 
-	editorBackground = image->loadImage( "rsc\\ui\\ui_editorBackground.bmp" );
-	horizontalLine = image->loadImage( "rsc\\ui\\ui_horizontalLine.bmp" );
-	verticalLine = image->loadImage( "rsc\\ui\\ui_verticalLine.bmp" );
-
+	// 32 x 32 tile images
 	IMG_BRICK = image->loadImage( "rsc\\game\\tile_brick32.bmp" );
 	IMG_DIRT = image->loadImage( "rsc\\game\\tile_dirt32.bmp" );
 	IMG_DIRTYBRICK = image->loadImage( "rsc\\game\\tile_dirtybrick32.bmp" );
@@ -31,6 +31,7 @@ Editor::Editor( )
 	IMG_WATER = image->loadImage( "rsc\\game\\tile_water32.bmp" );
 	IMG_WOOD = image->loadImage( "rsc\\game\\tile_wood32.bmp" );
 
+	// 64 x 64 image tile (for the tile selector)
 	IMG_BRICK64 = image->loadImage( "rsc\\game\\tile_brick64.bmp" );
 	IMG_DIRT64 = image->loadImage( "rsc\\game\\tile_dirt64.bmp" );
 	IMG_DIRTYBRICK64 = image->loadImage( "rsc\\game\\tile_dirtybrick64.bmp" );
@@ -40,22 +41,35 @@ Editor::Editor( )
 	IMG_STONE64 = image->loadImage( "rsc\\game\\tile_stone64.bmp" );
 	IMG_WATER64 = image->loadImage( "rsc\\game\\tile_water64.bmp" );
 	IMG_WOOD64 = image->loadImage( "rsc\\game\\tile_wood64.bmp" );
+	
+	// Game object tiles
+	IMG_P1 = image->loadImage( "rsc\\game\\tile_p1.bmp" );		// Player 1 spawn tile
+	IMG_P2 = image->loadImage( "rsc\\game\\tile_p2.bmp" );		// Player 2 spawn tile
+	IMG_END = image->loadImage( "rsc\\game\\tile_end.bmp" );	// Endzone tile
+	// 
 
-	IMG_P1 = image->loadImage( "rsc\\game\\tile_p1.bmp" );
-	IMG_P2 = image->loadImage( "rsc\\game\\tile_p2.bmp" );
-	IMG_END = image->loadImage( "rsc\\game\\tile_end.bmp" );
-
-	IMG_MENU1 = image->loadImage( "rsc\\ui\\ui_menu1.bmp" );
-
+	// Background images
+	bg_BlackScreen = image->loadImage( "rsc\\ui\\ui_blackScreen.bmp" );
+	bg_Infobar = image->loadImage( "rsc\\ui\\ui_infoBar.bmp" );
+	
+	// Lines
+	hLine = image->loadImage( "rsc\\ui\\ui_horizontalLine.bmp" );
+	vLine = image->loadImage( "rsc\\ui\\ui_verticalLine.bmp" );
+	
+	// Highlights
 	IMG_SELECT_HIGHLIGHT = image->loadImage( "rsc\\ui\\ui_editorHighlight.bmp" );
-	IMG_INFOBAR = image->loadImage( "rsc\\ui\\ui_infoBar.bmp" );
+
+	// Menu images
+	IMG_MENU1 = image->loadImage( "rsc\\ui\\ui_menu1.bmp" );
 }
 
 Editor::~Editor( )
 {
-	SDL_FreeSurface( editorBackground );
-	SDL_FreeSurface( horizontalLine );
-	SDL_FreeSurface( verticalLine );
+	text->changeColor(0,0,0);
+	
+	SDL_FreeSurface( bg_BlackScreen );
+	SDL_FreeSurface( hLine );
+	SDL_FreeSurface( vLine );
 
 	SDL_FreeSurface( IMG_BRICK );
 	SDL_FreeSurface( IMG_DIRT );
@@ -69,7 +83,7 @@ Editor::~Editor( )
 
 	SDL_FreeSurface( IMG_MENU1 );
 
-	SDL_FreeSurface( IMG_INFOBAR );
+	SDL_FreeSurface( bg_Infobar );
 }
 
 int Editor::runEditor( )
@@ -80,7 +94,7 @@ int Editor::runEditor( )
 		switch ( input( ) )
 		{
 			case -1:
-				return Global::AS_MAIN_MENU;
+				return Enumerations::AS_MAIN_MENU;
 			case 0:
 				break;
 		}
@@ -88,11 +102,11 @@ int Editor::runEditor( )
 		switch ( update( ) )
 		{
 			case -1:
-				return Global::AS_MAIN_MENU;
+				return Enumerations::AS_MAIN_MENU;
 			case 0:
 				break;
 			case 1:
-				return Global::AS_EDITOR;
+				return Enumerations::AS_EDITOR;
 		}
 
 		switch ( draw( ) )
@@ -171,21 +185,21 @@ int Editor::draw( )
 	//cout << "DEBUG:: editor input" << endl;
 	if ( !fileOpen )
 	{
-		image->drawSurface( 0, 0, editorBackground );
-		for ( int i = 0; i <= Global::GRID_WIDTH; i++ )
-			image->drawSurface( i * 32, 0, verticalLine );
-		image->drawSurface( 1279, 0, verticalLine );
-		for ( int j = 0; j <= Global::GRID_HEIGHT; j++ )
-			image->drawSurface( 0, j * 32, horizontalLine );
+		image->drawSurface( 0, 0, bg_BlackScreen );
+		for ( int i = 0; i <= Enumerations::GRID_WIDTH; i++ )
+			image->drawSurface( i * 32, 0, vLine );
+		image->drawSurface( 1279, 0, vLine );
+		for ( int j = 0; j <= Enumerations::GRID_HEIGHT; j++ )
+			image->drawSurface( 0, j * 32, hLine );
 	}
 
 	if ( needsDraw )
 		grid->drawGrid( );
 
 	//Draw bar
-	image->drawSurface( 0, 640, IMG_INFOBAR );
-	image->drawSurface( 0, 640, horizontalLine );
-	image->drawSurface( 0, 767, horizontalLine );
+	image->drawSurface( 0, 640, bg_Infobar );
+	image->drawSurface( 0, 640, hLine );
+	image->drawSurface( 0, 767, hLine );
 
 	//Draw tile selection
 	image->drawSurface( 12 + ( 48 * ( selectedTile - 1 ) ), 700, IMG_SELECT_HIGHLIGHT );

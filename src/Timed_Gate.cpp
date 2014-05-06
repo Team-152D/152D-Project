@@ -1,12 +1,13 @@
 #include "Timed_Gate.h"
 #include "Game.h"
 //
-Timed_Gate::Timed_Gate(int x, int y, int timer)
+Timed_Gate::Timed_Gate(int x, int y, int timer, int id)
 {
     xOffset=x;
     yOffset=y;
     xPos = xOffset+16;
     yPos = yOffset+16;
+	this->id = id;
     status=false;
     gatetype="timed";
     seconds=timer;

@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "Command.h"
 #include "Settings.h"
+#include "Enumerations.h"
 
 Game::Game( bool newGame, int socket )
 {
@@ -30,9 +30,7 @@ Game::Game( bool newGame, int socket )
 	frameCounter = 0;
 	currentGameGlobal = this;
 	currentLevel = new Level( currentLevelNumber );
-
-
-
+	currentLevel->loadLevel();
 
 	IMG_MENU2 = image->loadImage( "rsc\\ui\\ui_menu2.bmp" );
 
@@ -65,22 +63,29 @@ int Game::runGame( )
 		if ( settings->getMusicEnabled( ) )
 			audio->playMusic( 1 );
 		text->changeColor(255,255,255);
-		if ( runGameLoop( ) == Global::AS_MAIN_MENU )
+		if ( runGameLoop( ) == Enumerations::AS_MAIN_MENU )
 		{
 			Mix_HaltMusic( );
 			cout << "DEBUG: (Game.cpp) game is quitting." << endl;
 			if ( multiPlayer )
 				endNet( CMD.getSocket( ) );
 			text->changeColor(0,0,0);
-			return Global::AS_MAIN_MENU;
+			return Enumerations::AS_MAIN_MENU;
 		}
 		cout << "DEBUG: (Game.cpp) Level complete, loading victory screen" << endl;
 		currentLevelNumber++;
 
-
+		/* Victory Screen
+		 This section of the code should be replaced by a menu system
+		 - Whatever is currently on the screen should be saved to an SDL_Surface to be used as the background for the menu
+		 - A new menu object should be created and run
+		 - The menu should offer two options:
+			- Continue: increment the current level number and return Enumerations::AS_GAME_CONT
+			- Exit: return Enumerations::AS_MAIN_MENU
+		 - Finally, Game::runGame() should return the value the menu object returned
+		*/
 		SDL_Surface* victoryMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
 		bool atVictoryScreen = true;
-
 		while ( atVictoryScreen )
 		{
 			if ( SDL_PollEvent( &event ) )
@@ -114,7 +119,7 @@ int Game::runGame( )
 
 									Mix_HaltMusic( );
 									endNet( CMD.getSocket( ) );
-									return Global::AS_MAIN_MENU;
+									return Enumerations::AS_MAIN_MENU;
 								}
 							}
 						}
@@ -135,7 +140,7 @@ int Game::runGame( )
 	//display game complete screen
 	if ( multiPlayer )
 		endNet( CMD.getSocket( ) );
-	return Global::AS_MAIN_MENU;
+	return Enumerations::AS_MAIN_MENU;
 }
 
 int Game::runGameLoop( )
@@ -146,7 +151,6 @@ int Game::runGameLoop( )
 
 	bool victory = false;
 
-	gameTimer.start( );
 	while ( !victory )
 	{
 		fps.start( );
@@ -154,7 +158,7 @@ int Game::runGameLoop( )
 		switch ( input( ) )
 		{
 			case 0: break;
-			case 2: return Global::AS_MAIN_MENU;
+			case 2: return Enumerations::AS_MAIN_MENU;
 			default: break;
 		}
 		switch ( update( ) )
@@ -167,14 +171,14 @@ int Game::runGameLoop( )
 		switch ( draw( ) )
 		{
 			case 0: break;
-			case 2: return Global::AS_MAIN_MENU;
+			case 2: return Enumerations::AS_MAIN_MENU;
 			default: break;
 		}
 		frameCounter++;
 		if ( frameCounter > 30 )
 			frameCounter = 0;
-		if ( fps.get_ticks( ) < 1000 / Global::FRAMES_PER_SECOND )
-			SDL_Delay( ( 1000 / Global::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
+		if ( fps.get_ticks( ) < 1000 / Enumerations::FRAMES_PER_SECOND )
+			SDL_Delay( ( 1000 / Enumerations::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
 	}
 	if ( settings->getGameSfxEnabled( ) )
 		audio->playSound( 3 );
@@ -240,7 +244,6 @@ int Game::draw( )
 
 bool Game::pauseGame( )
 {
-	gameTimer.pause( );
 	bool isPaused = true;
 	SDL_Event event;
 	SDL_Surface* pauseMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
@@ -294,7 +297,6 @@ bool Game::pauseGame( )
 			cout << "SDL_Flip failed" << endl;
 	}
 	SDL_FreeSurface( pauseMenu );
-	gameTimer.unpause( );
 	return false;
 }
 

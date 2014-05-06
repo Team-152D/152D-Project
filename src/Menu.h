@@ -9,9 +9,7 @@
 
 #include "SDL2/SDL.h"
 
-#include "Global.h"
 #include "View.h"
-
 #include "chat.h"
 
 using namespace std;

@@ -32,9 +32,9 @@ private:
     int selectedTile;
     SDL_Rect mouseDown, mouseUp, oneSpawn, twoSpawn, endzone;
 
-    SDL_Surface* editorBackground;
-    SDL_Surface* horizontalLine;
-    SDL_Surface* verticalLine;
+    SDL_Surface* bg_BlackScreen;
+    SDL_Surface* hLine;
+    SDL_Surface* vLine;
 
     SDL_Surface* IMG_BRICK;
     SDL_Surface* IMG_DIRT;
@@ -62,7 +62,7 @@ private:
     SDL_Surface* IMG_MENU1;
     
     SDL_Surface* IMG_SELECT_HIGHLIGHT;    
-    SDL_Surface* IMG_INFOBAR;
+    SDL_Surface* bg_Infobar;
 };
 
 #endif

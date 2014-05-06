@@ -1,10 +1,12 @@
 #include "MobileBoxes.h"
 #include "Level.h"
+#include "Enumerations.h"
 
 PushBox::PushBox(int x, int y){
     otype= "PushBox";
     bounds.x= x; bounds.y= y;
     bounds.w= bounds.h= 32;
+    xVel= yVel= 0;
     //need to correct bellow image
     bg= image->loadImage("rsc\\game\\tile_det.bmp");     
 }
@@ -16,6 +18,11 @@ void PushBox::collide(Unit* impact){
     //player collision, disallowing diagonal pushes
     int tx, ty, tw, th; tx= impact->getXVel(), ty=impact->getYVel();
     if((tx && !ty) || (!tx && ty)){ xVel= tx; yVel= ty;}  
+    //check if push would send box out of map bounds
+    if(bounds.x+xVel < 0 || bounds.x+bounds.w+xVel > Enumerations::GRID_WIDTH)
+        xVel= 0;
+    if(bounds.y+yVel < 0 || bounds.y+bounds.h+yVel > Enumerations::GRID_HEIGHT)
+        yVel= 0;
     //check if box movement would cause a collision with another object
     vector<Object*>* check= currentLevelGlobal->getObjects();
     vector<Object*>::iterator it = check->begin();

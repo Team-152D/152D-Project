@@ -5,18 +5,19 @@
 Monster::Monster(int x, int y)
 {
     //Initialize movement variables
-    health = 125;
+    health = 50;
     xOffset = x;
     yOffset = y;
     xVel = 0;
     yVel = 0;
-    speed = 6;
+    speed = 16;
     cooldown =0;
     alive=true;
     radius=16;
     teamID=1;
     damage=15;
     ammo=0;
+    num=0;
 
     //Initialize animation variables
     frame = 0;
@@ -69,48 +70,43 @@ void Monster::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Monster::AI(){
-    seesPlayer=sight_check();
+    if(sightcooldown<=0){
+        seesPlayer=sight_check();
+        sightcooldown=30;}
     if(seesPlayer==true){knowsPlayerlocation=true; losessighttimer=0;}
     if(knowsPlayerlocation==true){
         int playerX=target->getXoffset();
         int playerY=target->getYoffset();
-    
-        int distance=sqrt( pow(xOffset-playerX, 2 ) + pow(yOffset-playerY, 2 ));
-        //if(distance>radius){
-            if(yOffset<playerY){
-		if ( yVel < speed )
-			yVel += speed;
-            }
-            else if(yOffset>playerY){
-		if ( yVel > ( 0 - speed ) )
-			yVel -= speed;
-            }            
-            if(xOffset<playerX){
-		if ( xVel < speed )
-			xVel += speed;
-	    }
-            else if(xOffset>playerX){
-		if ( xVel > ( 0 - speed ) )
-			xVel -= speed;
-	    }
-        /*}
-        else{
-            xVel=0;
-            yVel=0;*/
-            int up= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset-radius)-playerY, 2 ));
-            int right= sqrt( pow((xOffset+radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
-            int down= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset+radius)-playerY, 2 ));
-            int left= sqrt( pow((xOffset-radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
             
-            if(up>=right && up>=left && up>=down){direction = DIR_DOWN;}
-            else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
-            else if(down>=up && down>=right && down>=left){direction = DIR_UP;}
-            else{direction = DIR_RIGHT;}
-        //}
+        if(yOffset<playerY){
+	    if ( yVel < speed )
+		yVel += speed;
+        }
+        else if(yOffset>playerY){
+            if ( yVel > ( 0 - speed ) )
+		yVel -= speed;
+        }            
+        if(xOffset<playerX){
+	    if ( xVel < speed )
+	        xVel += speed;
+	}
+        else if(xOffset>playerX){
+            if ( xVel > ( 0 - speed ) )
+		xVel -= speed;
+	    }
+        int up= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset-radius)-playerY, 2 ));
+        int right= sqrt( pow((xOffset+radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
+        int down= sqrt( pow(xOffset-playerX, 2 ) + pow((yOffset+radius)-playerY, 2 ));
+        int left= sqrt( pow((xOffset-radius)-playerX, 2 ) + pow(yOffset-playerY, 2 ));
+            
+        if(up>=right && up>=left && up>=down){direction = DIR_DOWN;}
+        else if(right>=up && right>=left && right>=down){direction = DIR_LEFT;}
+        else if(down>=up && down>=right && down>=left){direction = DIR_UP;}
+        else{direction = DIR_RIGHT;}
     }
     if(seesPlayer==false&&knowsPlayerlocation==true){
         losessighttimer++;
-        if(losessighttimer>=(3*30)){
+        if(losessighttimer>=(10*30)){
             knowsPlayerlocation=false;
             target=NULL;
         }
@@ -118,7 +114,7 @@ void Monster::AI(){
     if(knowsPlayerlocation==false){
         if(patrolsteps<=0){
             patroldirection= rand() % 100 + 1;
-            patrolsteps=20;
+            patrolsteps=10;
         }
             
         switch (patroldirection%4)
@@ -151,7 +147,7 @@ bool Monster::sight_check(){
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
-            for(int i=-40;i<40;i+=16){
+            for(int i=-70;i<=70;i+=20){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -167,7 +163,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
-            for(int i=-40;i<40;i+=16){
+            for(int i=-70;i<=70;i+=20){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -183,7 +179,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
-            for(int i=-40;i<40;i+=16){
+            for(int i=-70;i<=70;i+=20){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -199,7 +195,7 @@ bool Monster::sight_check(){
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
-            for(int i=-40;i<40;i+=16){
+            for(int i=-70;i<=70;i+=20){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -220,8 +216,15 @@ bool Monster::sight_check(){
     if(canisee=="Player 1"){target=player1; return true;}
     else if(canisee=="Player 2"){target=player2; return true;}
     else if(canisee=="Both Players"){
-        if((rand() % 2 + 1) == 1) target=player1;
-        else target=player2;
+        int decide = rand() +1;
+        switch (decide){
+            case 1:
+                target = player1;
+            break;
+            case 2:
+                target = player2;
+            break;            
+        }
         return true;
     }
     else{return false;}
@@ -260,15 +263,25 @@ bool Monster::checkCharacters(){
 void Monster::update()
 {
     AI();
-    cout<<"Monster location: "<<"X: "<<xOffset<<" Y: "<<yOffset<<endl;
+    
+    //begin object collision detection
+    vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
+    vector<Object*>::iterator it= impact.begin();
+    while(it!=impact.end()) (*it)->collide(this);
+    //end object collision detection
     
     if(cooldown>0)
         cooldown--;
+    if(sightcooldown>0)
+        sightcooldown--;
     
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
-        xVel=xVel/2;
+        if(knowsPlayerlocation==true)
+            xVel/=2;
+        else
+            xVel/=2;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Enumerations::LEVEL_WIDTH-32 ||
@@ -283,7 +296,10 @@ void Monster::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
-        yVel=yVel/2;
+        if(knowsPlayerlocation==true)
+            yVel/=2;
+        else
+            yVel/=2;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Enumerations::LEVEL_HEIGHT-32 ||

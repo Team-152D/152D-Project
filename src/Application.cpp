@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Enumerations.h"
 #include "Settings.h"
 #include "Game.h"
 #include <fstream>
@@ -9,9 +10,9 @@ Application::Application( )
 	menu = NULL;
 
 	if ( initializeApplication( ) == false )
-		appState = Global::AS_EXIT_FAIL;
+		appState = Enumerations::AS_EXIT_FAIL;
 	else
-		appState = Global::AS_MAIN_MENU;
+		appState = Enumerations::AS_MAIN_MENU;
 }
 
 Application::~Application( )
@@ -27,25 +28,25 @@ int Application::runApplication( )
 	{
 		switch ( appState )
 		{
-			case Global::AS_MAIN_MENU:
+			case Enumerations::AS_MAIN_MENU:
 				menu = new Menu( "rsc\\data\\data_menu_MM.txt" );
 				appState = menu -> runMenu( );
 				delete menu;
 				menu = NULL;
 				break;
-			case Global::AS_GAME_NEW:
+			case Enumerations::AS_GAME_NEW:
 				game = new Game( true, 0 );
 				appState = game ->runGame( );
 				delete game;
 				game = NULL;
 				break;
-			case Global::AS_GAME_CONT:
+			case Enumerations::AS_GAME_CONT:
 				game = new Game( false, 0 );
 				appState = game->runGame( );
 				delete game;
 				game = NULL;
 				break;
-			case Global::AS_GAME_JOIN:
+			case Enumerations::AS_GAME_JOIN:
 			{
 				ifstream infile;
 				infile.open( "rsc\\data\\data_ip.txt" );
@@ -58,7 +59,7 @@ int Application::runApplication( )
 				delete game;
 				break;
 			}
-			case Global::AS_GAME_HOST:
+			case Enumerations::AS_GAME_HOST:
 			{
 				SDL_Surface *blk = image->loadImage( "rsc\\ui\\ui_blackScreen.bmp" );
 				image->drawSurface( 0, 0, blk );
@@ -69,7 +70,7 @@ int Application::runApplication( )
 				delete game;
 				break;
 			}
-			case Global::AS_EDITOR:
+			case Enumerations::AS_EDITOR:
 				editor = new Editor( );
 				appState = editor -> runEditor( );
 				delete editor;

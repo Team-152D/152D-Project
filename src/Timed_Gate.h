@@ -10,7 +10,7 @@ using namespace std;
 class Timed_Gate : public Gate
 {
 public:
-    Timed_Gate(int, int, int);
+    Timed_Gate(int, int, int,int);
     ~Timed_Gate();
     void update();
     void draw();

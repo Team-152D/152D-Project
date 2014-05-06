@@ -1,5 +1,6 @@
 #include "UI_Button.h"
 #include "Settings.h"
+#include "Enumerations.h"
 
 UI_Button::UI_Button(SDL_Rect rect, char* label, int actionValue)
 {
@@ -62,7 +63,7 @@ int UI_Button::handleEvents(SDL_Event* event)
 	default:
 	    break;
     }
-    return Global::CONTINUE;
+    return Enumerations::CONTINUE;
 }
 
 void UI_Button::draw()

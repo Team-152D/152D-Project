@@ -5,7 +5,7 @@
 Guard::Guard(int x, int y)
 {
     //Initialize movement variables
-    health = 80;
+    health = 30;
     xOffset = x;
     yOffset = y;
     xVel = 0;
@@ -17,6 +17,7 @@ Guard::Guard(int x, int y)
     teamID=1;
     ammo=0;
     sightcooldown=0;
+    num=0;
 
     //Initialize animation variables
     frame = 0;
@@ -69,7 +70,9 @@ void Guard::apply_surface(int x, int y, SDL_Surface* source, SDL_Rect* clip)
 
 
 void Guard::AI(){
-    seesPlayer=sight_check();
+    if(sightcooldown<=0){
+        seesPlayer=sight_check();
+        sightcooldown=15;}
     if(seesPlayer==true){knowsPlayerlocation=true; losessighttimer=0;}
     if(knowsPlayerlocation==true){
         int playerX=target->getXoffset();
@@ -151,7 +154,7 @@ bool Guard::sight_check(){
     switch ( direction ){
 	case DIR_UP:
 	    shoot_direction=0;
-            for(int i=-100;i<=100;i+=16){
+            for(int i=-50;i<=50;i+=20){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -167,7 +170,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_RIGHT:
 	    shoot_direction=1;
-            for(int i=-100;i<=100;i+=16){
+            for(int i=-50;i<=50;i+=20){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -183,7 +186,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_DOWN:
 	    shoot_direction=2;
-            for(int i=-100;i<=100;i+=16){
+            for(int i=-50;i<=50;i+=20){
                 Sight* look=new Sight(myX+i,myY,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -199,7 +202,7 @@ bool Guard::sight_check(){
 	    break;
 	case DIR_LEFT:
 	    shoot_direction=3;
-            for(int i=-100;i<=100;i+=16){
+            for(int i=-50;i<=50;i+=20){
                 Sight* look=new Sight(myX,myY+i,shoot_direction,1);
                 currsight=look->look();
                 delete look;
@@ -256,7 +259,7 @@ void Guard::shooting(){
 	    break;
     }
     Projectile* shoot;
-    shoot=new Projectile(xOffset,yOffset,shoot_direction,1);
+    shoot=new Projectile(xOffset,yOffset,shoot_direction,teamID);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=30;
@@ -299,15 +302,26 @@ void Guard::checkSwitches(){
 void Guard::update()
 {
     AI();
+    
+    //begin object collision detection
+    vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
+    vector<Object*>::iterator it= impact.begin();
+    while(it!=impact.end()) (*it)->collide(this);
     checkSwitches();
+    //end object collision detection
     
     if(cooldown>0)
         cooldown--;
+    if(sightcooldown>0)
+        sightcooldown--;
     
     cout<<"updating enemy x"<<endl;
     if ( xVel != 0 )
     {
-        xVel/=2;
+        if(knowsPlayerlocation==true)
+            xVel/=2;
+        else
+            xVel/=3;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
 		xOffset + 16 >= Enumerations::LEVEL_WIDTH-32 ||
@@ -323,7 +337,10 @@ void Guard::update()
     cout<<"updating enemy y"<<endl;
     if ( yVel != 0 )
     {
-        yVel/=2;
+        if(knowsPlayerlocation==true)
+            yVel/=2;
+        else
+            yVel/=3;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
 		yOffset + 16 >= Enumerations::LEVEL_HEIGHT-32 ||

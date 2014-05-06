@@ -47,10 +47,16 @@ public:
     Grid* getGrid();
     bool victoryCondition();
     vector<string>* getInfoBarData();
+	
+	void loadLevel();
 private:
-    void loadLevel(int);
+    int levelNumber;
     bool multiplayer;
+	string difficulty;
+	
     Grid* grid;
+	SDL_Rect endzone;
+	
     Player* player1;
     Player* player2;
     vector<Unit*>* characters;
@@ -59,13 +65,6 @@ private:
     vector<Switch*>* switches;
     vector<Powerup*>* powerups;
     vector<Object*>* objects;
-    
-    string difficulty;
-    
-    SDL_Rect p1Spawn;
-    SDL_Rect p2Spawn;
-    SDL_Rect endzone;
-    SDL_Rect espawn;
 };
 
 #endif

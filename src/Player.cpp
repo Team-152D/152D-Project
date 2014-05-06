@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Enumerations.h"
 
-Player::Player( int x, int y )
+Player::Player( int x, int y, int number)
 {
 	//Initialize movement variables
 	health = 100;
@@ -16,6 +16,7 @@ Player::Player( int x, int y )
 	radius=16;
 	teamID = 0;
 	ammo = 15;
+        num=number;
 
 	//Initialize animation variables
 	frame = 0;
@@ -104,7 +105,7 @@ void Player::shooting(){
 	    break;
     }
     Projectile* shoot;
-    shoot=new Projectile(xOffset,yOffset,shoot_direction,0);
+    shoot=new Projectile(xOffset,yOffset,shoot_direction,teamID);
     vector<Mover*>*  projectiles=currentLevelGlobal->getMovers();
     projectiles->push_back(shoot);
     cooldown=30;
@@ -155,7 +156,7 @@ void Player::update( )
         //begin object collision detection
         vector<Object*> impact= objsAhead(*currentLevelGlobal->getObjects());
         vector<Object*>::iterator it= impact.begin();
-        //while(it!=impact.end()) impact.collide(this);   
+        while(it!=impact.end()) (*it)->collide(this);   
         
         if(cooldown>0)
             cooldown--;

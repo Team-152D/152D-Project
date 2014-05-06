@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Enumerations.h"
 
 Menu::Menu( string input )
 {
@@ -33,8 +34,8 @@ int Menu::runMenu( )
 
 	cout << "Entering menu loop" << endl;
 	while ( inMenu )
-	{
-		//input, update
+	{	// menu loop
+		// input, update
 		int updateRValue = update( input( ) );
 
 		if ( ( updateRValue >= 0 && updateRValue <= 9 ) || ( updateRValue >= 30 && updateRValue <= 39 ) )
@@ -59,13 +60,12 @@ int Menu::runMenu( )
 			}
 		}
 
-		//draw
 		draw( );
-	}
+	} // End menu loop
 
 	if ( identifier == "Main Menu" )
 		cout << "APPSTATE CHANGE: leaving main menu system" << endl << endl;
-	return Global::AS_EXIT_FAIL;
+	return Enumerations::AS_EXIT_FAIL;
 }
 
 int Menu::input( )
@@ -76,7 +76,7 @@ int Menu::input( )
 	{
 		polledEvent = true;
 		if ( event.type == SDL_QUIT )
-			return Global::AS_EXIT_SUCC;
+			return Enumerations::AS_EXIT_SUCC;
 		else if ( event.type == SDL_KEYUP )
 		{
 			if ( event.key.keysym.sym == SDLK_ESCAPE )
@@ -91,7 +91,7 @@ int Menu::input( )
 	else
 		polledEvent = false;
 
-	return Global::CONTINUE;
+	return Enumerations::CONTINUE;
 }
 
 int Menu::update( int iValue )
@@ -112,7 +112,7 @@ int Menu::update( int iValue )
 
 	}
 
-	return Global::CONTINUE;
+	return Enumerations::CONTINUE;
 }
 
 int Menu::draw( )

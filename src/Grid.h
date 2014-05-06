@@ -17,12 +17,12 @@ using namespace std;
 class Grid
 {
 public:
-    Grid(string);
-    Grid(vector<vector<int>*>*);
+    Grid(string);                   // create a new grid object from data in a text file
+    Grid(vector<vector<int>*>*);    // create a new grid given a 2D vector
     ~Grid();
     
-    void loadGrid(string);
-    void editorSave(string,SDL_Rect,SDL_Rect, SDL_Rect);
+    void loadGrid(string);          // read a grid from a test file
+    void editorSave(string,SDL_Rect,SDL_Rect, SDL_Rect);    // 
     void renderGrid();
     void drawGrid();
     int getTileAt(int,int);

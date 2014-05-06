@@ -1,4 +1,5 @@
 #include "View.h"
+#include "Enumerations.h"
 
 View::View( int iParentView, string backgroundPath )
 {
@@ -20,7 +21,7 @@ int View::input( SDL_Event* event )
 	for ( int i = 0; i < elements->size( ); i++ )
 	{
 		int rValue = elements->at( i )->handleEvents( event );
-		if ( rValue == Global::CONTINUE )
+		if ( rValue == Enumerations::CONTINUE )
 			continue;
 		else if ( rValue >= 0 && rValue <= 39 )
 		{
@@ -29,13 +30,13 @@ int View::input( SDL_Event* event )
 		else if ( rValue >= 40 && rValue <= 49 )
 			switch ( rValue )
 			{
-					//case Global::SET_TOGGLEFULL:
+					//case Enumerations::SET_TOGGLEFULL:
 					//break;
 				default:
 					break;
 			}
 	}
-	return Global::CONTINUE;
+	return Enumerations::CONTINUE;
 }
 
 void View::draw( )

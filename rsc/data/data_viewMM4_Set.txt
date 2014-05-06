@@ -1,8 +1,8 @@
 Text centered 0 0 1280 125 Settings; 42
 Button 100 100 150 100 Back; 10
-Checkbox uiSFX; 225 225 25 25 Enable UI SFX; 200
-Checkbox gameSFX; 225 275 25 25 Enable Game SFX; 201
-Checkbox music; 225 325 25 25 Enable Music; 202
+Checkbox uiSFX; 225 225 25 25 Enable UI SFX; 31
+Checkbox gameSFX; 225 275 25 25 Enable Game SFX; 32
+Checkbox music; 225 325 25 25 Enable Music; 33
 Text false 255 375 400 100 Join IP; 30
 IPfield 255 475 500 100
 Button 800 475 250 100 Set; 30

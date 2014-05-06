@@ -1,4 +1,5 @@
 #include "Settings.h"
+#include "Enumerations.h"
 
 Settings::Settings()
 {
@@ -18,11 +19,11 @@ bool* Settings::getLinkedBool(int index)
 {
     switch ( index )
     {
-	case Global::SET_UISFX_BOOL:
+	case Enumerations::SET_UISFX_BOOL:
 	    return &uiSfxEnabled;
-	case Global::SET_GAMESFX_BOOL:
+	case Enumerations::SET_GAMESFX_BOOL:
 	    return &gameSfxEnabled;
-	case Global::SET_MUSIC_BOOL:
+	case Enumerations::SET_MUSIC_BOOL:
 	    return &musicEnabled;
     }
 }

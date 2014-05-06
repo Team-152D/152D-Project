@@ -29,7 +29,7 @@ private:
     Level* currentLevel;
     
     int currentLevelNumber, frameCounter;
-    Timer fps, gameTimer; 
+    Timer fps;
     command CMD;
     
     int runGameLoop();
