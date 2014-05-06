@@ -40,7 +40,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Audio.o \
 	${OBJECTDIR}/src/DetTile.o \
 	${OBJECTDIR}/src/Editor.o \
-	${OBJECTDIR}/src/Enemy.o \
 	${OBJECTDIR}/src/Fixed_Switch.o \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/Global.o \
@@ -117,11 +116,6 @@ ${OBJECTDIR}/src/Editor.o: src/Editor.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Editor.o src/Editor.cpp
-
-${OBJECTDIR}/src/Enemy.o: src/Enemy.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Enemy.o src/Enemy.cpp
 
 ${OBJECTDIR}/src/Fixed_Switch.o: src/Fixed_Switch.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

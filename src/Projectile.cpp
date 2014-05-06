@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include "Game.h"
-//
+#include "Enumerations.h"
+
 Projectile::Projectile( int x, int y, int d, int ID )
 {
 	//Initialize movement variables
@@ -71,7 +72,7 @@ void Projectile::update( )
     {
 	xOffset += xVel;
 	if ( xOffset + 8 <= 0 ||
-		xOffset + 8 >= Global::GAME_WIDTH){
+		xOffset + 8 >= Enumerations::LEVEL_WIDTH){
             hitsomething=true;
         }
     }
@@ -79,7 +80,7 @@ void Projectile::update( )
     {
 	yOffset += yVel;
 	if ( yOffset + 8 <= 0 ||
-		yOffset + 8 >= Global::GAME_HEIGHT){
+		yOffset + 8 >= Enumerations::LEVEL_HEIGHT){
             hitsomething=true;
         }
     }

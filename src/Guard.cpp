@@ -1,6 +1,7 @@
 #include "Guard.h"
 #include "Game.h"
-//
+#include "Enumerations.h"
+
 Guard::Guard(int x, int y)
 {
     //Initialize movement variables
@@ -309,7 +310,7 @@ void Guard::update()
         xVel/=2;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
-		xOffset + 16 >= Global::GAME_WIDTH-32 ||
+		xOffset + 16 >= Enumerations::LEVEL_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
                 checkGates()||checkCharacters()){
@@ -325,7 +326,7 @@ void Guard::update()
         yVel/=2;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
-		yOffset + 16 >= Global::GAME_HEIGHT-32 ||
+		yOffset + 16 >= Enumerations::LEVEL_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 5 ||
                 checkGates()||checkCharacters()){

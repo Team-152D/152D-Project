@@ -5,6 +5,7 @@
       <logicalFolder name="f1" displayName="Application" projectFiles="true">
         <itemPath>src/Application.cpp</itemPath>
         <itemPath>src/Application.h</itemPath>
+        <itemPath>src/Enumerations.h</itemPath>
         <itemPath>src/Global.cpp</itemPath>
         <itemPath>src/Global.h</itemPath>
         <itemPath>src/Main.cpp</itemPath>
@@ -24,35 +25,46 @@
         <itemPath>src/chat.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Game Objects" projectFiles="true">
-        <itemPath>src/Ammobox.cpp</itemPath>
-        <itemPath>src/Ammobox.h</itemPath>
-        <itemPath>src/DetTile.cpp</itemPath>
-        <itemPath>src/DetTile.h</itemPath>
-        <itemPath>src/Enemy.cpp</itemPath>
-        <itemPath>src/Enemy.h</itemPath>
-        <itemPath>src/Fixed_Switch.cpp</itemPath>
-        <itemPath>src/Fixed_Switch.h</itemPath>
-        <itemPath>src/Gate.h</itemPath>
+        <logicalFolder name="f1" displayName="gate" projectFiles="true">
+          <itemPath>src/Gate.h</itemPath>
+          <itemPath>src/Timed_Gate.cpp</itemPath>
+          <itemPath>src/Timed_Gate.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="mover" projectFiles="true">
+          <itemPath>src/Mover.h</itemPath>
+          <itemPath>src/Projectile.cpp</itemPath>
+          <itemPath>src/Projectile.h</itemPath>
+          <itemPath>src/Sight.cpp</itemPath>
+          <itemPath>src/Sight.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f6" displayName="object" projectFiles="true">
+          <itemPath>src/DetTile.cpp</itemPath>
+          <itemPath>src/DetTile.h</itemPath>
+          <itemPath>src/MobileBoxes.cpp</itemPath>
+          <itemPath>src/MobileBoxes.h</itemPath>
+          <itemPath>src/Object.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f5" displayName="powerup" projectFiles="true">
+          <itemPath>src/Ammobox.cpp</itemPath>
+          <itemPath>src/Ammobox.h</itemPath>
+          <itemPath>src/Powerup.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="switch" projectFiles="true">
+          <itemPath>src/Fixed_Switch.cpp</itemPath>
+          <itemPath>src/Fixed_Switch.h</itemPath>
+          <itemPath>src/Switch.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f3" displayName="unit" projectFiles="true">
+          <itemPath>src/Guard.cpp</itemPath>
+          <itemPath>src/Guard.h</itemPath>
+          <itemPath>src/Monster.cpp</itemPath>
+          <itemPath>src/Monster.h</itemPath>
+          <itemPath>src/Player.cpp</itemPath>
+          <itemPath>src/Player.h</itemPath>
+          <itemPath>src/Unit.h</itemPath>
+        </logicalFolder>
         <itemPath>src/Grid.cpp</itemPath>
         <itemPath>src/Grid.h</itemPath>
-        <itemPath>src/Guard.cpp</itemPath>
-        <itemPath>src/Guard.h</itemPath>
-        <itemPath>src/MobileBoxes.cpp</itemPath>
-        <itemPath>src/MobileBoxes.h</itemPath>
-        <itemPath>src/Monster.cpp</itemPath>
-        <itemPath>src/Monster.h</itemPath>
-        <itemPath>src/Mover.h</itemPath>
-        <itemPath>src/Object.h</itemPath>
-        <itemPath>src/Player.cpp</itemPath>
-        <itemPath>src/Player.h</itemPath>
-        <itemPath>src/Projectile.cpp</itemPath>
-        <itemPath>src/Projectile.h</itemPath>
-        <itemPath>src/Sight.cpp</itemPath>
-        <itemPath>src/Sight.h</itemPath>
-        <itemPath>src/Switch.h</itemPath>
-        <itemPath>src/Timed_Gate.cpp</itemPath>
-        <itemPath>src/Timed_Gate.h</itemPath>
-        <itemPath>src/Unit.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="GUI" projectFiles="true">
         <itemPath>src/UI_AbstractElement.h</itemPath>
@@ -148,9 +160,7 @@
       </item>
       <item path="src/Editor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Enumerations.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -203,6 +213,8 @@
       <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Powerup.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Projectile.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -309,9 +321,7 @@
       </item>
       <item path="src/Editor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enemy.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Enumerations.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Fixed_Switch.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -364,6 +374,8 @@
       <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Powerup.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Projectile.cpp" ex="false" tool="1" flavor2="0">
       </item>

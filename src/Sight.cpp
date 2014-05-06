@@ -1,6 +1,7 @@
 #include "Sight.h"
 #include "Game.h"
-//
+#include "Enumerations.h"
+
 Sight::Sight( int x, int y, int d, int ID )
 {
 	//Initialize movement variables
@@ -68,14 +69,14 @@ string Sight::look(){
 	{
 		xOffset += xVel;
 		if ( xOffset + 8 <= 0 ||
-		xOffset + 8 >= Global::GAME_WIDTH)
+		xOffset + 8 >= Enumerations::LEVEL_WIDTH)
                          conditionwall="hit";
 	}
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
 		if ( yOffset + 8 <= 0 ||
-		yOffset + 8 >= Global::GAME_HEIGHT)
+		yOffset + 8 >= Enumerations::LEVEL_HEIGHT)
                          conditionwall="hit";
 	}
         conditionplayer=hit();

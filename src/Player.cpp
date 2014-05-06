@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Game.h"
+#include "Enumerations.h"
 
 Player::Player( int x, int y )
 {
@@ -167,7 +168,7 @@ void Player::update( )
 	{
 		xOffset += xVel;
 		if ( xOffset + 16 <= 0 ||
-			 xOffset + 16 >= Global::GAME_WIDTH ||
+			 xOffset + 16 >= Enumerations::LEVEL_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 checkGates( )||checkCharacters() )
 			xOffset -= xVel;
@@ -181,7 +182,7 @@ void Player::update( )
 	{
 		yOffset += yVel;
 		if ( yOffset + 16 <= 0 ||
-			 yOffset + 16 >= Global::GAME_HEIGHT ||
+			 yOffset + 16 >= Enumerations::LEVEL_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 checkGates( )||checkCharacters() )
 			yOffset -= yVel;
