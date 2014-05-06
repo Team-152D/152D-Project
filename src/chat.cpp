@@ -200,7 +200,8 @@ bool chat::can_type(){
       // keystate = SDL_GetKeyboardState(NULL); 
        show_output(); 
        text->changeColor(255,255,255);
-       text->writeText(100,640,s.c_str(),20);
+      // text->writeText(14,640,">",20);
+       text->writeText(20,640,s.c_str(),20);
        
      //  if(keystate[SDLK_BACKSPACE]){
      //      text->~Text();
@@ -236,4 +237,13 @@ bool chat::can_type(){
        return state_out;  
    }
    
+   
+   void chat::input_text(string str){
+       if(output.size()>5){
+           output.pop_front();
+       }else{
+       output.push_back(str);
+       }
+     
+   }
    
