@@ -13,7 +13,7 @@ chat::chat(){
     keystate = NULL;
     isTyping = false;
     count = 0;
-    state_out = false; 
+    state_out = 0; 
     //keystate[SDLK_XXXX]  0 = not pressed   1 = pressed
     //SDL_TEXTINPUT
     //SDL_TEXTEDITING 
@@ -81,14 +81,10 @@ void chat::old_chatting(SDL_Event event){ //handles input from user
                 break;
                 
                   case SDLK_t:
-                      if(isTyping == false){
-                          state_out = true;
-                          
-                      }else{
-                          state_out = false;
+                      if(!isTyping){
+                      state_out++;     
+                      state_out = state_out % 2;
                       }
-                      
-                      
                       break;
                 
                 default: 
@@ -203,8 +199,8 @@ bool chat::can_type(){
       // text_in.draw();
       // keystate = SDL_GetKeyboardState(NULL); 
        show_output(); 
-       text->changeColor(0,0,0);
-       text->writeText(30,620,s.c_str(),20);
+       text->changeColor(255,255,255);
+       text->writeText(100,640,s.c_str(),20);
        
      //  if(keystate[SDLK_BACKSPACE]){
      //      text->~Text();
@@ -218,10 +214,10 @@ bool chat::can_type(){
        if(output.size()>5)
            output.pop_front(); 
            
-       int x = 340;
+       int x = 640;
        for(list<string>::iterator it = output.begin() ; it != output.end() ; it++){
            string temp = *it;
-           text->writeText(30,x,temp.c_str(), 20);
+           text->writeText(540,x,temp.c_str(), 20);
            x+= 22; 
        }
    
@@ -236,10 +232,8 @@ bool chat::can_type(){
        }
    }
   
-   void chat::toggle(){
-       if(state_out){
-           show_output();
-       }
+   int chat::toggle(){
+       return state_out;  
    }
    
    
