@@ -3,7 +3,7 @@
 #ifndef CHAT_H
 #define	CHAT_H
 
-#define Limit 75
+#define Limit 60
 
 #include <iostream>
 #include <cstdlib>
@@ -38,6 +38,7 @@ using namespace std;
        void show_output();
        int toggle();
        void input_text();
+       void input_text(string str);
        //Future methods
        //scroll up and down to see text
        //Text boxes size
