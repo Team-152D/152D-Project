@@ -191,9 +191,12 @@ int Game::input( )
 	SDL_Event event;
 
 	SDL_PollEvent( &event );
-
+      //chatbox input stuff
+        ch_box.old_chatting(event);
+        
+        if( ch_box.can_type()==false){
 	CMD.push( event, multiPlayer );
-	CMD.take( );
+	CMD.take( ); }
 	if ( multiPlayer )
 		currentLevel->input( CMD.slfCmd, CMD.othCmd );
 	else
@@ -233,7 +236,11 @@ int Game::draw( )
 	cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
 	displayInfoBar( );
-
+        
+        if(ch_box.can_type() == true){
+            ch_box.show_input(); 
+        }
+        
 	//displayDebug();
 
 	if ( SDL_UpdateWindowSurface( window ) < 0 )
