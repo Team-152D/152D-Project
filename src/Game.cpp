@@ -206,13 +206,12 @@ int Game::input( )
 		//chatbox input stuff
 		ch_box.old_chatting( event );
 		if ( ch_box.can_type( ) == false )
-		{
-			CMD.push( event, multiPlayer );
-			CMD.take( );
-		}
-
-		if ( multiPlayer )
-			currentLevel->input( CMD.slfCmd, CMD.othCmd );
+                    CMD.push( event, multiPlayer );
+                else strcpy(CMD.slfCmd, "nil");
+			
+		if ( multiPlayer ){
+                    CMD.take( ); currentLevel->input( CMD.slfCmd, CMD.othCmd );
+                }			
 		else
 		{
 			currentLevel->input( CMD.slfCmd, NULL );

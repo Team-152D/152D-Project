@@ -6,8 +6,9 @@ DetTile::DetTile(int x, int y, int cnt){
     cntMax= cntCur= cnt;
     bounds.x= x; bounds.y= y;
     bounds.w= 32; bounds.h= 32; 
-    bg= image->loadImage("rsc\\game\\tile_det.bmp");   
-    /*insert blast animation image loads here*/
+    bg= image->loadImage("rsc\\game\\tile_det.bmp");
+    blast_1= image->loadImage("rsc\\game\\object_Detonate1.bmp");
+    blast_2= image->loadImage("rsc\\game\\object_Detonate2.bmp");
 }
 
 void DetTile::draw(){
