@@ -17,6 +17,8 @@ Timed_Gate::Timed_Gate(int x, int y, int timer, int id)
 	timed_gate_sprite_closed = image->loadImage( "rsc\\game\\object_GateClosed.bmp" ); // move right
 	if ( timed_gate_sprite_open == NULL || timed_gate_sprite_closed == NULL)
 		cout << "Gate sprite didn't load" << endl;
+	
+	cout << "timed gate constructor end" << endl;
 }
 
 Timed_Gate::~Timed_Gate()

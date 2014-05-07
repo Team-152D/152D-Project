@@ -206,12 +206,14 @@ int Game::input( )
 		//chatbox input stuff
 		ch_box.old_chatting( event );
 		if ( ch_box.can_type( ) == false )
-                    CMD.push( event, multiPlayer );
-                else strcpy(CMD.slfCmd, "nil");
-			
-		if ( multiPlayer ){
-                    CMD.take( ); currentLevel->input( CMD.slfCmd, CMD.othCmd );
-                }			
+			CMD.push( event, multiPlayer );
+		else strcpy( CMD.slfCmd, "nil" );
+
+		if ( multiPlayer )
+		{
+			CMD.take( );
+			currentLevel->input( CMD.slfCmd, CMD.othCmd );
+		}
 		else
 		{
 			currentLevel->input( CMD.slfCmd, NULL );
@@ -222,15 +224,11 @@ int Game::input( )
 					bool x = pauseGame( );
 					switch ( x )
 					{
-							bool x = pauseGame( );
-							switch ( x )
-							{
-								case false:
-									break;
-								case true:
-									return 2;
-									break;
-							}
+						case false:
+							break;
+						case true:
+							return 2;
+							break;
 					}
 				}
 		}
@@ -329,9 +327,7 @@ bool Game::pauseGame( )
 	return false;
 }
 
-void Game::displayDebug( )
-{
-}
+void Game::displayDebug( ) { }
 
 void Game::displayInfoBar( )
 {

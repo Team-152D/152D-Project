@@ -289,7 +289,6 @@ void Level::loadLevel()
 			int x, y;
 			infile >> x;
 			infile >> y;
-			cout << x << "," << y << endl;
 			Guard *guard = new Guard( x, y );
 			characters->push_back( guard );
 		}
@@ -321,7 +320,10 @@ void Level::loadLevel()
 			for ( int i = 0; i < gates->size( ); i++ )
 			{
 				if ( gates->at( i )->getID( ) == id )
+				{
 					gate = gates->at( i );
+					cout << "switch is connected to gate at index " << i << endl;
+				}
 			}
 			Fixed_Switch *fswitch = new Fixed_Switch( x, y, gate );
 			switches->push_back( fswitch );
@@ -335,9 +337,30 @@ void Level::loadLevel()
 			Ammobox *ammobox = new Ammobox( x, y, rounds );
 			powerups->push_back( ammobox );
 		}
+		else if ( input == "DetTile" )
+		{
+			int x, y, count;
+			infile >> x;
+			infile >> y;
+			infile >> count;
+			DetTile *dtile = new DetTile( x, y, count );
+			objects->push_back(dtile);
+		}
+		else if( input == "PushBox" )
+		{
+			int x, y;
+			infile >> x;
+			infile >> y;
+			PushBox *pbox = new PushBox( x, y );
+			objects->push_back( pbox );
+		}
+		else
+			cout << "ERROR: Bad input in level data file" << endl;
 	}
 
 	infile.close( );
+	
+	cout << "There are " << objects->size() << " objects" << endl;
 
 	/*cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"

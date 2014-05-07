@@ -22,6 +22,8 @@
 #include "Fixed_Switch.h"
 #include "Timed_Gate.h"
 #include "Ammobox.h"
+#include "DetTile.h"
+#include "MobileBoxes.h"
 
 using namespace std;
 

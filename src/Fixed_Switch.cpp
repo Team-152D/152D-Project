@@ -16,6 +16,8 @@ Fixed_Switch::Fixed_Switch(int x, int y, Gate* pair)
 	fixed_switch_sprite_off = image->loadImage( "rsc\\game\\object_switchOff.bmp" ); // move right
 	if ( fixed_switch_sprite_on == NULL || fixed_switch_sprite_off == NULL)
 		cout << "switch sprite didn't load" << endl;
+	
+	cout << "fixed swtich constructor end" << endl;
 }
 
 Fixed_Switch::~Fixed_Switch()
