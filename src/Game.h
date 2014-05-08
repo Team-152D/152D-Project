@@ -14,7 +14,7 @@
 #include "Audio.h"
 #include "Text.h"
 #include "chat.h"
-
+#include "Menu.h"
 
 class Game
 {
@@ -35,9 +35,9 @@ private:
     command CMD;
     
     int runGameLoop();
-    int input();
+    bool input();
     int update();
-    int draw();
+    void draw();
     
     bool pauseGame();
     void displayInfoBar();

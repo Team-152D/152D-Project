@@ -19,11 +19,11 @@ bool* Settings::getLinkedBool(int index)
 {
     switch ( index )
     {
-	case Enumerations::SET_UISFX_BOOL:
+	case Enums::SET_UISFX_BOOL:
 	    return &uiSfxEnabled;
-	case Enumerations::SET_GAMESFX_BOOL:
+	case Enums::SET_GAMESFX_BOOL:
 	    return &gameSfxEnabled;
-	case Enumerations::SET_MUSIC_BOOL:
+	case Enums::SET_MUSIC_BOOL:
 	    return &musicEnabled;
     }
 }

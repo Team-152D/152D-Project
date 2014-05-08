@@ -76,14 +76,14 @@ string Sight::look(){
 	{
 		xOffset += xVel;
 		if ( xOffset + 8 <= 0 ||
-		xOffset + 8 >= Enumerations::LEVEL_WIDTH || xOffset<=min_length || xOffset >=max_length)
+		xOffset + 8 >= Enums::LEVEL_WIDTH || xOffset<=min_length || xOffset >=max_length)
                          conditionwall="hit";
 	}
 	if ( yVel != 0 )
 	{
 		yOffset += yVel;
 		if ( yOffset + 8 <= 0 ||
-		yOffset + 8 >= Enumerations::LEVEL_HEIGHT || yOffset<=min_height || yOffset >=max_height)
+		yOffset + 8 >= Enums::LEVEL_HEIGHT || yOffset<=min_height || yOffset >=max_height)
                          conditionwall="hit";
 	}
         conditionplayer=hit();

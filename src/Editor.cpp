@@ -94,7 +94,7 @@ int Editor::runEditor( )
 		switch ( input( ) )
 		{
 			case -1:
-				return Enumerations::AS_MAIN_MENU;
+				return Enums::AS_MAIN_MENU;
 			case 0:
 				break;
 		}
@@ -102,11 +102,11 @@ int Editor::runEditor( )
 		switch ( update( ) )
 		{
 			case -1:
-				return Enumerations::AS_MAIN_MENU;
+				return Enums::AS_MAIN_MENU;
 			case 0:
 				break;
 			case 1:
-				return Enumerations::AS_EDITOR;
+				return Enums::AS_EDITOR;
 		}
 
 		switch ( draw( ) )
@@ -186,10 +186,10 @@ int Editor::draw( )
 	if ( !fileOpen )
 	{
 		image->drawSurface( 0, 0, bg_BlackScreen );
-		for ( int i = 0; i <= Enumerations::GRID_WIDTH; i++ )
+		for ( int i = 0; i <= Enums::GRID_WIDTH; i++ )
 			image->drawSurface( i * 32, 0, vLine );
 		image->drawSurface( 1279, 0, vLine );
-		for ( int j = 0; j <= Enumerations::GRID_HEIGHT; j++ )
+		for ( int j = 0; j <= Enums::GRID_HEIGHT; j++ )
 			image->drawSurface( 0, j * 32, hLine );
 	}
 

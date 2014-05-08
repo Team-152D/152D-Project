@@ -72,7 +72,7 @@ void Projectile::update( )
     {
 	xOffset += xVel;
 	if ( xOffset + 8 <= 0 ||
-		xOffset + 8 >= Enumerations::LEVEL_WIDTH){
+		xOffset + 8 >= Enums::LEVEL_WIDTH){
             hitsomething=true;
         }
     }
@@ -80,7 +80,7 @@ void Projectile::update( )
     {
 	yOffset += yVel;
 	if ( yOffset + 8 <= 0 ||
-		yOffset + 8 >= Enumerations::LEVEL_HEIGHT){
+		yOffset + 8 >= Enums::LEVEL_HEIGHT){
             hitsomething=true;
         }
     }

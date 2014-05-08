@@ -19,9 +19,9 @@ void PushBox::collide(Unit* impact){
     int tx, ty, tw, th; tx= impact->getXVel(), ty=impact->getYVel();
     if((tx && !ty) || (!tx && ty)){ xVel= tx; yVel= ty;}  
     //check if push would send box out of map bounds
-    if(bounds.x+xVel < 0 || bounds.x+bounds.w+xVel > Enumerations::GRID_WIDTH)
+    if(bounds.x+xVel < 0 || bounds.x+bounds.w+xVel > Enums::GRID_WIDTH)
         xVel= 0;
-    if(bounds.y+yVel < 0 || bounds.y+bounds.h+yVel > Enumerations::GRID_HEIGHT)
+    if(bounds.y+yVel < 0 || bounds.y+bounds.h+yVel > Enums::GRID_HEIGHT)
         yVel= 0;
     //check if box movement would cause a collision with another object
     vector<Object*>* check= currentLevelGlobal->getObjects();

@@ -170,7 +170,7 @@ void Level::draw( )
 Player* Level::getPlayer( int player )
 {
 	Player *temp = NULL;
-	switch( player )
+	switch ( player )
 	{
 		case 1:
 			temp = player1;
@@ -217,16 +217,16 @@ bool Level::victoryCondition( )
 		return endOne;
 }
 
-void Level::loadLevel()
+void Level::loadLevel( )
 {
 	//cout << "DEBUG: Level is loading file" << endl;
 	vector<vector<int>*>* temp = new vector<vector<int>*>;
 
-	for ( int i = 0; i < Enumerations::GRID_HEIGHT; i++ )
+	for ( int i = 0; i < Enums::GRID_HEIGHT; i++ )
 		temp->push_back( new vector<int> );
 
-	for ( int i = 0; i < Enumerations::GRID_HEIGHT; i++ )
-		for ( int j = 0; j < Enumerations::GRID_WIDTH; j++ )
+	for ( int i = 0; i < Enums::GRID_HEIGHT; i++ )
+		for ( int j = 0; j < Enums::GRID_WIDTH; j++ )
 			temp->at( i )->push_back( 1 );
 
 	string filepath;
@@ -246,9 +246,9 @@ void Level::loadLevel()
 
 	ifstream infile;
 	infile.open( filepath.c_str( ) );
-	for ( int i = 0; i < Enumerations::GRID_HEIGHT; i++ )
+	for ( int i = 0; i < Enums::GRID_HEIGHT; i++ )
 	{
-		for ( int j = 0; j < Enumerations::GRID_WIDTH; j++ )
+		for ( int j = 0; j < Enums::GRID_WIDTH; j++ )
 		{
 			int input;
 			if ( infile >> input )
@@ -259,9 +259,9 @@ void Level::loadLevel()
 		if ( !infile )
 			break;
 	}
-	
+
 	SDL_Rect p1Spawn, p2Spawn;
-	
+
 	infile >> p1Spawn.x;
 	infile >> p1Spawn.y;
 	infile >> p2Spawn.x;
@@ -320,10 +320,7 @@ void Level::loadLevel()
 			for ( int i = 0; i < gates->size( ); i++ )
 			{
 				if ( gates->at( i )->getID( ) == id )
-				{
 					gate = gates->at( i );
-					cout << "switch is connected to gate at index " << i << endl;
-				}
 			}
 			Fixed_Switch *fswitch = new Fixed_Switch( x, y, gate );
 			switches->push_back( fswitch );
@@ -344,9 +341,9 @@ void Level::loadLevel()
 			infile >> y;
 			infile >> count;
 			DetTile *dtile = new DetTile( x, y, count );
-			objects->push_back(dtile);
+			objects->push_back( dtile );
 		}
-		else if( input == "PushBox" )
+		else if ( input == "PushBox" )
 		{
 			int x, y;
 			infile >> x;
@@ -359,8 +356,8 @@ void Level::loadLevel()
 	}
 
 	infile.close( );
-	
-	cout << "There are " << objects->size() << " objects" << endl;
+
+	cout << "There are " << objects->size( ) << " objects" << endl;
 
 	/*cout << "DEBUG: (Level.cpp) P1 Spawn = (" << p1Spawn.x << "," << p1Spawn.y << ")"
 		<< "P2 Spawn = (" << p2Spawn.x << "," << p2Spawn.y << ")"

@@ -63,7 +63,7 @@ int UI_Button::handleEvents(SDL_Event* event)
 	default:
 	    break;
     }
-    return Enumerations::CONTINUE;
+    return Enums::CONTINUE;
 }
 
 void UI_Button::draw()

@@ -388,7 +388,7 @@ void Guard::update( )
 		xOffset += xVel;
 		
 		if ( xOffset + 16 <= 0 + 32 ||
-			 xOffset + 16 >= Enumerations::LEVEL_WIDTH - 32 ||
+			 xOffset + 16 >= Enums::LEVEL_WIDTH - 32 ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 5 ||
 			 checkGates( ) || checkCharacters( ) )
@@ -412,7 +412,7 @@ void Guard::update( )
 			yVel /= 3;
 		yOffset += yVel;
 		if ( yOffset + 16 <= 0 + 32 ||
-			 yOffset + 16 >= Enumerations::LEVEL_HEIGHT - 32 ||
+			 yOffset + 16 >= Enums::LEVEL_HEIGHT - 32 ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 5 ||
 			 checkGates( ) || checkCharacters( ) )

@@ -27,6 +27,8 @@ Game::Game( bool newGame, int socket )
 		infile.close( );
 	}
 
+	text->changeColor( 255, 255, 255 );
+
 	frameCounter = 0;
 	currentGameGlobal = this;
 	currentLevel = new Level( currentLevelNumber );
@@ -51,102 +53,51 @@ Game::~Game( )
 
 int Game::runGame( )
 {
-	cout << "DEBUG: runGame()" << endl;
-	bool quit = false;
-	while ( !quit )
-	{
-		SDL_Event event;
+	cout << "DEBUG: Running Game" << endl;
 
-		CMD.push( event, multiPlayer );
-		CMD.take( );
+	SDL_Event event;
+	CMD.push( event, multiPlayer );
+	CMD.take( );
 
-		text->changeColor( 255, 255, 255 );
-		
-		int loopReturn = runGameLoop();
-		
-		if ( loopReturn == Enumerations::AS_MAIN_MENU || loopReturn == Enumerations::AS_GAME_CONT )
-		{
-			Mix_HaltMusic( );
-			if ( multiPlayer )
-				endNet( CMD.getSocket( ) );
-			return loopReturn;
-		}
-		
-		currentLevelNumber++;
+	int loopReturn = runGameLoop( );
+	cout << "DEBUG: Game loop returned: " << loopReturn << endl;
 
-		/* Victory Screen
-		 This section of the code should be replaced by a menu system
-		 - Whatever is currently on the screen should be saved to an SDL_Surface to be used as the background for the menu
-		 - A new menu object should be created and run
-		 - The menu should offer two options:
-			- Continue: increment the current level number and return Enumerations::AS_GAME_CONT
-			- Exit: return Enumerations::AS_MAIN_MENU
-		 - Finally, Game::runGame() should return the value the menu object returned
-		 */
-		SDL_Surface* victoryMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
-		bool atVictoryScreen = true;
-		while ( atVictoryScreen )
-		{
-			if ( SDL_PollEvent( &event ) )
-			{
-				switch ( event.type )
-				{
-					/**/case SDL_MOUSEBUTTONUP:
-						if ( event.button.button == SDL_BUTTON_LEFT )
-						{
-							int x = event.button.x, y = event.button.y;
-							if ( x > 390 && x < 890 )
-							{
-								if ( y > 134 && y < 234 ) //Continue
-								{
-									audio->playSound( 1 );
-									delete currentLevel;
-									currentLevel = new Level( currentLevelNumber );
-									atVictoryScreen = false;
-									if ( currentLevelNumber > 5 )
-										quit = true;
-									break;
-								}
-								else if ( y > 234 && y < 334 ) //save & quit
-								{
-									audio->playSound( 1 );
-									ofstream outfile;
-									outfile.open( "rsc\\data\\data_saveGameData.txt" );
-									outfile << currentLevelNumber;
-									outfile.close( );
-
-
-									Mix_HaltMusic( );
-									endNet( CMD.getSocket( ) );
-									return Enumerations::AS_MAIN_MENU;
-								}
-							}
-						}
-						break;
-					/**/default:
-						break;
-				}
-			}
-			image->drawSurface( 0, 0, victoryMenu );
-			text->writeText( 490, 58, "Level Complete!", 46 );
-			text->writeText( 523, 158, "Next Level", 46 );
-			text->writeText( 495, 258, "Save and Quit", 46 );
-			SDL_UpdateWindowSurface( window );
-
-		}
-	}
 	Mix_HaltMusic( );
-	//display game complete screen
 	if ( multiPlayer )
 		endNet( CMD.getSocket( ) );
-	return Enumerations::AS_MAIN_MENU;
+	
+	switch( loopReturn )
+	{
+		case Enums::AS_MAIN_MENU:
+			return loopReturn;
+		case Enums::GAME_VICTORY:
+		{
+			currentLevelNumber++;
+			ofstream outfile;
+			outfile.open( "rsc\\data\\data_saveGameData.txt" );
+			outfile << currentLevelNumber;
+			outfile.close;
+			
+			Menu *vMenu = new Menu( "rsc\\data\\data_menu_VM.txt" );
+			int ret = vMenu -> runMenu();
+			delete vMenu;
+			return ret;
+		}
+		case Enums::GAME_DEFEAT:
+		{
+			Menu *dMenu = new Menu( "rsc\\data\\data_menu_DM.txt" );
+			int ret = dMenu -> runMenu();
+			delete dMenu;
+			return ret;
+		}
+	}
 }
 
 int Game::runGameLoop( )
 {
 	//cout << "DEBUG: Beginning game loop" << endl;
 	if ( settings->getMusicEnabled( ) )
-			audio->playMusic( 1 );
+		audio->playMusic( 1 );
 	if ( settings->getGameSfxEnabled( ) )
 		audio->playSound( 2 );
 
@@ -157,47 +108,43 @@ int Game::runGameLoop( )
 		fps.start( );
 		int iTime, uTime, dTime;
 
-		switch ( input( ) )
-		{
-			case 0: break;
-			case 2: return Enumerations::AS_MAIN_MENU;
-			default: break;
-		}
+		if ( input( ) )
+			return Enums::AS_MAIN_MENU;
 		iTime = fps.get_ticks( );
 
 		switch ( update( ) )
 		{
-			case 0: break;
-			case 1: victory = true;
+			case Enums::CONTINUE:
 				break;
-			default: break;
+			case Enums::GAME_VICTORY:
+				return Enums::GAME_VICTORY;
+			case Enums::GAME_DEFEAT:
+				return Enums::GAME_DEFEAT;
+			default:
+				break;
 		}
 		uTime = fps.get_ticks( );
 
-		switch ( draw( ) )
-		{
-			case 0: break;
-			case 2: return Enumerations::AS_MAIN_MENU;
-			default: break;
-		}
+		draw( );
 		dTime = fps.get_ticks( );
 
 		frameCounter++;
 		if ( frameCounter > 30 )
 			frameCounter = 0;
 
-		if ( fps.get_ticks( ) < 1000 / Enumerations::FRAMES_PER_SECOND )
-			SDL_Delay( ( 1000 / Enumerations::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
-		else if ( fps.get_ticks( ) > 1000 / Enumerations::FRAMES_PER_SECOND )
+		if ( fps.get_ticks( ) < 1000 / Enums::FRAMES_PER_SECOND )
+			SDL_Delay( ( 1000 / Enums::FRAMES_PER_SECOND ) - fps.get_ticks( ) );
+		/*else if ( fps.get_ticks( ) > 1000 / Enumerations::FRAMES_PER_SECOND )
 			cout << "WARNING: Frame took too long to draw. "
-			<< endl << "\tinput: " << iTime << "\tupdate: " << uTime << "\tdraw: " << dTime << endl;
+			<< endl << "\tinput: " << iTime << "\tupdate: " << uTime << "\tdraw: " << dTime << endl;*/
 	}
+
 	if ( settings->getGameSfxEnabled( ) )
 		audio->playSound( 3 );
 	return 1;
 }
 
-int Game::input( )
+bool Game::input( )
 {
 	// cout << "DEBUG: input()" << endl;
 	SDL_Event event;
@@ -222,19 +169,23 @@ int Game::input( )
 			if ( event.type == SDL_KEYUP )
 				if ( event.key.keysym.sym == SDLK_ESCAPE )
 				{
-					bool x = pauseGame( );
-					switch ( x )
+					Menu *pMenu = new Menu( "rsc\\data\\data_menu_PM.txt" );
+					int retVal = pMenu ->runMenu( );
+					switch ( retVal )
 					{
-						case false:
+						case Enums::CONTINUE:
 							break;
-						case true:
-							return 2;
+						case Enums::AS_MAIN_MENU:
+							return true;
+						default:
 							break;
 					}
+
+					// return true if the users quits
 				}
 		}
 	}
-	return 0;
+	return false;
 }
 
 int Game::update( )
@@ -243,11 +194,13 @@ int Game::update( )
 	currentLevel -> update( );
 
 	if ( currentLevel -> victoryCondition( ) )
-		return 1;
-	else return 0;
+		return Enums::GAME_VICTORY;
+		// if (death condition), return GAME_DEFEAT
+
+	else return Enums::CONTINUE;
 }
 
-int Game::draw( )
+void Game::draw( )
 {
 	// cout << "DEBUG: draw()" << endl;
 	currentLevel -> draw( );
@@ -265,16 +218,14 @@ int Game::draw( )
 	//displayDebug();
 
 	if ( SDL_UpdateWindowSurface( window ) < 0 )
-		return 2;
-	else
-		return 0;
+		cout << "ERROR: Game::draw() SDL_UpdateWindowSurface failed" << endl;
 }
 
 bool Game::pauseGame( )
 {
 	bool isPaused = true;
 	SDL_Event event;
-	SDL_Surface* pauseMenu = image->loadImage( "Resources\\ui_menu2.bmp" );
+	SDL_Surface* pauseMenu = image->loadImage( "rsc\\ui\\ui_menu2.bmp" );
 	if ( pauseMenu == NULL )
 		cout << "Pause menu image didn't load" << endl;
 
@@ -328,7 +279,9 @@ bool Game::pauseGame( )
 	return false;
 }
 
-void Game::displayDebug( ) { }
+void Game::displayDebug( )
+{
+}
 
 void Game::displayInfoBar( )
 {

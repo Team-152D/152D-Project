@@ -168,7 +168,7 @@ void Player::update( )
 	{
 		xOffset += xVel;
 		if ( xOffset + 16 <= 0 ||
-			 xOffset + 16 >= Enumerations::LEVEL_WIDTH ||
+			 xOffset + 16 >= Enums::LEVEL_WIDTH ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 checkGates( )||checkCharacters() )
 			xOffset -= xVel;
@@ -182,7 +182,7 @@ void Player::update( )
 	{
 		yOffset += yVel;
 		if ( yOffset + 16 <= 0 ||
-			 yOffset + 16 >= Enumerations::LEVEL_HEIGHT ||
+			 yOffset + 16 >= Enums::LEVEL_HEIGHT ||
 			 currentLevelGlobal->getGrid( )->getTileAt( ( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32 ) == 8 ||
 			 checkGates( )||checkCharacters() )
 			yOffset -= yVel;

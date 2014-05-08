@@ -8,9 +8,8 @@ Menu::Menu( string input )
 	views = new vector<View*>;
 
 	polledEvent = false;
-
 	loadViews( input );
-
+	text->changeColor( 0, 0, 0 );
 	background = image->loadImage( "rsc\\ui\\test.bmp" );
 	//cout << "DEBUG: Menu initialized" << endl;
 }
@@ -24,7 +23,7 @@ Menu::~Menu( )
 
 int Menu::runMenu( )
 {
-	cout << "APPSTATE CHANGE: " << identifier << endl;
+	cout << "Running Menu: " << identifier << endl;
 
 	bool inMenu = true;
 	views->at( currentView )->draw( );
@@ -34,59 +33,58 @@ int Menu::runMenu( )
 	{
 		int updateRValue = update( input( ) );
 
-		if ( ( updateRValue >= 0 && updateRValue <= 9 ) || ( updateRValue >= 30 && updateRValue <= 39 ) )
-		{
-			if ( identifier == "Main Menu" && updateRValue <= 9 )
-				return updateRValue;
-			else
+		if ( updateRValue > -1 && updateRValue <= 9 )
+			return updateRValue;
+		else
+			switch ( updateRValue )
 			{
-				switch( updateRValue )
-				{
-					case 30:
-						cout << "Received action value 30" << endl;
-						views -> at( currentView ) -> getIPfield() -> setIP();
-						cout << "set position" << endl;
-						break;
-					default:
-						break;
-				}
+				case 30:
+					cout << "Received action value 30" << endl;
+					views -> at( currentView ) -> getIPfield( ) -> setIP( );
+					cout << "set position" << endl;
+					break;
+				case 34:
+					return Enums::CONTINUE;
+				default:
+					break;
 			}
-		}
 
 		draw( );
-	} // End menu loop
-
-	return Enumerations::AS_EXIT_FAIL;
+	}
+	return Enums::AS_EXIT_FAIL;
 }
 
 int Menu::input( )
 {
+	// cout << "DEBUG: Menu::input()" << endl;
 	SDL_Event event;
 
 	if ( SDL_PollEvent( &event ) )
 	{
 		polledEvent = true;
 		if ( event.type == SDL_QUIT )
-			return Enumerations::AS_EXIT_SUCC;
+			return Enums::AS_EXIT_SUCC;
 		else if ( event.type == SDL_KEYUP )
 		{
 			if ( event.key.keysym.sym == SDLK_ESCAPE )
-				return views->at( currentView )->getParentView( );
+			{
+				int temp = views->at( currentView )->getParentView( );
+				cout << "Menu::input() escape pressed: returning " << temp << endl;
+				return temp;
+			}
 		}
 		else
-		{
-			int rValue = views->at( currentView )->input( &event );
-			return rValue;
-		}
+			return views->at( currentView )->input( &event );
 	}
 	else
 		polledEvent = false;
 
-	return Enumerations::CONTINUE;
+	return Enums::CONTINUE;
 }
 
 int Menu::update( int iValue )
 {
+	// cout << "DEBUG: Menu::update()" << endl;
 	if ( iValue >= 0 && iValue <= 9 ) //return exit/game state
 		return iValue;
 	else if ( iValue >= 10 && iValue <= 29 ) //set current view
@@ -98,16 +96,13 @@ int Menu::update( int iValue )
 	{
 		return iValue;
 	}
-	else if ( iValue >= 50 && iValue <= 99 ) //handle action
-	{
 
-	}
-
-	return Enumerations::CONTINUE;
+	return Enums::CONTINUE;
 }
 
 int Menu::draw( )
 {
+	// cout << "DEBUG: Menu::draw()" << endl;
 	views->at( currentView )->draw( );
 
 	drawDebug( );
@@ -140,7 +135,7 @@ void Menu::loadViews( string filepath )
 		nView->loadElements( viewPath );
 		views->push_back( nView );
 	}
-	//cout << "DEBUG: (Menu.cpp) loaded " << views->size() << " views" << endl;
+	cout << "DEBUG: loaded " << views->size( ) << " views for " << identifier << endl;
 }
 
 void Menu::drawDebug( )

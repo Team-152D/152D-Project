@@ -284,7 +284,7 @@ void Monster::update()
             xVel/=2;
 	xOffset += xVel;
 	if ( xOffset + 16 <= 0+32 ||
-		xOffset + 16 >= Enumerations::LEVEL_WIDTH-32 ||
+		xOffset + 16 >= Enums::LEVEL_WIDTH-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 checkGates()||checkCharacters()){
 	    xOffset -= xVel;}
@@ -302,7 +302,7 @@ void Monster::update()
             yVel/=2;
 	yOffset += yVel;
 	if ( yOffset + 16 <= 0+32 ||
-		yOffset + 16 >= Enumerations::LEVEL_HEIGHT-32 ||
+		yOffset + 16 >= Enums::LEVEL_HEIGHT-32 ||
 		currentLevelGlobal->getGrid()->getTileAt(( xOffset + 16 ) / 32, ( yOffset + 16 ) / 32) == 8 ||
                 checkGates()||checkCharacters()){
 	    yOffset -= yVel;}

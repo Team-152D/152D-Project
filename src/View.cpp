@@ -5,7 +5,8 @@ View::View( int iParentView, string backgroundPath )
 {
 	elements = new vector<UI_AbstractElement*>;
 	parentView = iParentView;
-	backgroundImage = image->loadImage( backgroundPath );
+	//cout << "view bg image" << endl;
+	backgroundImage = image->loadImage( "rsc\\ui\\test.bmp" );
 	ipfield = NULL;
 }
 
@@ -21,22 +22,12 @@ int View::input( SDL_Event* event )
 	for ( int i = 0; i < elements->size( ); i++ )
 	{
 		int rValue = elements->at( i )->handleEvents( event );
-		if ( rValue == Enumerations::CONTINUE )
+		if ( rValue == Enums::CONTINUE )
 			continue;
 		else if ( rValue >= 0 && rValue <= 39 )
-		{
 			return rValue;
-		}
-		else if ( rValue >= 40 && rValue <= 49 )
-			switch ( rValue )
-			{
-					//case Enumerations::SET_TOGGLEFULL:
-					//break;
-				default:
-					break;
-			}
 	}
-	return Enumerations::CONTINUE;
+	return Enums::CONTINUE;
 }
 
 void View::draw( )

@@ -10,9 +10,9 @@ Application::Application( )
 	menu = NULL;
 
 	if ( initializeApplication( ) == false )
-		appState = Enumerations::AS_EXIT_FAIL;
+		appState = Enums::AS_EXIT_FAIL;
 	else
-		appState = Enumerations::AS_MAIN_MENU;
+		appState = Enums::AS_MAIN_MENU;
 }
 
 Application::~Application( )
@@ -28,26 +28,30 @@ int Application::runApplication( )
 	{
 		switch ( appState )
 		{
-			case Enumerations::AS_MAIN_MENU:
+			case Enums::AS_MAIN_MENU:
+				cout << "APPSTATE CHANGE: Main Menu" << endl;
 				menu = new Menu( "rsc\\data\\data_menu_MM.txt" );
 				appState = menu -> runMenu( );
 				delete menu;
 				menu = NULL;
 				break;
-			case Enumerations::AS_GAME_NEW:
+			case Enums::AS_GAME_NEW:
+				cout << "APPSTATE CHANGE: New Game" << endl;
 				game = new Game( true, 0 );
 				appState = game ->runGame( );
 				delete game;
 				game = NULL;
 				break;
-			case Enumerations::AS_GAME_CONT:
+			case Enums::AS_GAME_CONT:
+				cout << "APPSTATE CHANGE: Continue Game" << endl;
 				game = new Game( false, 0 );
 				appState = game->runGame( );
 				delete game;
 				game = NULL;
 				break;
-			case Enumerations::AS_GAME_JOIN:
+			case Enums::AS_GAME_JOIN:
 			{
+				cout << "APPSTATE CHANGE: Join Game" << endl;
 				ifstream infile;
 				infile.open( "rsc\\data\\data_ip.txt" );
 				char IP[16];
@@ -59,8 +63,9 @@ int Application::runApplication( )
 				delete game;
 				break;
 			}
-			case Enumerations::AS_GAME_HOST:
+			case Enums::AS_GAME_HOST:
 			{
+				cout << "APPSTATE CHANGE: Host Game" << endl;
 				SDL_Surface *blk = image->loadImage( "rsc\\ui\\ui_blackScreen.bmp" );
 				image->drawSurface( 0, 0, blk );
 				text->writeText( 0, 0, "waiting for other player", 44 );
@@ -70,7 +75,8 @@ int Application::runApplication( )
 				delete game;
 				break;
 			}
-			case Enumerations::AS_EDITOR:
+			case Enums::AS_EDITOR:
+				cout << "APPSTATE CHANGE: Editor" << endl;
 				editor = new Editor( );
 				appState = editor -> runEditor( );
 				delete editor;

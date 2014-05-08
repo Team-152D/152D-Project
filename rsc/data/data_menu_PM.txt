@@ -1,1 +1,3 @@
 Pause Menu;
+rsc\\data\\data_viewPM0_Root.txt 34 rsc\\ui\\test.bmp
+rsc\\data\\data_viewPM1_Set.txt 10 rsc\\ui\\test.bmp

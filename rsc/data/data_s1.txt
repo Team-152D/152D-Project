@@ -21,5 +21,5 @@
 0 544 0 576 1214 32 64 64
 Guard 1000 128
 Ammobox 96 544 10
-Timedgate 0 416 1 1
-Fixedswitch 128 448 1
+Timed_Gate 0 416 1 1
+Fixed_Switch 128 448 1

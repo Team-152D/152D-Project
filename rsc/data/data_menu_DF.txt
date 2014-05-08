@@ -1,1 +1,2 @@
 Defeat Menu;
+rsc\\data\\data_viewDM0_Root.txt 34 rsc\\ui\\test.bmp

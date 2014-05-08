@@ -1,7 +1,7 @@
 #ifndef ENUMERATIONS_H
 #define	ENUMERATIONS_H
 
-namespace Enumerations
+namespace Enums
 {
 	/***** Config values *****/
 	const int SCREEN_WIDTH = 1280; // Total screen width
@@ -50,6 +50,10 @@ namespace Enumerations
 	const int SET_UISFX_BOOL = 31;
 	const int SET_GAMESFX_BOOL = 32;
 	const int SET_MUSIC_BOOL = 33;
+	const int SUBMENU_EXIT = 34;
+	
+	const int GAME_VICTORY = 40;
+	const int GAME_DEFEAT = 41;
 	
 	/***** [100 - 199] Audio *****/
     // Sound Effects

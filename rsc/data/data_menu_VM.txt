@@ -1,1 +1,2 @@
 Victory Menu;
+rsc\\data\\data_viewVM0_Root.txt 34 rsc\\ui\\test.bmp
