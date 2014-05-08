@@ -60,19 +60,18 @@ int Game::runGame( )
 		CMD.push( event, multiPlayer );
 		CMD.take( );
 
-		if ( settings->getMusicEnabled( ) )
-			audio->playMusic( 1 );
 		text->changeColor( 255, 255, 255 );
-		if ( runGameLoop( ) == Enumerations::AS_MAIN_MENU )
+		
+		int loopReturn = runGameLoop();
+		
+		if ( loopReturn == Enumerations::AS_MAIN_MENU || loopReturn == Enumerations::AS_GAME_CONT )
 		{
 			Mix_HaltMusic( );
-			cout << "DEBUG: (Game.cpp) game is quitting." << endl;
 			if ( multiPlayer )
 				endNet( CMD.getSocket( ) );
-			text->changeColor( 0, 0, 0 );
-			return Enumerations::AS_MAIN_MENU;
+			return loopReturn;
 		}
-		cout << "DEBUG: (Game.cpp) Level complete, loading victory screen" << endl;
+		
 		currentLevelNumber++;
 
 		/* Victory Screen
@@ -145,7 +144,9 @@ int Game::runGame( )
 
 int Game::runGameLoop( )
 {
-	cout << "Beginning game loop" << endl;
+	//cout << "DEBUG: Beginning game loop" << endl;
+	if ( settings->getMusicEnabled( ) )
+			audio->playMusic( 1 );
 	if ( settings->getGameSfxEnabled( ) )
 		audio->playSound( 2 );
 

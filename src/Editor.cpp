@@ -121,7 +121,7 @@ int Editor::input( )
 {
 	//cout << "DEBUG:: editor input" << endl;
 	SDL_Event event;
-	if ( SDL_PollEvent( &event ) )
+	while ( SDL_PollEvent( &event ) != 0 )
 	{
 		if ( event.type == SDL_MOUSEBUTTONUP )
 			if ( event.button.button == SDL_BUTTON_LEFT )

@@ -23,5 +23,3 @@ Guard 1000 128
 Ammobox 96 544 10
 Timedgate 0 416 1 1
 Fixedswitch 128 448 1
-DetTile 300 544 2
-PushBox 600 544
