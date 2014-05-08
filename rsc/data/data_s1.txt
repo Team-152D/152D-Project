@@ -23,3 +23,4 @@ Guard 1000 128
 Ammobox 96 544 10
 Timed_Gate 0 416 1 1
 Fixed_Switch 128 448 1
+DetTile 192 544 9

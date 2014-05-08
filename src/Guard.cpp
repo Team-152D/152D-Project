@@ -369,7 +369,7 @@ void Guard::update( )
 	//begin object collision detection
 	vector<Object*> impact = objsAhead( *currentLevelGlobal->getObjects( ) );
 	vector<Object*>::iterator it = impact.begin( );
-	while ( it != impact.end( ) ) ( *it )->collide( this );
+	while ( it != impact.end( ) ) {( *it )->collide( this ); it++;}
 	checkSwitches( );
 	//end object collision detection
 

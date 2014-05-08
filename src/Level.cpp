@@ -74,6 +74,7 @@ void Level::update( )
 	Gate* Gpointer;
 	Switch* Spointer;
 	Powerup* Ppointer;
+        Object* Opointer;
 
 	bool isalive;
 
@@ -105,7 +106,11 @@ void Level::update( )
 	{
 		Spointer = switches->at( j );
 		Spointer->update( );
-	}
+        }         
+        for(int j=0; j< objects->size(); j++){
+            Opointer = objects->at(j);
+            Opointer->update();
+        }
 	bool grabbed;
 	for ( int j = 0; j < powerups->size( ); j++ )
 	{
@@ -127,6 +132,7 @@ void Level::draw( )
 	Gate* Gpointer;
 	Switch* Spointer;
 	Powerup* Ppointer;
+        Object* Opointer;
 
 	for ( int i = 0; i < characters->size( ); i++ )
 	{
@@ -153,6 +159,10 @@ void Level::draw( )
 		Ppointer = powerups->at( j );
 		Ppointer->draw( );
 	}
+        for(int j=0; j< objects->size(); j++){         
+            Opointer = objects->at(j);
+            Opointer->draw();           
+        }        
 
 	ostringstream sstream;
 	sstream << "Ammo (Player 1) = " << player1->getammo( );

@@ -76,7 +76,7 @@ int Game::runGame( )
 			ofstream outfile;
 			outfile.open( "rsc\\data\\data_saveGameData.txt" );
 			outfile << currentLevelNumber;
-			outfile.close;
+			outfile.close();
 			
 			Menu *vMenu = new Menu( "rsc\\data\\data_menu_VM.txt" );
 			int ret = vMenu -> runMenu();

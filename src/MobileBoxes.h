@@ -2,6 +2,7 @@
 #define	MOBILEBOXES_H
 
 #include "Object.h"
+#include "Unit.h"
 
 class PushBox: public Object{
     SDL_Surface *bg;

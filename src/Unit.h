@@ -50,11 +50,12 @@ public:
         int x = xOffset + xVel, y = yOffset + yVel;
         vector<Object*> impact;
         vector<Object*>::iterator it = check.begin();
-        while (it != check.end())
+        while (it != check.end()){
             if (x + radius >= ((*it)->getCord().x) && y + radius >= ((*it)->getCord().y)
                     && x - radius <= ((*it)->getCord().x + (*it)->getCord().w)
                     && y - radius <= ((*it)->getCord().y + (*it)->getCord().h))
                 impact.push_back(*it);
+            it++;}
         return impact;
     }
     void stop(){xVel= 0; yVel= 0;}

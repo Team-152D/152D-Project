@@ -14,6 +14,7 @@ PushBox::PushBox(int x, int y){
 void PushBox::draw(){image->drawSurface(bounds.x, bounds.y, bg);}
 
 void PushBox::collide(Unit* impact){
+    cout<<"running collide";
     if(impact->myside()) {impact->stop(); return;}//non-player collision
     //player collision, disallowing diagonal pushes
     int tx, ty, tw, th; tx= impact->getXVel(), ty=impact->getYVel();
@@ -38,7 +39,7 @@ void PushBox::collide(Unit* impact){
             else if(bounds.x <= tx+tw && bounds.x+bounds.w >= tx &&
               (yVel+bounds.y <= ty+th || yVel+bounds.y+bounds.h >= ty)    
             ) {yVel= 0; break;}
-        }
+        } it++;
     }
     //end collision checking with other objects
     //begin checking collision with units
@@ -57,6 +58,7 @@ void PushBox::collide(Unit* impact){
             else if(bounds.x <= tx+tw && bounds.x+bounds.w >= tx &&
               (yVel+bounds.y <= ty+th || yVel+bounds.y+bounds.h >= ty)    
             ) {yVel= 0; break;}
+            itu++;
     } //end checking collision with units
     if(!xVel && !yVel) {impact->stop(); return;}
     bounds.x+= xVel; bounds.y+=yVel; xVel= 0; yVel= 0;

@@ -1,6 +1,7 @@
 #ifndef DETTILE_H
 #define	DETTILE_H
 
+#include <cstdlib>
 #include "Object.h"
 #include "Unit.h"
 #include "Text.h"
